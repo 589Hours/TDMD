@@ -16,6 +16,7 @@ namespace HueApp
 
         private async void OnCounterClicked(object sender, EventArgs e)
         {
+            //todo will be changed when MVVM gets implemented.
             PhilipsHueApiClient client = new PhilipsHueApiClient(new HttpClient());
 
             Dictionary<string, Light> lights = await client.GetLightsAsync();

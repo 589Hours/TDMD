@@ -10,5 +10,6 @@ namespace HueApp.Domain.Clients
     public interface IPhilipsHueApiClient
     {
         Task<Dictionary<string, Light>> GetLightsAsync();
+        Task SendPutCommandAsync();
     }
 }
