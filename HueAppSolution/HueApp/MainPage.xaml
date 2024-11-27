@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HueApp.MainPage"
-             Loaded="MainPageLoaded">
+             x:Class="HueApp.MainPage">
 
     <ScrollView>
         <VerticalStackLayout
@@ -17,7 +16,7 @@
                 WidthRequest="252"
                 HeightRequest="50" />
 
-            <Entry x:Name="EntryUsername" FontSize="Medium" HorizontalOptions="Center" WidthRequest="350" HeightRequest="50" BackgroundColor="Gray" />
+            <Entry x:Name="EntryUsername" FontSize="Medium" Text="{Binding EntryUsername}" HorizontalOptions="Center" WidthRequest="350" HeightRequest="50" BackgroundColor="Gray" />
 
             <Label
                 x:Name="LabelLocalhost"
@@ -27,33 +26,34 @@
                 WidthRequest="222" 
                 HeightRequest="50" />
 
-            <CheckBox x:Name="CheckBoxIsLocalhost" IsChecked="False" CheckedChanged="CheckBoxIsLocalHostChanged" HorizontalOptions="Center" />
+            <CheckBox x:Name="CheckBoxIsLocalhost" IsChecked="False" CheckedChanged="{Binding CheckBoxLocalHostChangedCommand}" HorizontalOptions="Center" />
 
             <Label
                 x:Name="LabelBridge"
                 Text="Enter Bridge IP-adress:"
+                IsEnabled="{Binding LabelBrigeEnabled}"
                 FontSize="Large"
                 HorizontalOptions="Center"
                 WidthRequest="340"
                 HeightRequest="50" />
 
-            <Entry x:Name="EntryBridge" FontSize="Medium" HorizontalOptions="Center" WidthRequest="350" HeightRequest="50" BackgroundColor="Gray" />
+            <Entry x:Name="EntryBridge" IsEnabled="{Binding EntryBridgeEnabled}" Text="{Binding EntryBridgeText}" FontSize="Medium" HorizontalOptions="Center" WidthRequest="350" HeightRequest="50" BackgroundColor="Gray" />
 
             <Label
                 x:Name="LabelPort"
                 Text="Enter Port number:"
-                IsEnabled="False"
+                IsEnabled="{Binding LabelPortEnabled}"
                 FontSize="Large"
                 WidthRequest="288"
                 HeightRequest="50" />
 
-            <Entry x:Name="EntryPort" IsEnabled="False" FontSize="Medium" HorizontalOptions="Center" WidthRequest="350" HeightRequest="50" BackgroundColor="Gray" />
+            <Entry x:Name="EntryPort" IsEnabled="{Binding EntryPortEnabled}" Text="{Binding EntryPortText}" FontSize="Medium" HorizontalOptions="Center" WidthRequest="350" HeightRequest="50" BackgroundColor="Gray" />
 
             <Button
                 x:Name="ButtonSubmit"
                 Text="Login" 
                 FontSize="Medium"
-                Clicked="ButtonSubmitClicked"
+                Command="{Binding ButtonSubmitClickedCommand}"
                 HorizontalOptions="Center"
                 WidthRequest="200" 
                 HeightRequest="50"
