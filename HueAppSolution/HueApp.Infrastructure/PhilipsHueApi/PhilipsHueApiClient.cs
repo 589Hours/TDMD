@@ -53,7 +53,7 @@ namespace HueApp.Infrastructure.HueApi
             }
         }
 
-        public async Task SendPutCommandAsync()
+        public async Task SendPutCommandAsync() 
         {
             throw new NotImplementedException();
         }
