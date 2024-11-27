@@ -69,7 +69,6 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\HueApp.Domain\HueApp.Domain.csproj" />
 	  <ProjectReference Include="..\HueApp.Infrastructure\HueApp.Infrastructure.csproj" />
-	  <ProjectReference Include="..\HueApp.ViewModels\HueApp.ViewModels.csproj" />
 	</ItemGroup>
 
 </Project>
