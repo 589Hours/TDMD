@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace HueApp.ViewModels
+﻿namespace HueApp.ViewModels
 {
-    public partial class MainPageViewModel : ObservableObject
+    // All the code in this file is included in all platforms.
+    public class MainPageViewModel
     {
-
     }
 }

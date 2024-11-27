@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HueApp.Domain", "HueApp.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HueApp.Infrastructure", "HueApp.Infrastructure\HueApp.Infrastructure.csproj", "{E2A609F2-25A5-4CAF-991C-95AC645CFD3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HueApp.ViewModels", "HueApp.ViewModels\HueApp.ViewModels.csproj", "{F6A3CF8D-001B-4B38-8DC6-3F0B04908BA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HueApp.ViewModels", "HueApp.ViewModels\HueApp.ViewModels.csproj", "{77B9FC4E-21F0-4F44-BD13-9976D9C9B2BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{E2A609F2-25A5-4CAF-991C-95AC645CFD3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2A609F2-25A5-4CAF-991C-95AC645CFD3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2A609F2-25A5-4CAF-991C-95AC645CFD3B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F6A3CF8D-001B-4B38-8DC6-3F0B04908BA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F6A3CF8D-001B-4B38-8DC6-3F0B04908BA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6A3CF8D-001B-4B38-8DC6-3F0B04908BA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F6A3CF8D-001B-4B38-8DC6-3F0B04908BA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77B9FC4E-21F0-4F44-BD13-9976D9C9B2BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77B9FC4E-21F0-4F44-BD13-9976D9C9B2BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77B9FC4E-21F0-4F44-BD13-9976D9C9B2BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77B9FC4E-21F0-4F44-BD13-9976D9C9B2BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
