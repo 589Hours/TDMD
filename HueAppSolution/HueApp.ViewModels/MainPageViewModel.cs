@@ -52,9 +52,12 @@ namespace HueApp.ViewModels
         [RelayCommand]
         public async Task ButtonSubmitClicked()
         {
-            //string username = entryUsername;
+            // Get Username and Bridge IP-adress or Port number
+            string username = entryUsername;
+            string bridgeText = entryBridgeText;
+            string portText = entryPortText;
+
 
         }
     }
 }
-
