@@ -16,7 +16,14 @@
                 WidthRequest="252"
                 HeightRequest="50" />
 
-            <Entry x:Name="EntryUsername" FontSize="Medium" Text="{Binding EntryUsername}" HorizontalOptions="Center" WidthRequest="350" HeightRequest="50" BackgroundColor="Gray" />
+            <Entry 
+                x:Name="EntryUsername" 
+                FontSize="Medium" 
+                Text="{Binding EntryUsername}" 
+                HorizontalOptions="Center" 
+                WidthRequest="350" 
+                HeightRequest="50" 
+                BackgroundColor="Gray" />
 
             <Label
                 x:Name="LabelLocalhost"
@@ -26,28 +33,48 @@
                 WidthRequest="222" 
                 HeightRequest="50" />
 
-            <CheckBox x:Name="CheckBoxIsLocalhost" IsChecked="False" CheckedChanged="{Binding CheckBoxLocalHostChangedCommand}" HorizontalOptions="Center" />
+            <CheckBox 
+                x:Name="CheckBoxIsLocalhost" 
+                CheckedChanged="CheckBoxIsLocalhostChanged" 
+                IsChecked="{Binding CheckBoxLocalChecked, Mode=TwoWay}" 
+                HorizontalOptions="Center" />
 
-            <Label
+            <Label 
                 x:Name="LabelBridge"
                 Text="Enter Bridge IP-adress:"
-                IsEnabled="{Binding LabelBrigeEnabled}"
+                IsEnabled="{Binding CheckedValue}"
                 FontSize="Large"
                 HorizontalOptions="Center"
                 WidthRequest="340"
                 HeightRequest="50" />
 
-            <Entry x:Name="EntryBridge" IsEnabled="{Binding EntryBridgeEnabled}" Text="{Binding EntryBridgeText}" FontSize="Medium" HorizontalOptions="Center" WidthRequest="350" HeightRequest="50" BackgroundColor="Gray" />
+            <Entry 
+                x:Name="EntryBridge" 
+                Text="{Binding EntryBridgeText}" 
+                IsEnabled="{Binding CheckedValue}"
+                FontSize="Medium" 
+                HorizontalOptions="Center" 
+                WidthRequest="350" 
+                HeightRequest="50" 
+                BackgroundColor="Gray" />
 
             <Label
                 x:Name="LabelPort"
                 Text="Enter Port number:"
-                IsEnabled="{Binding LabelPortEnabled}"
+                IsEnabled="{Binding CheckedValueInverse}"
                 FontSize="Large"
                 WidthRequest="288"
                 HeightRequest="50" />
 
-            <Entry x:Name="EntryPort" IsEnabled="{Binding EntryPortEnabled}" Text="{Binding EntryPortText}" FontSize="Medium" HorizontalOptions="Center" WidthRequest="350" HeightRequest="50" BackgroundColor="Gray" />
+            <Entry 
+                x:Name="EntryPort"  
+                Text="{Binding EntryPortText}" 
+                IsEnabled="{Binding CheckedValueInverse}" 
+                FontSize="Medium" 
+                HorizontalOptions="Center" 
+                WidthRequest="350" 
+                HeightRequest="50" 
+                BackgroundColor="Gray" />
 
             <Button
                 x:Name="ButtonSubmit"

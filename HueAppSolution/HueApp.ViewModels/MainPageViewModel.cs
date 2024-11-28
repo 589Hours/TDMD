@@ -8,64 +8,53 @@ namespace HueApp.ViewModels
     {
         private IPhilipsHueApiClient client;
         private IPreferences preferences;
-        public MainPageViewModel(IPreferences preferences, IPhilipsHueApiClient client) 
+        public MainPageViewModel(IPreferences preferences, IPhilipsHueApiClient client)
         {
             this.preferences = preferences;
             this.client = client;
         }
 
         [ObservableProperty]
+        private bool checkBoxLocalChecked;
+
+        [ObservableProperty]
+        private bool checkedValue = true;
+
+        [ObservableProperty]
+        private bool checkedValueInverse;
+
+        [ObservableProperty]
         private string entryUsername;
-
-        [ObservableProperty]
-        private bool labelBridgeEnabled;
-
-        [ObservableProperty]
-        private bool entryBridgeEnabled;
 
         [ObservableProperty]
         private string entryBridgeText;
 
         [ObservableProperty]
-        private bool labelPortEnabled;
-
-        [ObservableProperty]
-        private bool entryPortEnabled;
-
-        [ObservableProperty]
         private string entryPortText;
 
-        private bool CheckedState = true;
-
         [RelayCommand]
-        public async Task CheckBoxLocalHostChanged()
+        public void IsCheckBoxChanged()
         {
-            CheckedState = !CheckedState;
-            if (CheckedState)
+            if (CheckBoxLocalChecked == true)
             {
-                CheckedState = !CheckedState;
-                entryBridgeEnabled = CheckedState;
-                labelBridgeEnabled = CheckedState;
-                entryBridgeText = "";
-                entryPortEnabled = !CheckedState;
-                labelPortEnabled = !CheckedState;
+                CheckedValue = false;
+                CheckedValueInverse = true;
+                EntryBridgeText = "";
             }
             else
             {
-                CheckedState = !CheckedState;
-                entryBridgeEnabled = CheckedState;
-                labelBridgeEnabled = CheckedState;
-                entryPortEnabled = !CheckedState;
-                labelPortEnabled = !CheckedState;
-                entryPortText = "";
+                CheckedValue = true;
+                CheckedValueInverse = false;
+                EntryPortText = "";
             }
         }
 
         [RelayCommand]
         public async Task ButtonSubmitClicked()
         {
-            string username = entryUsername;
+            //string username = entryUsername;
 
         }
     }
 }
+
