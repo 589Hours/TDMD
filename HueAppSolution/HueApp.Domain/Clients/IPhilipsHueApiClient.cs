@@ -9,7 +9,10 @@ namespace HueApp.Domain.Clients
 {
     public interface IPhilipsHueApiClient
     {
+        void SetBaseUrl(string url);
+        Task<string> Login(string username);
+        Task<string> SignUp(string username);
         Task<Dictionary<string, Light>> GetLightsAsync();
-        Task SendPutCommandAsync();
+        Task<string> SendPutCommandAsync(string requestUrlPart, string body);
     }
 }

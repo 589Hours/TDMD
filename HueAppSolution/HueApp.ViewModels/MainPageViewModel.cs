@@ -52,7 +52,19 @@ namespace HueApp.ViewModels
         [RelayCommand]
         public async Task ButtonSubmitClicked()
         {
-            //string username = entryUsername;
+            string username = EntryUsername;
+            if (CheckBoxLocalChecked == true)
+            {
+                string url = $"http://localhost:{EntryPortText}/api/";
+                client.SetBaseUrl(url);
+                var response = await client.Login(username);
+                
+            }
+            else
+            {
+                string url = $"http://{EntryBridgeText}/api/";
+                client.SetBaseUrl(url);
+            }
 
         }
     }
