@@ -1,4 +1,4 @@
-﻿using HueApp.Domain.Clients;
+using HueApp.Domain.Clients;
 using HueApp.Infrastructure.HueApi;
 using HueApp.ViewModels;
 using Microsoft.Extensions.Logging;
