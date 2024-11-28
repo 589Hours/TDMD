@@ -2,33 +2,24 @@
 using HueApp.Domain.Clients;
 using HueApp.Domain.Models.PhilipsLight;
 using HueApp.Infrastructure.HueApi;
+using HueApp.ViewModels;
 
 namespace HueApp
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
-        public MainPage()
+        public MainPage(MainPageViewModel mainPageViewModel)
         {
             InitializeComponent();
+            BindingContext = mainPageViewModel;
         }
 
-        private async void OnCounterClicked(object sender, EventArgs e)
+        private void CheckBoxIsLocalhostChanged(object sender, CheckedChangedEventArgs e)
         {
-            //todo will be changed when MVVM gets implemented.
-            PhilipsHueApiClient client = new PhilipsHueApiClient(new HttpClient());
-
-            Dictionary<string, Light> lights = await client.GetLightsAsync();
-            //todo sla de lijst met lampen ergens op.
-
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
+            if (BindingContext is MainPageViewModel viewModel)
+            {
+                viewModel.IsCheckBoxChanged();
+            }
         }
     }
-
 }

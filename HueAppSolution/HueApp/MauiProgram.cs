@@ -1,4 +1,4 @@
-﻿using HueApp.Domain.Clients;
+using HueApp.Domain.Clients;
 using HueApp.Infrastructure.HueApi;
 using HueApp.ViewModels;
 using Microsoft.Extensions.Logging;
@@ -22,12 +22,14 @@ namespace HueApp
             //TODO inloggen/account maken voor authorisatie?
             builder.Services.AddHttpClient<IPhilipsHueApiClient, PhilipsHueApiClient>();
 
+            builder.Services.AddSingleton<IPreferences>(o => Preferences.Default);
+
             //TODO uncomment wanneer ViewModel is opgezet.
-            //builder.Services.AddTransient<MainPage>();
-            //builder.Services.AddTransient<MainPageViewModel>();
+            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<MainPageViewModel>();
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
