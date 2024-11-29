@@ -15,6 +15,8 @@ namespace HueApp.Infrastructure.HueApi
     public class PhilipsHueApiClient : IPhilipsHueApiClient
     {
         private HttpClient httpClient;
+        private string baseUrl;
+
         public PhilipsHueApiClient (HttpClient httpClient)
         {
             this.httpClient = httpClient;
@@ -22,20 +24,12 @@ namespace HueApp.Infrastructure.HueApi
 
         public void SetBaseUrl(string url)
         {
-            try
-            {
-                httpClient.BaseAddress = new Uri(url);
-            }
-            catch
-            {
-                Debug.WriteLine("already set URL");
-            }
-            
+            baseUrl = url;
         }
 
         public async Task<string> SendPutCommandAsync(string requestUrlPart, string body)
         {
-            var putCommand = httpClient.PutAsJsonAsync<string>(requestUrlPart, body);
+            var putCommand = httpClient.PutAsJsonAsync<string>(baseUrl + requestUrlPart, body);
             var result = putCommand.Result;
 
             result.EnsureSuccessStatusCode();
@@ -82,25 +76,31 @@ namespace HueApp.Infrastructure.HueApi
 
         public async Task<string> Link(string username, string device)
         {
-            var response = await httpClient.PostAsJsonAsync("", new
+            try
             {
-                devicetype = $"HueApp#{device} {username}"
-            });
-
-            response.EnsureSuccessStatusCode();
-            var json = GetJsonRootElement(await response.Content.ReadAsStringAsync());
-            
-            var responsebody = json[0];
-            if(responsebody.TryGetProperty("success", out JsonElement succesElement))
-            {
-                if(succesElement.TryGetProperty("username", out JsonElement usernameProperty))
+                var response = await httpClient.PostAsJsonAsync(baseUrl, new
                 {
-                    var usernameFromLink = usernameProperty.GetString();
-                    return usernameFromLink;
+                    devicetype = $"HueApp#{device} {username}"
+                });
+                response.EnsureSuccessStatusCode();
+                var json = GetJsonRootElement(await response.Content.ReadAsStringAsync());
+
+                var responsebody = json[0];
+                if (responsebody.TryGetProperty("success", out JsonElement succesElement))
+                {
+                    if (succesElement.TryGetProperty("username", out JsonElement usernameProperty))
+                    {
+                        var usernameFromLink = usernameProperty.GetString();
+                        return usernameFromLink;
+                    }
+                    return "";
                 }
                 return "";
+            } 
+            catch (Exception e)
+            { 
+                return "";
             }
-            return "";
         }
     }
 }

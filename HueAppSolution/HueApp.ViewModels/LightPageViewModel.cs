@@ -17,7 +17,5 @@ namespace HueApp.ViewModels
             this.client = client;
         }
 
-        
-
     }
 }

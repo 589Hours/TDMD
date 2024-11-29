@@ -30,31 +30,29 @@ namespace HueApp.ViewModels
         [ObservableProperty]
         private string entryBridgeText;
 
-        [ObservableProperty]
-        private string entryPortText;
-
         [RelayCommand]
         public void IsCheckBoxChanged()
         {
             if (CheckBoxLocalChecked == true)
             {
                 CheckedValue = false;
-                CheckedValueInverse = true;
+                CheckedValueInverse = !CheckedValue;
                 EntryBridgeText = "";
             }
             else
             {
                 CheckedValue = true;
-                CheckedValueInverse = false;
-                EntryPortText = "";
+                CheckedValueInverse = !CheckedValue;
             }
         }
 
         [RelayCommand]
         public async Task ButtonSubmitClicked()
         {
+            //TODO: Handle case where username is empty (To display error messages: Handle event the same way as the checkbox?)
+
             string username = EntryUsername;
-            if (CheckBoxLocalChecked == true)
+            if (CheckedValue == false)
             {
                 string url = $"http://localhost/api";
                 client.SetBaseUrl(url);
@@ -65,7 +63,15 @@ namespace HueApp.ViewModels
                 client.SetBaseUrl(url);
             }
             var usernameFromLink = await client.Link(username, DeviceInfo.Platform.ToString());
+
+            // If there is an error, or something else went wrong: Prevent logging in
+            if (usernameFromLink == "")
+                return;
+
             preferences.Set("username", usernameFromLink);
+
+            //TODO: Create and navigate to LightPage
+
         }
     }
 }
