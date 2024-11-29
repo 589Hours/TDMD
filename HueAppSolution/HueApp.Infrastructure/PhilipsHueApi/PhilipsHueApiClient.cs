@@ -22,7 +22,15 @@ namespace HueApp.Infrastructure.HueApi
 
         public void SetBaseUrl(string url)
         {
-            httpClient.BaseAddress = new Uri(url);
+            try
+            {
+                httpClient.BaseAddress = new Uri(url);
+            }
+            catch
+            {
+                Debug.WriteLine("already set URL");
+            }
+            
         }
 
         public async Task<string> SendPutCommandAsync(string requestUrlPart, string body)
@@ -36,7 +44,7 @@ namespace HueApp.Infrastructure.HueApi
 
         public JsonElement GetJsonRootElement(string response)
         {
-            using JsonDocument doc = JsonDocument.Parse(response);
+            JsonDocument doc = JsonDocument.Parse(response);
             JsonElement root = doc.RootElement;
             return root;
         }
@@ -72,19 +80,27 @@ namespace HueApp.Infrastructure.HueApi
             }
         }
 
-        public async Task<string> Login(string username)
+        public async Task<string> Link(string username, string device)
         {
-            var response = await httpClient.GetAsync(username);
+            var response = await httpClient.PostAsJsonAsync("", new
+            {
+                devicetype = $"HueApp#{device} {username}"
+            });
+
             response.EnsureSuccessStatusCode();
             var json = GetJsonRootElement(await response.Content.ReadAsStringAsync());
-            //TODO read response from login request
-
+            
+            var responsebody = json[0];
+            if(responsebody.TryGetProperty("success", out JsonElement succesElement))
+            {
+                if(succesElement.TryGetProperty("username", out JsonElement usernameProperty))
+                {
+                    var usernameFromLink = usernameProperty.GetString();
+                    return usernameFromLink;
+                }
+                return "";
+            }
             return "";
-        }
-
-        public Task<string> SignUp(string username)
-        {
-            throw new NotImplementedException();
         }
     }
 }
