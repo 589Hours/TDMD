@@ -13,7 +13,6 @@
                 Text="Enter Username:"
                 FontSize="Large"
                 HorizontalOptions="Center"
-                WidthRequest="252"
                 HeightRequest="50" />
 
             <Entry 
@@ -23,14 +22,13 @@
                 HorizontalOptions="Center" 
                 WidthRequest="350" 
                 HeightRequest="50" 
-                BackgroundColor="Gray" />
+                BackgroundColor="LightGray" />
 
             <Label
                 x:Name="LabelLocalhost"
                 Text="Use Localhost?"
                 FontSize="Large"
                 HorizontalOptions="Center"
-                WidthRequest="222" 
                 HeightRequest="50" />
 
             <CheckBox 
@@ -45,7 +43,6 @@
                 IsEnabled="{Binding CheckedValue}"
                 FontSize="Large"
                 HorizontalOptions="Center"
-                WidthRequest="340"
                 HeightRequest="50" />
 
             <Entry 
@@ -56,35 +53,18 @@
                 HorizontalOptions="Center" 
                 WidthRequest="350" 
                 HeightRequest="50" 
-                BackgroundColor="Gray" />
-
-            <Label
-                x:Name="LabelPort"
-                Text="Enter Port number:"
-                IsEnabled="{Binding CheckedValueInverse}"
-                FontSize="Large"
-                WidthRequest="288"
-                HeightRequest="50" />
-
-            <Entry 
-                x:Name="EntryPort"  
-                Text="{Binding EntryPortText}" 
-                IsEnabled="{Binding CheckedValueInverse}" 
-                FontSize="Medium" 
-                HorizontalOptions="Center" 
-                WidthRequest="350" 
-                HeightRequest="50" 
-                BackgroundColor="Gray" />
+                BackgroundColor="LightGray" />
 
             <Button
                 x:Name="ButtonSubmit"
                 Text="Login" 
-                FontSize="Medium"
+                TextColor="Black"
+                FontSize="Large"
                 Command="{Binding ButtonSubmitClickedCommand}"
                 HorizontalOptions="Center"
-                WidthRequest="200" 
+                WidthRequest="200"
                 HeightRequest="50"
-                BackgroundColor="Cyan"/>
+                BackgroundColor="DarkGray" />
 
         </VerticalStackLayout>
     </ScrollView>
