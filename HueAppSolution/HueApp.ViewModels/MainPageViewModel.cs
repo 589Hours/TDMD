@@ -56,12 +56,12 @@ namespace HueApp.ViewModels
             string username = EntryUsername;
             if (CheckBoxLocalChecked == true)
             {
-                string url = $"http://localhost:{EntryPortText}/api";
+                string url = $"http://localhost/api";
                 client.SetBaseUrl(url);
             }
             else
             {
-                string url = $"http://{EntryBridgeText}/api/";
+                string url = $"http://{EntryBridgeText}/api";
                 client.SetBaseUrl(url);
             }
             var usernameFromLink = await client.Link(username, DeviceInfo.Platform.ToString());
