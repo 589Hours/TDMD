@@ -13,7 +13,6 @@ using HueApp.Domain.Models.PhilipsLight;
 namespace HueApp.Infrastructure.HueApi
 {
     public class PhilipsHueApiClient : IPhilipsHueApiClient
-
     {
         private HttpClient httpClient;
         public PhilipsHueApiClient (HttpClient httpClient)
@@ -21,18 +20,46 @@ namespace HueApp.Infrastructure.HueApi
             this.httpClient = httpClient;
         }
 
+        public void SetBaseUrl(string url)
+        {
+            try
+            {
+                httpClient.BaseAddress = new Uri(url);
+            }
+            catch
+            {
+                Debug.WriteLine("already set URL");
+            }
+            
+        }
+
+        public async Task<string> SendPutCommandAsync(string requestUrlPart, string body)
+        {
+            var putCommand = httpClient.PutAsJsonAsync<string>(requestUrlPart, body);
+            var result = putCommand.Result;
+
+            result.EnsureSuccessStatusCode();
+            return await result.Content.ReadAsStringAsync();
+        }
+
+        public JsonElement GetJsonRootElement(string response)
+        {
+            JsonDocument doc = JsonDocument.Parse(response);
+            JsonElement root = doc.RootElement;
+            return root;
+        }
+
         public async Task<Dictionary<string, Light>> GetLightsAsync()
         {
             //TODO recieve URL from user OR add base url AND edit url to how its better working
             try
             {
-                var response = await httpClient.GetAsync("http://localhost:80/api/newdeveloper");
+                var response = await httpClient.GetAsync("newdeveloper");
                 response.EnsureSuccessStatusCode();
 
                 var responseModel = await response.Content.ReadAsStringAsync();
-                using JsonDocument doc = JsonDocument.Parse(responseModel);
-                JsonElement root = doc.RootElement;
 
+                var root = GetJsonRootElement(responseModel);
                 JsonElement lightsElement = root.GetProperty("lights");
 
                 var lightDictionary = lightsElement.Deserialize<Dictionary<string, Light>>();
@@ -53,9 +80,27 @@ namespace HueApp.Infrastructure.HueApi
             }
         }
 
-        public async Task SendPutCommandAsync() 
+        public async Task<string> Link(string username, string device)
         {
-            throw new NotImplementedException();
+            var response = await httpClient.PostAsJsonAsync("", new
+            {
+                devicetype = $"HueApp#{device} {username}"
+            });
+
+            response.EnsureSuccessStatusCode();
+            var json = GetJsonRootElement(await response.Content.ReadAsStringAsync());
+            
+            var responsebody = json[0];
+            if(responsebody.TryGetProperty("success", out JsonElement succesElement))
+            {
+                if(succesElement.TryGetProperty("username", out JsonElement usernameProperty))
+                {
+                    var usernameFromLink = usernameProperty.GetString();
+                    return usernameFromLink;
+                }
+                return "";
+            }
+            return "";
         }
     }
 }

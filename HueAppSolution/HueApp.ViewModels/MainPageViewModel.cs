@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HueApp.Domain.Clients;
+using System.Diagnostics;
 namespace HueApp.ViewModels
 {
     // All the code in this file is included in all platforms.
@@ -52,12 +53,19 @@ namespace HueApp.ViewModels
         [RelayCommand]
         public async Task ButtonSubmitClicked()
         {
-            // Get Username and Bridge IP-adress or Port number
-            string username = entryUsername;
-            string bridgeText = entryBridgeText;
-            string portText = entryPortText;
-
-
+            string username = EntryUsername;
+            if (CheckBoxLocalChecked == true)
+            {
+                string url = $"http://localhost:{EntryPortText}/api";
+                client.SetBaseUrl(url);
+            }
+            else
+            {
+                string url = $"http://{EntryBridgeText}/api/";
+                client.SetBaseUrl(url);
+            }
+            var usernameFromLink = await client.Link(username, DeviceInfo.Platform.ToString());
+            preferences.Set("username", usernameFromLink);
         }
     }
 }
