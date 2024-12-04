@@ -1,4 +1,5 @@
 using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HueApp.Domain.Clients;
@@ -67,15 +68,26 @@ namespace HueApp.ViewModels
             // If there is an error, or something else went wrong: Prevent logging in
             if (usernameFromLink == "")
             {
-                var toastError = Toast.Make("Username cannot be empty!");
-                await toastError.Show();
+                this.DisplayToastMessage("Username cannot be empty!", ToastDuration.Short, 14);
                 return;
             }
             // Create username in securestorage
             await secureStorage.SetAsync("username", usernameFromLink);
-            
+
             // Navigate to LightPage
             await Shell.Current.GoToAsync("//LightPage");
         }
+
+        /// <summary>
+        /// Method for displaying Toast messages
+        /// </summary>
+        /// <param name="message"></param>
+        private async void DisplayToastMessage(string message, ToastDuration duration, int textSize)
+        {
+            CancellationTokenSource cancellationTokenSource = new();
+            var toastError = Toast.Make(message, duration, textSize);
+            await toastError.Show(cancellationTokenSource.Token);
+        }
+
     }
 }
