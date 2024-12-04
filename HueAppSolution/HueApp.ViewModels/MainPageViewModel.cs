@@ -71,11 +71,11 @@ namespace HueApp.ViewModels
                 await toastError.Show();
                 return;
             }
+            // Create username in securestorage
+            await secureStorage.SetAsync("username", usernameFromLink);
 
-            preferences.Set("username", usernameFromLink);
-
-            //TODO: Create and navigate to LightPage
-            
+            // Navigate to LightPage
+            await Shell.Current.GoToAsync("//LightPage");
         }
     }
 }

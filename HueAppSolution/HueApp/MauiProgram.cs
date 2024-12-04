@@ -18,16 +18,17 @@ namespace HueApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            //TODO wel of geen base URL? Afhankelijk van ip-adres dus moeilijk misschien aan user overlaten?
-            //TODO inloggen/account maken voor authorisatie?
-            builder.Services.AddHttpClient<IPhilipsHueApiClient, PhilipsHueApiClient>();
+            // Services:
+            builder.Services.AddHttpClient<IPhilipsHueApiClient, PhilipsHueApiClient>(); // Client
+            builder.Services.AddSingleton<ISecureStorage>(o => SecureStorage.Default); // Secure Storage
 
-            builder.Services.AddSingleton<ISecureStorage>(o => SecureStorage.Default);
-
-            //TODO uncomment wanneer ViewModel is opgezet.
+            // Pages:
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<MainPageViewModel>();
+            builder.Services.AddTransient<LightPage>();
+            builder.Services.AddTransient<LightPageViewModel>();
 
+            // Debug:
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
