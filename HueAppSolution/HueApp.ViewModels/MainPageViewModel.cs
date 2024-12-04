@@ -52,27 +52,27 @@ namespace HueApp.ViewModels
         {
             // Get username and set base url
             string username = EntryUsername;
+            string url;
             if (CheckedValue == false)
             {
-                string url = $"http://localhost/api/";
-                client.SetBaseUrl(url);
+                url = $"http://localhost/api/";
             }
             else
             {
-                string url = $"http://{EntryBridgeText}/api/";
-                client.SetBaseUrl(url);
+                url = $"http://{EntryBridgeText}/api/";   
             }
-            var usernameFromLink = await client.Link(username, DeviceInfo.Platform.ToString());
+
+            //once chosen a way to connect, set the base address
+            var usernameFromLink = await client.Link(url, username, DeviceInfo.Platform.ToString());
 
             // If there is an error, or something else went wrong: Prevent logging in
             if (usernameFromLink == "")
             {
-                var toastError = Toast.Make("Username cannot be empty!");
-                await toastError.Show();
                 return;
             }
+
             // Create username in securestorage
-            await secureStorage.SetAsync("username", usernameFromLink);
+            await secureStorage.SetAsync("authorisedUrl", url+usernameFromLink);
             
             // Navigate to LightPage
             await Shell.Current.GoToAsync("//LightPage");
