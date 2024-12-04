@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HueApp.Domain.Clients;
@@ -49,8 +50,7 @@ namespace HueApp.ViewModels
         [RelayCommand]
         public async Task ButtonSubmitClicked()
         {
-            //TODO: Handle case where username is empty (To display error messages: Handle event the same way as the checkbox?)
-
+            // Get username and set base url
             string username = EntryUsername;
             if (CheckedValue == false)
             {
@@ -66,12 +66,16 @@ namespace HueApp.ViewModels
 
             // If there is an error, or something else went wrong: Prevent logging in
             if (usernameFromLink == "")
+            {
+                var toastError = Toast.Make("Username cannot be empty!");
+                await toastError.Show();
                 return;
+            }
 
             preferences.Set("username", usernameFromLink);
 
             //TODO: Create and navigate to LightPage
-
+            
         }
     }
 }

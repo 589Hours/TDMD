@@ -8,8 +8,13 @@
     Title="HueApp">
 
     <ShellContent
-        Title="Home"
+        Title="Login"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+
+    <ShellContent
+        Title="Lights"
+        ContentTemplate="{DataTemplate local:LightPage}"
+        Route="LightPage" />
 
 </Shell>
