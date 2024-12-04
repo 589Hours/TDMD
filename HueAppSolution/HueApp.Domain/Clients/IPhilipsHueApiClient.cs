@@ -11,7 +11,7 @@ namespace HueApp.Domain.Clients
     {
         void SetBaseUrl(string url);
         Task<string> Link(string username, string device);
-        Task<Dictionary<string, Light>> GetLightsAsync();
+        Task<Dictionary<string, Light>> GetLightsAsync(string username);
         Task<string> SendPutCommandAsync(string requestUrlPart, string body);
     }
 }

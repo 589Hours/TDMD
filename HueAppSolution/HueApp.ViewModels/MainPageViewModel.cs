@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HueApp.Domain.Clients;
@@ -8,10 +9,10 @@ namespace HueApp.ViewModels
     public partial class MainPageViewModel : ObservableObject
     {
         private IPhilipsHueApiClient client;
-        private IPreferences preferences;
-        public MainPageViewModel(IPreferences preferences, IPhilipsHueApiClient client)
+        private ISecureStorage secureStorage;
+        public MainPageViewModel(ISecureStorage secureStorage, IPhilipsHueApiClient client)
         {
-            this.preferences = preferences;
+            this.secureStorage = secureStorage;
             this.client = client;
         }
 
@@ -30,42 +31,51 @@ namespace HueApp.ViewModels
         [ObservableProperty]
         private string entryBridgeText;
 
-        [ObservableProperty]
-        private string entryPortText;
-
         [RelayCommand]
         public void IsCheckBoxChanged()
         {
             if (CheckBoxLocalChecked == true)
             {
                 CheckedValue = false;
-                CheckedValueInverse = true;
+                CheckedValueInverse = !CheckedValue;
                 EntryBridgeText = "";
             }
             else
             {
                 CheckedValue = true;
-                CheckedValueInverse = false;
-                EntryPortText = "";
+                CheckedValueInverse = !CheckedValue;
             }
         }
 
         [RelayCommand]
         public async Task ButtonSubmitClicked()
         {
+            // Get username and set base url
             string username = EntryUsername;
-            if (CheckBoxLocalChecked == true)
+            if (CheckedValue == false)
             {
-                string url = $"http://localhost/api";
+                string url = $"http://localhost/api/";
                 client.SetBaseUrl(url);
             }
             else
             {
-                string url = $"http://{EntryBridgeText}/api";
+                string url = $"http://{EntryBridgeText}/api/";
                 client.SetBaseUrl(url);
             }
             var usernameFromLink = await client.Link(username, DeviceInfo.Platform.ToString());
-            preferences.Set("username", usernameFromLink);
+
+            // If there is an error, or something else went wrong: Prevent logging in
+            if (usernameFromLink == "")
+            {
+                var toastError = Toast.Make("Username cannot be empty!");
+                await toastError.Show();
+                return;
+            }
+            // Create username in securestorage
+            await secureStorage.SetAsync("username", usernameFromLink);
+            
+            // Navigate to LightPage
+            await Shell.Current.GoToAsync("//LightPage");
         }
     }
 }
