@@ -1,8 +1,8 @@
 using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HueApp.Domain.Clients;
-using System.Diagnostics;
 namespace HueApp.ViewModels
 {
     // All the code in this file is included in all platforms.
@@ -52,30 +52,48 @@ namespace HueApp.ViewModels
         {
             // Get username and set base url
             string username = EntryUsername;
+            string url;
             if (CheckedValue == false)
             {
-                string url = $"http://localhost/api/";
-                client.SetBaseUrl(url);
+                url = $"http://localhost/api/";
             }
             else
             {
-                string url = $"http://{EntryBridgeText}/api/";
-                client.SetBaseUrl(url);
+                url = $"http://{EntryBridgeText}/api/";   
             }
-            var usernameFromLink = await client.Link(username, DeviceInfo.Platform.ToString());
+
+            //once chosen a way to connect, set the base address
+            var usernameFromLink = await client.Link(url, username, DeviceInfo.Platform.ToString());
 
             // If there is an error, or something else went wrong: Prevent logging in
-            if (usernameFromLink == "")
+            if (usernameFromLink == "error")
             {
-                var toastError = Toast.Make("Username cannot be empty!");
-                await toastError.Show();
+                this.DisplayToastMessage("An error has occured! Perhaps the username was empty?", ToastDuration.Short, 14);
+                return;
+            } 
+            else if (usernameFromLink == "http request error" || usernameFromLink == "bridge request error")
+            {
+                this.DisplayToastMessage("The request went wrong! Please try again. Was the link button pressed?", ToastDuration.Short, 14);
                 return;
             }
+
             // Create username in securestorage
-            await secureStorage.SetAsync("username", usernameFromLink);
+            await secureStorage.SetAsync("authorisedUrl", url+usernameFromLink);
             
             // Navigate to LightPage
             await Shell.Current.GoToAsync("//LightPage");
         }
+
+        /// <summary>
+        /// Method for displaying Toast messages
+        /// </summary>
+        /// <param name="message"></param>
+        private async void DisplayToastMessage(string message, ToastDuration duration, int textSize)
+        {
+            CancellationTokenSource cancellationTokenSource = new();
+            var toastError = Toast.Make(message, duration, textSize);
+            await toastError.Show(cancellationTokenSource.Token);
+        }
+
     }
 }

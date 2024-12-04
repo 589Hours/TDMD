@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-using HueApp.Domain.Clients;
-using HueApp.Domain.Models.PhilipsLight;
-using HueApp.Infrastructure.HueApi;
-using HueApp.ViewModels;
+﻿using HueApp.ViewModels;
 
 namespace HueApp
 {
