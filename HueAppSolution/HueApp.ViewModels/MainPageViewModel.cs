@@ -73,7 +73,7 @@ namespace HueApp.ViewModels
             }
             // Create username in securestorage
             await secureStorage.SetAsync("username", usernameFromLink);
-
+            
             // Navigate to LightPage
             await Shell.Current.GoToAsync("//LightPage");
         }

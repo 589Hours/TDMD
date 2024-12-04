@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui;
 using HueApp.Domain.Clients;
 using HueApp.Infrastructure.HueApi;
 using HueApp.ViewModels;
@@ -12,6 +13,7 @@ namespace HueApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -25,6 +27,7 @@ namespace HueApp
             // Pages:
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<MainPageViewModel>();
+
             builder.Services.AddTransient<LightPage>();
             builder.Services.AddTransient<LightPageViewModel>();
 
