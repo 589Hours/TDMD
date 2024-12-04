@@ -6,7 +6,7 @@
              Loaded="LightPageLoaded">
     
     <ScrollView>
-        <ListView x:Name="ListViewLights" BackgroundColor="LightGray">
+        <ListView x:Name="ListViewLights" ItemsSource="{Binding LampIds}">
 
         </ListView>
     </ScrollView>

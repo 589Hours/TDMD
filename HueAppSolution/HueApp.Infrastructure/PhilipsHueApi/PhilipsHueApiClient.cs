@@ -5,8 +5,6 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 using HueApp.Domain.Clients;
 using HueApp.Domain.Models.PhilipsLight;
 
@@ -15,21 +13,15 @@ namespace HueApp.Infrastructure.HueApi
     public class PhilipsHueApiClient : IPhilipsHueApiClient
     {
         private HttpClient httpClient;
-        private string baseUrl;
 
         public PhilipsHueApiClient (HttpClient httpClient)
         {
             this.httpClient = httpClient;
         }
 
-        public void SetBaseUrl(string url)
+        public async Task<string> SendPutCommandAsync(string authorisedUrl, string body)
         {
-            baseUrl = url;
-        }
-
-        public async Task<string> SendPutCommandAsync(string requestUrlPart, string body)
-        {
-            var putCommand = httpClient.PutAsJsonAsync<string>(baseUrl + requestUrlPart, body);
+            var putCommand = httpClient.PutAsJsonAsync<string>(authorisedUrl, body);
             var result = putCommand.Result;
 
             result.EnsureSuccessStatusCode();
@@ -43,15 +35,19 @@ namespace HueApp.Infrastructure.HueApi
             return root;
         }
 
-        public async Task<Dictionary<string, Light>> GetLightsAsync(string username)
+        public async Task<Dictionary<string, Light>> GetLightsAsync(string authorisedUrl)
         {
             //TODO recieve URL from user OR add base url AND edit url to how its better working
             try
             {
-                var response = await httpClient.GetAsync($"{baseUrl}{username}/lights");
+                var fullUrl = $"{authorisedUrl}/lights";
+                Debug.WriteLine(fullUrl);
+                var response = await httpClient.GetAsync(fullUrl);
                 response.EnsureSuccessStatusCode();
 
                 var responseModel = await response.Content.ReadAsStringAsync();
+
+                Debug.WriteLine(responseModel);
 
                 var root = GetJsonRootElement(responseModel);
 
@@ -73,11 +69,11 @@ namespace HueApp.Infrastructure.HueApi
             }
         }
 
-        public async Task<string> Link(string username, string device)
+        public async Task<string> Link(string apiUrl, string username, string device)
         {
             try
             {
-                var response = await httpClient.PostAsJsonAsync(baseUrl, new
+                var response = await httpClient.PostAsJsonAsync(apiUrl, new
                 {
                     devicetype = $"HueApp#{device} {username}"
                 });
@@ -97,7 +93,8 @@ namespace HueApp.Infrastructure.HueApi
                 return "";
             } 
             catch (Exception e)
-            { 
+            {
+                Debug.Write(e);
                 return "";
             }
         }
