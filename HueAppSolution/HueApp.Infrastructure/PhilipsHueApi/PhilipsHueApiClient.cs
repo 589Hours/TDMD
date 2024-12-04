@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
 using HueApp.Domain.Clients;
 using HueApp.Domain.Models.PhilipsLight;
@@ -19,9 +15,9 @@ namespace HueApp.Infrastructure.HueApi
             this.httpClient = httpClient;
         }
 
-        public async Task<string> SendPutCommandAsync(string authorisedUrl, string body)
+        public async Task<string> SendPutCommandAsync(string putUrl, string body)
         {
-            var putCommand = httpClient.PutAsJsonAsync<string>(authorisedUrl, body);
+            var putCommand = httpClient.PutAsJsonAsync<string>(putUrl, body);
             var result = putCommand.Result;
 
             result.EnsureSuccessStatusCode();
@@ -37,7 +33,6 @@ namespace HueApp.Infrastructure.HueApi
 
         public async Task<Dictionary<string, Light>> GetLightsAsync(string authorisedUrl)
         {
-            //TODO recieve URL from user OR add base url AND edit url to how its better working
             try
             {
                 var fullUrl = $"{authorisedUrl}/lights";
@@ -92,10 +87,20 @@ namespace HueApp.Infrastructure.HueApi
                 }
                 return "";
             } 
+            catch (UriFormatException ex)
+            {
+                Debug.Write(ex);
+                return "bridge request error";
+            } 
+            catch (HttpRequestException exc)
+            {
+                Debug.Write(exc);
+                return "http request error";
+            }
             catch (Exception e)
             {
                 Debug.Write(e);
-                return "";
+                return "error";
             }
         }
     }
