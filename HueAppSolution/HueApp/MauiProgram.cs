@@ -22,7 +22,7 @@ namespace HueApp
             //TODO inloggen/account maken voor authorisatie?
             builder.Services.AddHttpClient<IPhilipsHueApiClient, PhilipsHueApiClient>();
 
-            builder.Services.AddSingleton<IPreferences>(o => Preferences.Default);
+            builder.Services.AddSingleton<ISecureStorage>(o => SecureStorage.Default);
 
             //TODO uncomment wanneer ViewModel is opgezet.
             builder.Services.AddTransient<MainPage>();

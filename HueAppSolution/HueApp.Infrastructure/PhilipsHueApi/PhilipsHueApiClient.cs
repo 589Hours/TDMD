@@ -43,20 +43,19 @@ namespace HueApp.Infrastructure.HueApi
             return root;
         }
 
-        public async Task<Dictionary<string, Light>> GetLightsAsync()
+        public async Task<Dictionary<string, Light>> GetLightsAsync(string username)
         {
             //TODO recieve URL from user OR add base url AND edit url to how its better working
             try
             {
-                var response = await httpClient.GetAsync("newdeveloper");
+                var response = await httpClient.GetAsync($"{baseUrl}{username}/lights");
                 response.EnsureSuccessStatusCode();
 
                 var responseModel = await response.Content.ReadAsStringAsync();
 
                 var root = GetJsonRootElement(responseModel);
-                JsonElement lightsElement = root.GetProperty("lights");
 
-                var lightDictionary = lightsElement.Deserialize<Dictionary<string, Light>>();
+                var lightDictionary = root.Deserialize<Dictionary<string, Light>>();
 
                 foreach (var light in lightDictionary)
                 {

@@ -10,10 +10,8 @@ namespace HueApp.ViewModels
     public partial class LightPageViewModel
     {
         private IPhilipsHueApiClient client;
-        private IPreferences preferences;
-        public LightPageViewModel(IPreferences preferences, IPhilipsHueApiClient client)
+        public LightPageViewModel(IPhilipsHueApiClient client)
         {
-            this.preferences = preferences;
             this.client = client;
         }
 

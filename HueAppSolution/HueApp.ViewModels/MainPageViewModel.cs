@@ -8,10 +8,10 @@ namespace HueApp.ViewModels
     public partial class MainPageViewModel : ObservableObject
     {
         private IPhilipsHueApiClient client;
-        private IPreferences preferences;
-        public MainPageViewModel(IPreferences preferences, IPhilipsHueApiClient client)
+        private ISecureStorage secureStorage;
+        public MainPageViewModel(ISecureStorage secureStorage, IPhilipsHueApiClient client)
         {
-            this.preferences = preferences;
+            this.secureStorage = secureStorage;
             this.client = client;
         }
 
@@ -54,12 +54,12 @@ namespace HueApp.ViewModels
             string username = EntryUsername;
             if (CheckedValue == false)
             {
-                string url = $"http://localhost/api";
+                string url = $"http://localhost/api/";
                 client.SetBaseUrl(url);
             }
             else
             {
-                string url = $"http://{EntryBridgeText}/api";
+                string url = $"http://{EntryBridgeText}/api/";
                 client.SetBaseUrl(url);
             }
             var usernameFromLink = await client.Link(username, DeviceInfo.Platform.ToString());
