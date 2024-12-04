@@ -55,24 +55,6 @@
                 HeightRequest="50" 
                 BackgroundColor="LightGray" />
 
-            <Label
-                x:Name="LabelPort"
-                Text="Enter Port number:"
-                IsEnabled="{Binding CheckedValueInverse}"
-                FontSize="Large"
-                HorizontalOptions="Center"
-                HeightRequest="50" />
-
-            <Entry 
-                x:Name="EntryPort"  
-                Text="{Binding EntryPortText}" 
-                IsEnabled="{Binding CheckedValueInverse}" 
-                FontSize="Medium" 
-                HorizontalOptions="Center" 
-                WidthRequest="350" 
-                HeightRequest="50" 
-                BackgroundColor="LightGray" />
-
             <Button
                 x:Name="ButtonSubmit"
                 Text="Login" 
