@@ -5,11 +5,11 @@
              Title="LightDetailPage">
 
     <ScrollView>
-        <VerticalStackLayout Spacing="10">
-
-            <Button Text="Go Back" BackgroundColor="LightGray" Command="{Binding BackCommand}" WidthRequest="100" HorizontalOptions="Start" />
-
-            <Button Text="{Binding LightSwitchText}" BackgroundColor="{Binding LightSwitchButtonColor}" Command="{Binding LightSwitchCommand}" WidthRequest="350"  />
+        <VerticalStackLayout Spacing="15" HorizontalOptions="Center">
+     
+            <Label Text="{Binding LightInfo}" FontSize="Header" WidthRequest="350" />
+            
+            <Button Text="{Binding LightSwitchText}" BackgroundColor="{Binding LightSwitchButtonColor}" Command="{Binding LightSwitchCommand}" WidthRequest="350" FontSize="Medium" />
 
             <Border
                 HeightRequest="150" 
@@ -31,7 +31,9 @@
             <Label Text="Saturation" WidthRequest="160" FontSize="Large" />
             <Slider Minimum="0" Maximum="254" Value="{Binding Saturation}" ValueChanged="SaturationSlider_ValueChanged" WidthRequest="350" />
             <Label Text="{Binding Saturation, StringFormat='Saturation: {0:F0}'}" WidthRequest="100" />
-            
+
+            <Button Text="Go Back" BackgroundColor="LightGray" Command="{Binding BackCommand}" WidthRequest="350" FontSize="Medium" />
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -19,6 +19,9 @@ namespace HueApp.ViewModels
         }
 
         [ObservableProperty]
+        private string lightInfo;
+
+        [ObservableProperty]
         private string lightSwitchText;
 
         [ObservableProperty]
@@ -57,6 +60,7 @@ namespace HueApp.ViewModels
                 await Shell.Current.GoToAsync("//LightPage");
                 return;
             }
+            LightInfo = $"Info Of Light: {receivedLight.name}";
             var lightState = receivedLight.state;
             isLightOn = lightState.on;
             Hue = lightState.hue;
