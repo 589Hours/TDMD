@@ -6,9 +6,9 @@
              Loaded="LightPageLoaded">
 
     <ScrollView>
-        <VerticalStackLayout>
+        <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
             
-            <Label Text="Availible Lights:" FontSize="Header" HorizontalOptions="Center" />
+            <Label Text="Availible Lights:" FontSize="Header" WidthRequest="330" />
             <ListView x:Name="ListViewLights" ItemsSource="{Binding LampIds}" ItemSelected="ListViewLights_ItemSelected" WidthRequest="350" />
             
         </VerticalStackLayout>
