@@ -4,10 +4,13 @@
              x:Class="HueApp.LightPage"
              Title="LightPage"
              Loaded="LightPageLoaded">
-    
-    <ScrollView>
-        <ListView x:Name="ListViewLights" ItemsSource="{Binding LampIds}">
 
-        </ListView>
+    <ScrollView>
+        <VerticalStackLayout>
+            
+            <Label Text="Availible Lights:" FontSize="Header" />
+            <ListView x:Name="ListViewLights" ItemsSource="{Binding LampIds}" ItemSelected="ListViewLights_ItemSelected" />
+            
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

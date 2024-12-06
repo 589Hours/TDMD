@@ -16,12 +16,14 @@ public partial class LightPage : ContentPage
     {
         // Get request for lights
         await lightPageViewModel.FetchLights();
-        // For each light, create an element and add to ListViewLight
-        BoxView boxToAdd = new();
-        Label labelTest = new();
-        labelTest.Text = "Hoi!";
-        boxToAdd.AddLogicalChild(labelTest);
-        ListViewLights.AddLogicalChild(boxToAdd);
+    }
 
+    private async void ListViewLights_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+    {
+        if (BindingContext is LightPageViewModel viewModel)
+        {
+            string item = e.SelectedItem as string;
+            await viewModel.IsItemSelected(item);
+        }
     }
 }
