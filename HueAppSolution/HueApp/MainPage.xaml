@@ -19,6 +19,7 @@
                 x:Name="EntryUsername" 
                 FontSize="Medium" 
                 Text="{Binding EntryUsername}" 
+                TextColor="Black"
                 HorizontalOptions="Center" 
                 WidthRequest="350" 
                 HeightRequest="50" 
@@ -50,6 +51,7 @@
                 Text="{Binding EntryBridgeText}" 
                 IsEnabled="{Binding CheckedValue}"
                 FontSize="Medium" 
+                TextColor="Black"
                 HorizontalOptions="Center" 
                 WidthRequest="350" 
                 HeightRequest="50" 
@@ -63,7 +65,7 @@
                 Command="{Binding ButtonSubmitClickedCommand}"
                 HorizontalOptions="Center"
                 WidthRequest="200"
-                HeightRequest="50"
+                HeightRequest="75"
                 BackgroundColor="DarkGray" />
 
         </VerticalStackLayout>
