@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HueApp.Domain.Models.PhilipsLight;
+﻿using HueApp.Domain.Models.PhilipsLight;
 
 namespace HueApp.Domain.Clients
 {
@@ -11,6 +6,6 @@ namespace HueApp.Domain.Clients
     {
         Task<string> Link(string apiUrl,string username, string device);
         Task<Dictionary<string, Light>> GetLightsAsync(string authorizedUrl);
-        Task<string> SendPutCommandAsync(string putUrl, string body);
+        Task<string> SendPutCommandAsync(string putUrl, object body);
     }
 }

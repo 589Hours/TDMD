@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HueApp.LightDetailPage"
+             Title="LightDetailPage">
+
+    <ScrollView>
+        <VerticalStackLayout>
+            
+            <Button Text="Go Back" BackgroundColor="Gray" Command="{Binding BackCommand}" />
+
+            <Button Text="{Binding LightSwitchText}" BackgroundColor="{Binding LightSwitchButtonColor}" Command="{Binding LightSwitchCommand}" />
+
+            <!-- Circle (by ChatGPT) -->
+            <Border
+                HeightRequest="150" 
+                WidthRequest="150"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                BackgroundColor="{Binding CircleColor}" />
+
+            <!-- Hue range from https://developers.meethue.com/develop/get-started-2/ -->
+            <Label Text="Hue" />
+            <Slider Minimum="0" Maximum="65535" Value="{Binding Hue}" ValueChanged="HueSlider_ValueChanged" />
+            <Label Text="{Binding Hue, StringFormat='Hue: {0:F0}'}" />
+
+            <!-- Brightness and Saturation also from philips getstarted website -->
+            <Label Text="Brightness" />
+            <Slider Minimum="0" Maximum="254" Value="{Binding Brightness}" ValueChanged="BrightnessSlider_ValueChanged" />
+            <Label Text="{Binding Brightness, StringFormat='Brightness: {0:F0}'}" />
+
+            <Label Text="Saturation" />
+            <Slider Minimum="0" Maximum="254" Value="{Binding Saturation}" ValueChanged="SaturationSlider_ValueChanged" />
+            <Label Text="{Binding Saturation, StringFormat='Saturation: {0:F0}'}" />
+            
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

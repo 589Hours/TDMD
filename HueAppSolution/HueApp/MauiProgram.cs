@@ -31,6 +31,9 @@ namespace HueApp
             builder.Services.AddTransient<LightPage>();
             builder.Services.AddTransient<LightPageViewModel>();
 
+            builder.Services.AddTransient<LightDetailPage>();
+            builder.Services.AddTransient<LightDetailPageViewModel>();
+
             // Debug:
 #if DEBUG
             builder.Logging.AddDebug();

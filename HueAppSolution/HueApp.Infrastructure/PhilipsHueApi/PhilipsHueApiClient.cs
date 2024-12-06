@@ -15,9 +15,9 @@ namespace HueApp.Infrastructure.HueApi
             this.httpClient = httpClient;
         }
 
-        public async Task<string> SendPutCommandAsync(string putUrl, string body)
+        public async Task<string> SendPutCommandAsync(string putUrl, object body)
         {
-            var putCommand = httpClient.PutAsJsonAsync<string>(putUrl, body);
+            var putCommand = httpClient.PutAsJsonAsync(putUrl, body);
             var result = putCommand.Result;
 
             result.EnsureSuccessStatusCode();
@@ -41,21 +41,14 @@ namespace HueApp.Infrastructure.HueApi
                 response.EnsureSuccessStatusCode();
 
                 var responseModel = await response.Content.ReadAsStringAsync();
-
-                Debug.WriteLine(responseModel);
-
                 var root = GetJsonRootElement(responseModel);
-
                 var lightDictionary = root.Deserialize<Dictionary<string, Light>>();
 
                 foreach (var light in lightDictionary)
                 {
                     string key = light.Key;
                     Light lightData = light.Value;
-
-                    Debug.WriteLine($"Key: {key} with data: \n{lightData}");
                 }
-                
                 return lightDictionary;
             }
             catch (Exception e)
