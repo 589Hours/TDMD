@@ -1,6 +1,6 @@
 ﻿using HueApp.Domain.Clients;
 using HueApp.Domain.Models.PhilipsLight;
-using HueApp.Infrastructure.HueApi;
+using HueApp.Infrastructure.PhilipsHueApi;
 using Moq;
 
 namespace HueApp.DomainTests
@@ -26,7 +26,7 @@ namespace HueApp.DomainTests
                 { "1", testLight }
             };
             httpMock.Setup(mock => mock.GetLightsAsync("")).ReturnsAsync(testResult);
-            PhilipsHueApiClient = new 
+            PhilipsHueApiClient a = new 
 
             Assert.AreEqual(testLight, httpMock.Object);
         }

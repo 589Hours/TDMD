@@ -4,7 +4,7 @@ using System.Text.Json;
 using HueApp.Domain.Clients;
 using HueApp.Domain.Models.PhilipsLight;
 
-namespace HueApp.Infrastructure.HueApi
+namespace HueApp.Infrastructure.PhilipsHueApi
 {
     public class PhilipsHueApiClient : IPhilipsHueApiClient
     {
