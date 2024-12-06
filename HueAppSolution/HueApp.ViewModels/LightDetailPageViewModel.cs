@@ -62,7 +62,7 @@ namespace HueApp.ViewModels
             Hue = lightState.hue;
             Brightness = lightState.bri;
             Saturation = lightState.sat;
-            CircleColor = ColorFromHSV(Hue, Saturation, Brightness);
+            CircleColor = Color.FromHsla(Hue / 65535, Saturation / 255, (Brightness / 255) / 2);
             SwitchButtonText();
         }
 
@@ -97,7 +97,7 @@ namespace HueApp.ViewModels
         {
             var url = await GetLightUrl();
             if (string.IsNullOrEmpty(url)) return;
-            CircleColor = ColorFromHSV(Hue, Saturation, Brightness);
+            CircleColor = Color.FromHsla(Hue / 65535, Saturation / 255, (Brightness / 255) / 2);
             await client.SendPutCommandAsync(url, new
             {
                 hue = (int) Hue
@@ -109,7 +109,7 @@ namespace HueApp.ViewModels
         {
             var url = await GetLightUrl();
             if (string.IsNullOrEmpty(url)) return;
-            CircleColor = ColorFromHSV(Hue, Saturation, Brightness);
+            CircleColor = Color.FromHsla(Hue / 65535, Saturation / 255, (Brightness / 255) / 2);
             await client.SendPutCommandAsync(url, new
             {
                 bri = (int) Brightness
@@ -121,7 +121,7 @@ namespace HueApp.ViewModels
         {
             var url = await GetLightUrl();
             if (string.IsNullOrEmpty(url)) return;
-            CircleColor = ColorFromHSV(Hue, Saturation, Brightness);
+            CircleColor = Color.FromHsla(Hue / 65535, Saturation / 255, (Brightness / 255) / 2);
             await client.SendPutCommandAsync(url, new
             {
                 sat = (int) Saturation
@@ -145,38 +145,5 @@ namespace HueApp.ViewModels
             }
                 
         }
-
-        /// <summary>
-        /// From StackOverflow: https://stackoverflow.com/questions/1335426/is-there-a-built-in-c-net-system-api-for-hsv-to-rgb
-        /// </summary>
-        /// <param name="hue"></param>
-        /// <param name="saturation"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static Color ColorFromHSV(double hue, double saturation, double value)
-        {
-            int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
-            double f = hue / 60 - Math.Floor(hue / 60);
-
-            value = value * 255;
-            int v = Convert.ToInt32(value);
-            int p = Convert.ToInt32(value * (1 - saturation));
-            int q = Convert.ToInt32(value * (1 - f * saturation));
-            int t = Convert.ToInt32(value * (1 - (1 - f) * saturation));
-
-            if (hi == 0)
-                return Color.FromRgba(v, t, p, 255);
-            else if (hi == 1)
-                return Color.FromRgba(q, v, p, 255);
-            else if (hi == 2)
-                return Color.FromRgba(p, v, t, 255);
-            else if (hi == 3)
-                return Color.FromRgba(p, q, v, 255);
-            else if (hi == 4)
-                return Color.FromRgba(t, p, v, 255);
-            else
-                return Color.FromRgba(v, p, q,255);
-        }
-
     }
 }

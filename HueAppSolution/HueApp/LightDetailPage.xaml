@@ -5,13 +5,12 @@
              Title="LightDetailPage">
 
     <ScrollView>
-        <VerticalStackLayout>
-            
-            <Button Text="Go Back" BackgroundColor="Gray" Command="{Binding BackCommand}" />
+        <VerticalStackLayout Spacing="10">
 
-            <Button Text="{Binding LightSwitchText}" BackgroundColor="{Binding LightSwitchButtonColor}" Command="{Binding LightSwitchCommand}" />
+            <Button Text="Go Back" BackgroundColor="LightGray" Command="{Binding BackCommand}" WidthRequest="100" HorizontalOptions="Start" />
 
-            <!-- Circle (by ChatGPT) -->
+            <Button Text="{Binding LightSwitchText}" BackgroundColor="{Binding LightSwitchButtonColor}" Command="{Binding LightSwitchCommand}" WidthRequest="350"  />
+
             <Border
                 HeightRequest="150" 
                 WidthRequest="150"
@@ -20,18 +19,18 @@
                 BackgroundColor="{Binding CircleColor}" />
 
             <!-- Hue range from https://developers.meethue.com/develop/get-started-2/ -->
-            <Label Text="Hue" />
-            <Slider Minimum="0" Maximum="65535" Value="{Binding Hue}" ValueChanged="HueSlider_ValueChanged" />
-            <Label Text="{Binding Hue, StringFormat='Hue: {0:F0}'}" />
+            <Label Text="Hue" WidthRequest="65" FontSize="Large" />
+            <Slider Minimum="0" Maximum="65535" Value="{Binding Hue}" ValueChanged="HueSlider_ValueChanged" WidthRequest="350"  />
+            <Label Text="{Binding Hue, StringFormat='Hue: {0:F0}'}" WidthRequest="75"  />
 
             <!-- Brightness and Saturation also from philips getstarted website -->
-            <Label Text="Brightness" />
-            <Slider Minimum="0" Maximum="254" Value="{Binding Brightness}" ValueChanged="BrightnessSlider_ValueChanged" />
-            <Label Text="{Binding Brightness, StringFormat='Brightness: {0:F0}'}" />
+            <Label Text="Brightness" WidthRequest="160" FontSize="Large" />
+            <Slider Minimum="0" Maximum="254" Value="{Binding Brightness}" ValueChanged="BrightnessSlider_ValueChanged" WidthRequest="350" />
+            <Label Text="{Binding Brightness, StringFormat='Brightness: {0:F0}'}" WidthRequest="105" />
 
-            <Label Text="Saturation" />
-            <Slider Minimum="0" Maximum="254" Value="{Binding Saturation}" ValueChanged="SaturationSlider_ValueChanged" />
-            <Label Text="{Binding Saturation, StringFormat='Saturation: {0:F0}'}" />
+            <Label Text="Saturation" WidthRequest="160" FontSize="Large" />
+            <Slider Minimum="0" Maximum="254" Value="{Binding Saturation}" ValueChanged="SaturationSlider_ValueChanged" WidthRequest="350" />
+            <Label Text="{Binding Saturation, StringFormat='Saturation: {0:F0}'}" WidthRequest="100" />
             
         </VerticalStackLayout>
     </ScrollView>
