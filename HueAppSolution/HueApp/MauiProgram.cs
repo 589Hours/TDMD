@@ -1,6 +1,6 @@
 using CommunityToolkit.Maui;
 using HueApp.Domain.Clients;
-using HueApp.Infrastructure.HueApi;
+using HueApp.Infrastructure.PhilipsHueApi;
 using HueApp.ViewModels;
 using Microsoft.Extensions.Logging;
 
