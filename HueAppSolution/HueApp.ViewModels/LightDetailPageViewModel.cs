@@ -134,10 +134,16 @@ namespace HueApp.ViewModels
         private void SwitchButtonText()
         {
             if (isLightOn == true)
+            {
                 LightSwitchText = "Turn Light Off";
-                
+                LightSwitchButtonColor = Color.FromRgb(0, 255, 0);
+            }
             else
+            {
                 LightSwitchText = "Turn Light On";
+                LightSwitchButtonColor = Color.FromRgb(255, 0, 0);
+            }
+                
         }
 
         /// <summary>
