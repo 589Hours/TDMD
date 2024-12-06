@@ -22,7 +22,6 @@ namespace HueApp.ViewModels
         [ObservableProperty]
         private ObservableCollection<string> lampIds = new();
 
-
         [RelayCommand]
         public async Task IsItemSelected(string selectedItem)
         {
@@ -41,6 +40,9 @@ namespace HueApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// Retrieves all of the lights and adds them to a dictionary
+        /// </summary>
         public async Task FetchLights()
         {
             // Retrieve lights
