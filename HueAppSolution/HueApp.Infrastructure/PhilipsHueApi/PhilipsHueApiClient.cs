@@ -1,50 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 using HueApp.Domain.Clients;
 using HueApp.Domain.Models.PhilipsLight;
 
-namespace HueApp.Infrastructure.HueApi
+namespace HueApp.Infrastructure.PhilipsHueApi
 {
     public class PhilipsHueApiClient : IPhilipsHueApiClient
-
     {
         private HttpClient httpClient;
+
         public PhilipsHueApiClient (HttpClient httpClient)
         {
             this.httpClient = httpClient;
         }
 
-        public async Task<Dictionary<string, Light>> GetLightsAsync()
+        public async Task<string> SendPutCommandAsync(string putUrl, object body)
         {
-            //TODO recieve URL from user OR add base url AND edit url to how its better working
+            var putCommand = httpClient.PutAsJsonAsync(putUrl, body);
+            var result = putCommand.Result;
+
+            result.EnsureSuccessStatusCode();
+            return await result.Content.ReadAsStringAsync();
+        }
+
+        public JsonElement GetJsonRootElement(string response)
+        {
+            JsonDocument doc = JsonDocument.Parse(response);
+            JsonElement root = doc.RootElement;
+            return root;
+        }
+
+        public async Task<Dictionary<string, Light>> GetLightsAsync(string authorisedUrl)
+        {
             try
             {
-                var response = await httpClient.GetAsync("http://localhost:80/api/newdeveloper");
+                var fullUrl = $"{authorisedUrl}/lights";
+                Debug.WriteLine(fullUrl);
+                var response = await httpClient.GetAsync(fullUrl);
                 response.EnsureSuccessStatusCode();
 
                 var responseModel = await response.Content.ReadAsStringAsync();
-                using JsonDocument doc = JsonDocument.Parse(responseModel);
-                JsonElement root = doc.RootElement;
-
-                JsonElement lightsElement = root.GetProperty("lights");
-
-                var lightDictionary = lightsElement.Deserialize<Dictionary<string, Light>>();
+                var root = GetJsonRootElement(responseModel);
+                var lightDictionary = root.Deserialize<Dictionary<string, Light>>();
 
                 foreach (var light in lightDictionary)
                 {
                     string key = light.Key;
                     Light lightData = light.Value;
-
-                    Debug.WriteLine($"Key: {key} with data: \n{lightData}");
                 }
-                
                 return lightDictionary;
             }
             catch (Exception e)
@@ -53,9 +57,44 @@ namespace HueApp.Infrastructure.HueApi
             }
         }
 
-        public async Task SendPutCommandAsync()
+        public async Task<string> Link(string apiUrl, string username, string device)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response = await httpClient.PostAsJsonAsync(apiUrl, new
+                {
+                    devicetype = $"HueApp#{device} {username}"
+                });
+                response.EnsureSuccessStatusCode();
+                var json = GetJsonRootElement(await response.Content.ReadAsStringAsync());
+
+                var responsebody = json[0];
+                if (responsebody.TryGetProperty("success", out JsonElement succesElement))
+                {
+                    if (succesElement.TryGetProperty("username", out JsonElement usernameProperty))
+                    {
+                        var usernameFromLink = usernameProperty.GetString();
+                        return usernameFromLink;
+                    }
+                    return "";
+                }
+                return "";
+            } 
+            catch (UriFormatException ex)
+            {
+                Debug.Write(ex);
+                return "bridge request error";
+            } 
+            catch (HttpRequestException exc)
+            {
+                Debug.Write(exc);
+                return "http request error";
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e);
+                return "error";
+            }
         }
     }
 }

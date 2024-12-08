@@ -1,5 +1,6 @@
-﻿using HueApp.Domain.Clients;
-using HueApp.Infrastructure.HueApi;
+using CommunityToolkit.Maui;
+using HueApp.Domain.Clients;
+using HueApp.Infrastructure.PhilipsHueApi;
 using HueApp.ViewModels;
 using Microsoft.Extensions.Logging;
 
@@ -12,22 +13,30 @@ namespace HueApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            //TODO wel of geen base URL? Afhankelijk van ip-adres dus moeilijk misschien aan user overlaten?
-            //TODO inloggen/account maken voor authorisatie?
-            builder.Services.AddHttpClient<IPhilipsHueApiClient, PhilipsHueApiClient>();
+            // Services:
+            builder.Services.AddHttpClient<IPhilipsHueApiClient, PhilipsHueApiClient>(); // Client
+            builder.Services.AddSingleton<ISecureStorage>(o => SecureStorage.Default); // Secure Storage
 
-            //TODO uncomment wanneer ViewModel is opgezet.
-            //builder.Services.AddTransient<MainPage>();
-            //builder.Services.AddTransient<MainPageViewModel>();
+            // Pages:
+            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<MainPageViewModel>();
 
+            builder.Services.AddTransient<LightPage>();
+            builder.Services.AddTransient<LightPageViewModel>();
+
+            builder.Services.AddTransient<LightDetailPage>();
+            builder.Services.AddTransient<LightDetailPageViewModel>();
+
+            // Debug:
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

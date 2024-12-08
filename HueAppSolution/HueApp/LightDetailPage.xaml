@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HueApp.LightDetailPage"
+             Title="LightDetailPage">
+
+    <ScrollView HorizontalOptions="Center">
+        <VerticalStackLayout Spacing="15">
+     
+            <Label Text="{Binding LightInfo}" FontSize="Header" WidthRequest="350" />
+            
+            <Button Text="{Binding LightSwitchText}" BackgroundColor="{Binding LightSwitchButtonColor}" Command="{Binding LightSwitchCommand}" WidthRequest="350" FontSize="Medium" />
+
+            <Border
+                HeightRequest="150" 
+                WidthRequest="150"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                BackgroundColor="{Binding CircleColor}" />
+
+            <!-- Hue range from https://developers.meethue.com/develop/get-started-2/ -->
+            <Label Text="Hue" WidthRequest="65" FontSize="Large" />
+            <Slider Minimum="0" Maximum="65535" Value="{Binding Hue}" ValueChanged="HueSlider_ValueChanged" WidthRequest="350"  />
+            <Label Text="{Binding Hue, StringFormat='Hue: {0:F0}'}" WidthRequest="75"  />
+
+            <!-- Brightness and Saturation also from philips getstarted website -->
+            <Label Text="Brightness" WidthRequest="160" FontSize="Large" />
+            <Slider Minimum="0" Maximum="254" Value="{Binding Brightness}" ValueChanged="BrightnessSlider_ValueChanged" WidthRequest="350" />
+            <Label Text="{Binding Brightness, StringFormat='Brightness: {0:F0}'}" WidthRequest="105" />
+
+            <Label Text="Saturation" WidthRequest="160" FontSize="Large" />
+            <Slider Minimum="0" Maximum="254" Value="{Binding Saturation}" ValueChanged="SaturationSlider_ValueChanged" WidthRequest="350" />
+            <Label Text="{Binding Saturation, StringFormat='Saturation: {0:F0}'}" WidthRequest="100" />
+
+            <Button Text="Go Back" BackgroundColor="LightGray" Command="{Binding BackCommand}" WidthRequest="350" FontSize="Medium" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
