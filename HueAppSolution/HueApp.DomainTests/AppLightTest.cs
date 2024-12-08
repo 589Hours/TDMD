@@ -98,5 +98,26 @@ namespace HueApp.DomainTests
             mockClient.Verify(client => client.Link(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
             Console.WriteLine("Finished test: Api_ShouldNotConnect_WhenBridgeIpIsWrong"); // Log End of Test
         }
+
+        //Happy test for put command
+        [TestMethod]
+        public async Task PutCommand_ShouldBeVerified_WhenBeingCalled()
+        {
+            Console.WriteLine("Started test: PutCommand_ShouldBeVerified_WhenBeingCalled");
+            string expectedOutput = "success";
+
+            //setup mock
+            object testBody = new { on = true };
+            mockClient.Setup(mock => mock.SendPutCommandAsync("", testBody)).ReturnsAsync("success");
+
+            //use function
+            var result = await mockClient.Object.SendPutCommandAsync("", testBody);
+
+            //Assert Result and Verify method call
+            Console.WriteLine($"Result from putcommand: {result}");
+            Assert.AreEqual(expectedOutput, result);
+            mockClient.Verify(client => client.SendPutCommandAsync("", testBody), Times.Once);
+            Console.WriteLine("Finished test: PutCommand_ShouldBeVerified_WhenBeingCalled");
+        }
     }
 }
