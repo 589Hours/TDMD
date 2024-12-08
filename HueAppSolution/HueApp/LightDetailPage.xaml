@@ -4,8 +4,8 @@
              x:Class="HueApp.LightDetailPage"
              Title="LightDetailPage">
 
-    <ScrollView>
-        <VerticalStackLayout Spacing="15" HorizontalOptions="Center">
+    <ScrollView HorizontalOptions="Center">
+        <VerticalStackLayout Spacing="15">
      
             <Label Text="{Binding LightInfo}" FontSize="Header" WidthRequest="350" />
             

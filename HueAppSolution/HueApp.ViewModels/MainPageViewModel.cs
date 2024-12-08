@@ -52,18 +52,23 @@ namespace HueApp.ViewModels
         {
             // Get username and set base url
             string username = EntryUsername;
+            // Get current device
+            string device = DeviceInfo.Platform.ToString();
             string url;
             if (CheckedValue == false)
             {
                 url = $"http://localhost/api/";
+                // Differentiate between Windows and Android-emulator devices
+                if (device == "Android")
+                    url = $"http://10.0.2.2/api/";
             }
             else
             {
                 url = $"http://{EntryBridgeText}/api/";   
             }
 
-            //once chosen a way to connect, set the base address
-            var usernameFromLink = await client.Link(url, username, DeviceInfo.Platform.ToString());
+            // Once chosen a way to connect, set the base address
+            var usernameFromLink = await client.Link(url, username, device);
 
             // If there is an error, or something else went wrong: Prevent logging in
             if (usernameFromLink == "error")
@@ -71,7 +76,7 @@ namespace HueApp.ViewModels
                 this.DisplayToastMessage("An error has occured! Perhaps the username was empty?", ToastDuration.Short, 14);
                 return;
             } 
-            else if (usernameFromLink == "http request error" || usernameFromLink == "bridge request error")
+            else if (usernameFromLink == "http request error" || usernameFromLink == "bridge request error" || usernameFromLink == "")
             {
                 this.DisplayToastMessage("The request went wrong! Please try again. Was the link button pressed?", ToastDuration.Short, 14);
                 return;
