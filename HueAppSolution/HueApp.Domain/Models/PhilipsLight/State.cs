@@ -13,13 +13,5 @@ namespace HueApp.Domain.Models.PhilipsLight
         public int bri { get; set; }
         public int hue { get; set; }
         public int sat { get; set; }
-
-        public override string ToString()
-        {
-            return $"On: {on}\n" +
-                   $"Brightness: {bri}\n" +
-                   $"Hue: {hue}\n" +
-                   $"Saturation: {sat}\n";
-        }
     }
 }
