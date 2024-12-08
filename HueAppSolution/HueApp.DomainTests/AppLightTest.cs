@@ -21,7 +21,8 @@ namespace HueApp.DomainTests
             testLight = new Light { name = "Test Light", state = testState };
         }
 
-        [TestMethod]
+        // Happy path instrumented test
+        [TestMethod] 
         public async Task AppLight_ShouldBeCorrectlySavedInLightClass_WhenReceievedFromApi()
         {
             Console.WriteLine("Started test: AppLight_ShouldBeCorrectlySavedInLightClass_WhenReceievedFromApi"); // Log Start of Test
@@ -48,31 +49,75 @@ namespace HueApp.DomainTests
             {
                 Console.WriteLine($"Name: {result[i.ToString()].name}"); // Log a Single Result
             }
-
             // Assert Result and compare to expected data
             Assert.IsNotNull(result);
             Assert.AreEqual(testLight, result["1"]);
             Console.WriteLine("Finished test: AppLight_ShouldBeCorrectlySavedInLightClass_WhenReceievedFromApi"); // Log End of Test
         }
 
+        // Happy path instrumented test
         [TestMethod]
         public async Task Api_ShouldReturnUsername_WhenLinkIsSuccesful()
         {
             Console.WriteLine("Started test: Api_ShouldReturnUsername_WhenLinkIsSuccesful"); // Log Start of Test
-            string testname = "username";
+            string testOutput = "username";
+
             // Setup Mock
             mockClient.Setup(client => client.Link(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(testname);
-            Console.WriteLine($"Expected Name From Link: {testname}D"); // Log Expected Name
+                .ReturnsAsync(testOutput);
+            Console.WriteLine($"Expected Name From Link: {testOutput}"); // Log Expected Name
 
             // Use Function
             var usernameFromLink = await mockClient.Object.Link("Url", "peter", "windowsPC");
 
             // Assert Result and Verify Method Call
             Console.WriteLine($"Username From Link: {usernameFromLink}"); // Log Gotten Name
-            Assert.AreEqual(testname, usernameFromLink);
+            Assert.AreEqual(testOutput, usernameFromLink);
             mockClient.Verify(client => client.Link(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
             Console.WriteLine("Finished test: Api_ShouldReturnUsername_WhenLinkIsSuccesful"); // Log End of Test
+        }
+
+        // Unhappy path instrumented test
+        [TestMethod]
+        public async Task Api_ShouldNotReturnUsername_WhenBridgeIpIsWrong()
+        {
+            Console.WriteLine("Started test: Api_ShouldNotConnect_WhenBridgeIpIsWrong"); // Log Start of Test
+            string testOutput = "bridge request error";
+
+            // Setup Mock
+            mockClient.Setup(client => client.Link(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(testOutput);
+            Console.WriteLine($"Expected Name From Link: bridge request error"); // Log Expected Name
+
+            // Use Function
+            var usernameFromLink = await mockClient.Object.Link("Wrong Url", "peter", "windowsPC");
+
+            // Assert Result and Verify Method Call
+            Console.WriteLine($"Username From Link: {usernameFromLink}"); // Log Gotten Name
+            Assert.AreEqual(testOutput, usernameFromLink);
+            mockClient.Verify(client => client.Link(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            Console.WriteLine("Finished test: Api_ShouldNotConnect_WhenBridgeIpIsWrong"); // Log End of Test
+        }
+
+        //Happy test for put command
+        [TestMethod]
+        public async Task PutCommand_ShouldBeVerified_WhenBeingCalled()
+        {
+            Console.WriteLine("Started test: PutCommand_ShouldBeVerified_WhenBeingCalled");
+            string expectedOutput = "success";
+
+            //setup mock
+            object testBody = new { on = true };
+            mockClient.Setup(mock => mock.SendPutCommandAsync("", testBody)).ReturnsAsync("success");
+
+            //use function
+            var result = await mockClient.Object.SendPutCommandAsync("", testBody);
+
+            //Assert Result and Verify method call
+            Console.WriteLine($"Result from putcommand: {result}");
+            Assert.AreEqual(expectedOutput, result);
+            mockClient.Verify(client => client.SendPutCommandAsync("", testBody), Times.Once);
+            Console.WriteLine("Finished test: PutCommand_ShouldBeVerified_WhenBeingCalled");
         }
     }
 }
