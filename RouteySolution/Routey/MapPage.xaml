@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
              x:Class="Routey.MapPage"
              Title="MapPage">
+    
     <VerticalStackLayout Margin="10,10,10,10">
+
         <Grid RowSpacing="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="20" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="50" />
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
@@ -16,17 +19,23 @@
             </Grid.ColumnDefinitions>
 
             <!-- Track Route elements -->
-            <Label x:Name="lblTrackRoute" Text="Track Route" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
-            <Entry x:Name="eRouteName" Placeholder="Enter route name..." Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" />
-            <Button x:Name="btnStartRoute" Text="Start Route" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" />
-            <Button x:Name="btnEndRoute" Text="End Route" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" />
+            <Label x:Name="lblTrackRoute" Text="Track Route" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" FontSize="24" />
+            <Entry x:Name="eRouteName" Placeholder="Enter route name..." Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" WidthRequest="175" />
+            <Button x:Name="btnStartRoute" Text="Start Route" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" BackgroundColor="#71C2FF" TextColor="Black" />
+            <Button x:Name="btnEndRoute" Text="End Route" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" BackgroundColor="#71C2FF" TextColor="Black" />
 
             <!-- Weather elements -->
-            <Label x:Name="lblWeather" Text="Weather" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
+            <Label x:Name="lblWeather" Text="Weather" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" FontSize="24" />
             <Image x:Name="imgIcon" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
             <Label x:Name="lblTemp" Text="10C" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" />
 
         </Grid>
 
+        <!-- TODO: Add API key and other functionality to the map:
+            https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/map?view=net-maui-9.0 -->
+        <!-- Map element -->
+        <!--<maps:Map x:Name="map" />-->
+        
     </VerticalStackLayout>
+    
 </ContentPage>

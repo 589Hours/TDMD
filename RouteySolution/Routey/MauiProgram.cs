@@ -20,6 +20,7 @@ namespace Routey
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+            //.UseMauiMaps(); Usage of the MAUI map: https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/map?view=net-maui-9.0
             // Views & ViewModels:
             builder.Services.AddTransient<MapPage>();
             builder.Services.AddTransient<MapPageViewModel>();
