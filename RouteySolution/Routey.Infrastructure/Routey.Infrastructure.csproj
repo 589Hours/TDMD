@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Routey.Domain\Routey.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
