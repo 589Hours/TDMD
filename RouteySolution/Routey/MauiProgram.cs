@@ -1,7 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using Routey.Domain.Clients;
 using Routey.Domain.SQLiteDatabases;
+using Routey.Domain.SQLiteDatabases.Entities;
+using Routey.Infrastructure.SQLiteDatabases;
 using Routey.Infrastructure.WeatherApiClient;
+using Routey.ViewModels;
 
 namespace Routey
 {
@@ -17,7 +20,16 @@ namespace Routey
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-            builder.Services.AddSingleton<IRouteDatabase>();
+            // Views & ViewModels:
+            builder.Services.AddTransient<MapPage>();
+            builder.Services.AddTransient<MapPageViewModel>();
+            builder.Services.AddTransient<RoutesPage>();
+            builder.Services.AddTransient<RoutesPageViewModel>();
+            builder.Services.AddTransient<SettingsPage>();
+            builder.Services.AddTransient<SettingsPageViewModel>();
+
+            // SQLite Database & HttpClient:
+            builder.Services.AddSingleton<IRouteDatabase, SQLRouteDatabase>();
             builder.Services.AddHttpClient<IWeatherApiClient, WeatherApiClient>(client =>
             {
                 // TODO add string to client BaseAddress
@@ -25,7 +37,7 @@ namespace Routey
             });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
