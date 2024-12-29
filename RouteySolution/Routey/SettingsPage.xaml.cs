@@ -22,10 +22,10 @@ public partial class SettingsPage : ContentPage
             settingsPageViewModel.OnLanguageChanged(language);
     }
 
-    private void DarkModeChanged(object sender, EventArgs e)
-    {
-        string darkMode = pDarkMode.SelectedItem.ToString();
-        if (this.settingsPageViewModel is SettingsPageViewModel)
-            settingsPageViewModel.OnDarkModeChanged(darkMode);
-    }
+    //private void DarkModeChanged(object sender, EventArgs e)
+    //{
+    //    string darkMode = pDarkMode.SelectedItem.ToString();
+    //    if (this.settingsPageViewModel is SettingsPageViewModel)
+    //        settingsPageViewModel.OnDarkModeChanged(darkMode);
+    //}
 }

@@ -4,9 +4,36 @@
              xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
              x:Class="Routey.MapPage"
              Title="MapPage">
+    <!-- Styles for Light & Dark modes-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="labelStyleHeader">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            <Style TargetType="Label" x:Key="labelStyle">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            <Style TargetType="Entry" x:Key="entryStyle">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+                <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            <Style TargetType="Button" x:Key="buttonStyle">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=White, Dark=White}" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBlue}, Dark=Gray}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <!-- Page Contents -->
     <ScrollView HorizontalOptions="Center">
         <VerticalStackLayout Margin="10,10,10,10">
-
+            
+            <!-- Grid -->
             <Grid RowSpacing="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30" />
@@ -19,15 +46,15 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Track Route elements -->
-                <Label x:Name="lblTrackRoute" Text="Track Route" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" FontSize="24" />
-                <Entry x:Name="eRouteName" Placeholder="Enter route name..." Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" WidthRequest="160" />
-                <Button x:Name="btnStartRoute" Text="Start Route" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" BackgroundColor="#71C2FF" TextColor="Black" />
-                <Button x:Name="btnEndRoute" Text="End Route" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" BackgroundColor="#71C2FF" TextColor="Black" />
+                <Label x:Name="lblTrackRoute" Text="Track Route" Grid.Row="0" Grid.Column="0" Style="{StaticResource labelStyleHeader}" />
+                <Entry x:Name="eRouteName" Placeholder="Enter route name..." Grid.Row="1" Grid.Column="0" WidthRequest="160" Style="{StaticResource entryStyle}" />
+                <Button x:Name="btnStartRoute" Text="Start Route" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource buttonStyle}" />
+                <Button x:Name="btnEndRoute" Text="End Route" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" Style="{StaticResource buttonStyle}" />
 
                 <!-- Weather elements -->
-                <Label x:Name="lblWeather" Text="Weather" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" FontSize="24" />
+                <Label x:Name="lblWeather" Text="Weather" Grid.Row="0" Grid.Column="1" Style="{StaticResource labelStyleHeader}" />
                 <Image x:Name="imgIcon" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
-                <Label x:Name="lblTemp" Text="10C" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" />
+                <Label x:Name="lblTemp" Text="10C" Grid.Row="2" Grid.Column="1" Style="{StaticResource labelStyle}" />
 
             </Grid>
 

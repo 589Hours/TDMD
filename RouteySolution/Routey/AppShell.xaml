@@ -5,13 +5,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Routey"
     Title="Routey"
-    Shell.TabBarBackgroundColor="Black"
-    Shell.TabBarForegroundColor="#71C2FF"
-    Shell.TabBarTitleColor="#71C2FF"
-    Shell.TabBarUnselectedColor="White"
-    Shell.BackgroundColor="Black"
-    Shell.TitleColor="#71C2FF">
-    
+    Shell.TabBarBackgroundColor="{AppThemeBinding Light={StaticResource LightBlue}, Dark=Black}"
+    Shell.TabBarForegroundColor="{AppThemeBinding Light=White, Dark={StaticResource LightBlue}}"
+    Shell.TabBarTitleColor="{AppThemeBinding Light=White, Dark={StaticResource LightBlue}}"
+    Shell.TabBarUnselectedColor="{AppThemeBinding Light=Gray, Dark=LightGray}"
+    Shell.BackgroundColor="{AppThemeBinding Light={StaticResource LightBlue}, Dark=Black}"
+    Shell.TitleColor="{AppThemeBinding Light=White, Dark={StaticResource LightBlue}}">
+
     <!-- The icons in the TabBar were used from FlatIcon: https://icons8.com/icons -->
     <TabBar Title="Tabs">
         <ShellContent
@@ -30,5 +30,5 @@
             ContentTemplate="{DataTemplate local:SettingsPage}"
             Route="SettingsPage" />
     </TabBar>
-    
+
 </Shell>

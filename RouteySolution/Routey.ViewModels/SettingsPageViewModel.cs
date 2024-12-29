@@ -33,11 +33,11 @@ namespace Routey.ViewModels
 
         }
 
-        public void OnDarkModeChanged(string darkMode)
-        {
-            //CultureInfo i = CultureInfo.Dar
-            throw new NotImplementedException();
-        }
+        //public void OnDarkModeChanged(string darkMode)
+        //{
+        //    //CultureInfo i = CultureInfo.Dar
+        //    throw new NotImplementedException();
+        //}
 
     }
 }
