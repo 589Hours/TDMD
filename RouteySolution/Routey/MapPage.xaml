@@ -8,22 +8,22 @@
     <!-- Styles for Light & Dark modes-->
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style TargetType="Label" x:Key="labelStyleHeader">
+            <Style TargetType="Label" x:Key="LabelStyleHeader">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
                 <Setter Property="FontSize" Value="24" />
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
-            <Style TargetType="Label" x:Key="labelStyle">
+            <Style TargetType="Label" x:Key="LabelStyle">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
-            <Style TargetType="Entry" x:Key="entryStyle">
+            <Style TargetType="Entry" x:Key="EntryStyle">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
                 <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
-            <Style TargetType="Button" x:Key="buttonStyle">
+            <Style TargetType="Button" x:Key="ButtonStyle">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light=White, Dark=White}" />
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBlue}, Dark=Gray}" />
             </Style>
@@ -47,15 +47,15 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Track Route elements -->
-                <Label x:Name="lblTrackRoute" Text="{lang:Translate TrackRoute}" Grid.Row="0" Grid.Column="0" Style="{StaticResource labelStyleHeader}" />
-                <Entry x:Name="eRouteName" Placeholder="{lang:Translate EnterRoute}" Grid.Row="1" Grid.Column="0" WidthRequest="160" Style="{StaticResource entryStyle}" />
-                <Button x:Name="btnStartRoute" Text="{lang:Translate StartRoute}" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource buttonStyle}" />
-                <Button x:Name="btnEndRoute" Text="{lang:Translate EndRoute}" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" Style="{StaticResource buttonStyle}" />
+                <Label x:Name="lblTrackRoute" Text="{lang:Translate TrackRoute}" Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyleHeader}" />
+                <Entry x:Name="eRouteName" Placeholder="{lang:Translate EnterRoute}" Grid.Row="1" Grid.Column="0" WidthRequest="160" Style="{StaticResource EntryStyle}" />
+                <Button x:Name="btnStartRoute" Text="{lang:Translate StartRoute}" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource ButtonStyle}" />
+                <Button x:Name="btnEndRoute" Text="{lang:Translate EndRoute}" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" Style="{StaticResource ButtonStyle}" />
 
                 <!-- Weather elements -->
-                <Label x:Name="lblWeather" Text="{lang:Translate Weather}" Grid.Row="0" Grid.Column="1" Style="{StaticResource labelStyleHeader}" />
+                <Label x:Name="lblWeather" Text="{lang:Translate Weather}" Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelStyleHeader}" />
                 <Image x:Name="imgIcon" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
-                <Label x:Name="lblTemp" Text="10C" Grid.Row="2" Grid.Column="1" Style="{StaticResource labelStyle}" />
+                <Label x:Name="lblTemp" Text="10C" Grid.Row="2" Grid.Column="1" Style="{StaticResource LabelStyle}" />
 
             </Grid>
 

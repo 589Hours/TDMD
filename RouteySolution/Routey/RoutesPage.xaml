@@ -7,22 +7,22 @@
     <!-- Styles for Light & Dark modes-->
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style TargetType="Label" x:Key="labelStyleHeader">
+            <Style TargetType="Label" x:Key="LabelStyleHeader">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
                 <Setter Property="FontSize" Value="24" />
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
-            <Style TargetType="Label" x:Key="labelStyle">
+            <Style TargetType="Label" x:Key="LabelStyle">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
-            <Style TargetType="ListView" x:Key="listStyle">
+            <Style TargetType="ListView" x:Key="ListStyle">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=LightGray, Dark=Gray}" />
                 <Setter Property="SeparatorColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
                 <Setter Property="RefreshControlColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
             </Style>
-            <Style TargetType="Button" x:Key="buttonStyle">
+            <Style TargetType="Button" x:Key="ButtonStyle">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light=White, Dark=White}" />
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBlue}, Dark=Gray}" />
             </Style>
@@ -34,9 +34,9 @@
         <VerticalStackLayout Margin="10,10,10,10">
 
             <!-- Previously Walked Routes List -->
-            <Label Text="{lang:Translate PreviousRoutes}" Style="{StaticResource labelStyleHeader}" />
+            <Label Text="{lang:Translate PreviousRoutes}" Style="{StaticResource LabelStyleHeader}" />
                                     <!-- RouteHistory contains RouteEntity objects -->
-            <ListView x:Name="lvRoutes" ItemsSource="{Binding RouteHistory}" SelectedItem="{Binding SelectedRoute}">
+            <ListView x:Name="lvRoutes" ItemsSource="{Binding RouteHistory}" SelectedItem="{Binding SelectedRoute}" Style="{Binding ListStyle}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -51,18 +51,18 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                                                                                     <!-- Bindings directly from RouteEntity -->
-                            <Label x:Name="name" Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" Text="{Binding RouteName}" Style="{StaticResource labelStyle}" />
-                            <Label x:Name="data" Grid.Column="1" Grid.Row="0" HorizontalOptions="End" Text="{Binding RouteDateTime}" Style="{StaticResource labelStyle}" />
-                            <Label x:Name="distance" Grid.Column="0" Grid.Row="1" Text="{Binding TotalDistance}" Style="{StaticResource labelStyle}" />
-                            <Label x:Name="speed" Grid.Column="0" Grid.Row="2" Text="{Binding AverageSpeed}" Style="{StaticResource labelStyle}" />
-                            <Label x:Name="duration" Grid.Column="0" Grid.Row="3" Text="{Binding RouteDuration}" Style="{StaticResource labelStyle}" />
+                            <Label x:Name="name" Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" Text="{Binding RouteName}" Style="{StaticResource LabelStyle}" />
+                            <Label x:Name="data" Grid.Column="1" Grid.Row="0" HorizontalOptions="End" Text="{Binding RouteDateTime}" Style="{StaticResource LabelStyle}" />
+                            <Label x:Name="distance" Grid.Column="0" Grid.Row="1" Text="{Binding TotalDistance}" Style="{StaticResource LabelStyle}" />
+                            <Label x:Name="speed" Grid.Column="0" Grid.Row="2" Text="{Binding AverageSpeed}" Style="{StaticResource LabelStyle}" />
+                            <Label x:Name="duration" Grid.Column="0" Grid.Row="3" Text="{Binding RouteDuration}" Style="{StaticResource LabelStyle}" />
 
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Button x:Name="DeleteButton" Text="{lang:Translate DeleteRoute}" VerticalOptions="End" Command="{Binding OnDeleteButtonPressedCommand}" Style="{StaticResource buttonStyle}" />
+            <Button x:Name="DeleteButton" Text="{lang:Translate DeleteRoute}" VerticalOptions="End" Command="{Binding OnDeleteButtonPressedCommand}" Style="{StaticResource ButtonStyle}" />
 
         </VerticalStackLayout>
     </ScrollView>
