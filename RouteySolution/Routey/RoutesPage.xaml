@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lang="clr-namespace:LocalizationResourceManager.Maui;assembly=LocalizationResourceManager.Maui"
              x:Class="Routey.RoutesPage"
              Title="RoutesPage">
     <!-- Styles for Light & Dark modes-->
@@ -33,7 +34,7 @@
         <VerticalStackLayout Margin="10,10,10,10">
 
             <!-- Previously Walked Routes List -->
-            <Label Text="Previous Routes:" Style="{StaticResource labelStyleHeader}" />
+            <Label Text="{lang:Translate PreviousRoutes}" Style="{StaticResource labelStyleHeader}" />
                                     <!-- RouteHistory contains RouteEntity objects -->
             <ListView x:Name="lvRoutes" ItemsSource="{Binding RouteHistory}" SelectedItem="{Binding SelectedRoute}">
                 <ListView.ItemTemplate>
@@ -61,7 +62,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Button x:Name="DeleteButton" Text="Delete Selected Route" VerticalOptions="End" Command="{Binding OnDeleteButtonPressedCommand}" Style="{StaticResource buttonStyle}" />
+            <Button x:Name="DeleteButton" Text="{lang:Translate DeleteRoute}" VerticalOptions="End" Command="{Binding OnDeleteButtonPressedCommand}" Style="{StaticResource buttonStyle}" />
 
         </VerticalStackLayout>
     </ScrollView>

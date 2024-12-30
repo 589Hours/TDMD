@@ -5,7 +5,7 @@ namespace Routey;
 
 public partial class RoutesPage : ContentPage
 {
-	private RoutesPageViewModel routesPageViewModel;
+    private RoutesPageViewModel routesPageViewModel;
 	public RoutesPage(RoutesPageViewModel routesPageViewModel)
 	{
 		InitializeComponent();

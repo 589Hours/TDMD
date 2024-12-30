@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lang="clr-namespace:LocalizationResourceManager.Maui;assembly=LocalizationResourceManager.Maui"
              xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
              x:Class="Routey.MapPage"
              Title="MapPage">
@@ -46,13 +47,13 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Track Route elements -->
-                <Label x:Name="lblTrackRoute" Text="Track Route" Grid.Row="0" Grid.Column="0" Style="{StaticResource labelStyleHeader}" />
-                <Entry x:Name="eRouteName" Placeholder="Enter route name..." Grid.Row="1" Grid.Column="0" WidthRequest="160" Style="{StaticResource entryStyle}" />
-                <Button x:Name="btnStartRoute" Text="Start Route" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource buttonStyle}" />
-                <Button x:Name="btnEndRoute" Text="End Route" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" Style="{StaticResource buttonStyle}" />
+                <Label x:Name="lblTrackRoute" Text="{lang:Translate TrackRoute}" Grid.Row="0" Grid.Column="0" Style="{StaticResource labelStyleHeader}" />
+                <Entry x:Name="eRouteName" Placeholder="{lang:Translate EnterRoute}" Grid.Row="1" Grid.Column="0" WidthRequest="160" Style="{StaticResource entryStyle}" />
+                <Button x:Name="btnStartRoute" Text="{lang:Translate StartRoute}" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource buttonStyle}" />
+                <Button x:Name="btnEndRoute" Text="{lang:Translate EndRoute}" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" Style="{StaticResource buttonStyle}" />
 
                 <!-- Weather elements -->
-                <Label x:Name="lblWeather" Text="Weather" Grid.Row="0" Grid.Column="1" Style="{StaticResource labelStyleHeader}" />
+                <Label x:Name="lblWeather" Text="{lang:Translate Weather}" Grid.Row="0" Grid.Column="1" Style="{StaticResource labelStyleHeader}" />
                 <Image x:Name="imgIcon" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
                 <Label x:Name="lblTemp" Text="10C" Grid.Row="2" Grid.Column="1" Style="{StaticResource labelStyle}" />
 

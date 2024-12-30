@@ -1,8 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Globalization;
+using LocalizationResourceManager.Maui;
+using Microsoft.Extensions.Logging;
 using Routey.Domain.Clients;
 using Routey.Domain.SQLiteDatabases;
 using Routey.Infrastructure.SQLiteDatabases;
 using Routey.Infrastructure.WeatherApiClient;
+using Routey.Resources.Localization;
 using Routey.ViewModels;
 
 namespace Routey
@@ -14,6 +17,12 @@ namespace Routey
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseLocalizationResourceManager(settings =>
+                {
+                    settings.RestoreLatestCulture(true);
+                    settings.AddResource(AppResources.ResourceManager);
+                    settings.InitialCulture(new CultureInfo("en-US"));
+                })
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -26,8 +35,8 @@ namespace Routey
             builder.Services.AddTransient<MapPageViewModel>(); //AddSingleton
             builder.Services.AddTransient<RoutesPage>();
             builder.Services.AddTransient<RoutesPageViewModel>(); //AddSingleton
-            builder.Services.AddTransient<SettingsPage>();
-            builder.Services.AddTransient<SettingsPageViewModel>(); //AddSingleton
+            builder.Services.AddTransient<SettingsPage>(); // This page doesn't have a ViewModel because the language and modes are updated dynamically
+            builder.Services.AddTransient<SettingsPageViewModel>();
 
             // SQLite Database & HttpClient:
             builder.Services.AddSingleton<IRouteDatabase>(new SQLRouteDatabase(Path.Combine(FileSystem.Current.AppDataDirectory, "routesqlitedatabase.db3")));

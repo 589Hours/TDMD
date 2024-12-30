@@ -1,43 +1,41 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using LocalizationResourceManager.Maui;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Globalization;
 
 namespace Routey.ViewModels
 {
     public partial class SettingsPageViewModel : ObservableObject
     {
-        [ObservableProperty]
-        private List<string> colorModeOptions;
-
-        [ObservableProperty]
-        private List<string> darkModeOptions;
-
-        public SettingsPageViewModel()
-        {
-            
+        private ILocalizationResourceManager localizationResourceManager; // To keep track of current language, and it's translations
+        public SettingsPageViewModel(ILocalizationResourceManager manager) 
+        { 
+            localizationResourceManager = manager;
         }
 
-        public void OnLanguageChanged(string language)
+        public void LanguageChanged(string language)
         {
-            CultureInfo lang;
-            switch (language)
+            switch (language) // All languages are listed here
             {
-                case "Dutch":
-                    lang = CultureInfo.GetCultureInfo("nl");
-                    break;
-
                 case "English":
-                    lang = CultureInfo.GetCultureInfo("en");
+                    if (localizationResourceManager.CurrentCulture.TwoLetterISOLanguageName != "en") // Only change the language if it isn't already English 
+                    {
+                        localizationResourceManager.CurrentCulture = new CultureInfo("en-US");
+                    }
                     break;
+
+                case "Dutch":
+                    if (localizationResourceManager.CurrentCulture.TwoLetterISOLanguageName != "nl") // Only change the language if it isn't already Dutch
+                    {
+                        localizationResourceManager.CurrentCulture = new CultureInfo("nl-NL");
+                    }
+                    break;
+
             }
-            // Set language (and make new AppShell for localization)
-
         }
-
-        //public void OnDarkModeChanged(string darkMode)
-        //{
-        //    //CultureInfo i = CultureInfo.Dar
-        //    throw new NotImplementedException();
-        //}
-
     }
 }

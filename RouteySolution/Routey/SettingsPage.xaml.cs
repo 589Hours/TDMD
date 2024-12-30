@@ -1,31 +1,24 @@
-using System.Diagnostics;
 using System.Globalization;
+using LocalizationResourceManager.Maui;
 using Routey.ViewModels;
 
 namespace Routey;
 
 public partial class SettingsPage : ContentPage
 {
-    private SettingsPageViewModel settingsPageViewModel;
+    private SettingsPageViewModel viewModel;
 	public SettingsPage(SettingsPageViewModel settingsPageViewModel)
-	{
+    {
 		InitializeComponent();
-
-        this.settingsPageViewModel = settingsPageViewModel;
+        
+        viewModel = settingsPageViewModel;
         BindingContext = settingsPageViewModel;
 	}
 
     private void LanguageChanged(object sender, EventArgs e)
     {
-        string language = pLanguage.SelectedItem.ToString();
-        if (this.settingsPageViewModel is SettingsPageViewModel)
-            settingsPageViewModel.OnLanguageChanged(language);
+        string language = pLanguage.SelectedItem.ToString(); // Get the current language
+        if (viewModel is SettingsPageViewModel)
+            viewModel.LanguageChanged(language); // Trigger Event to change language
     }
-
-    //private void DarkModeChanged(object sender, EventArgs e)
-    //{
-    //    string darkMode = pDarkMode.SelectedItem.ToString();
-    //    if (this.settingsPageViewModel is SettingsPageViewModel)
-    //        settingsPageViewModel.OnDarkModeChanged(darkMode);
-    //}
 }

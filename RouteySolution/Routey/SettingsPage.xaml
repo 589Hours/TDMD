@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lang="clr-namespace:LocalizationResourceManager.Maui;assembly=LocalizationResourceManager.Maui"
              x:Class="Routey.SettingsPage"
              Title="SettingsPage">
     <!-- Styles for Light & Dark modes-->
@@ -22,20 +23,12 @@
         <VerticalStackLayout Margin="40,40,40,40" Spacing="70" VerticalOptions="Start">
             
             <!-- Settings -->
-            <Picker x:Name="pLanguage" Title="Select Language:" SelectedIndexChanged="LanguageChanged" Style="{StaticResource pickerStyle}">
+            <Picker x:Name="pLanguage" Title="{lang:Translate SelectLanguage}" SelectedIndexChanged="LanguageChanged" Style="{StaticResource pickerStyle}">
                 <Picker.Items>
                     <x:String>Dutch</x:String>
                     <x:String>English</x:String>
                 </Picker.Items>
             </Picker>
-
-            <!-- Dark Mode is niet nodig, want dit wordt in de telefoon zelf ingesteld!!! -->
-            <!--<Picker x:Name="pDarkMode" Title="Dark Mode:" SelectedIndexChanged="DarkModeChanged" Style="{StaticResource pickerStyle}">
-                <Picker.Items>
-                    <x:String>On</x:String>
-                    <x:String>Off</x:String>
-                </Picker.Items>
-            </Picker>-->
 
         </VerticalStackLayout>
     </ScrollView>

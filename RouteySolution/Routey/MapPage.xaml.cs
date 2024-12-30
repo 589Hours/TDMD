@@ -2,7 +2,7 @@ namespace Routey;
 
 public partial class MapPage : ContentPage
 {
-	public MapPage()
+    public MapPage()
 	{
 		InitializeComponent();
 	}
