@@ -88,6 +88,15 @@ namespace Routey.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Map Page.
+        /// </summary>
+        internal static string MapPage {
+            get {
+                return ResourceManager.GetString("MapPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Previous Routes:.
         /// </summary>
         internal static string PreviousRoutes {
@@ -106,6 +115,15 @@ namespace Routey.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Routes Page.
+        /// </summary>
+        internal static string RoutesPage {
+            get {
+                return ResourceManager.GetString("RoutesPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Language:.
         /// </summary>
         internal static string SelectLanguage {
@@ -120,6 +138,15 @@ namespace Routey.Resources.Localization {
         internal static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings Page.
+        /// </summary>
+        internal static string SettingsPage {
+            get {
+                return ResourceManager.GetString("SettingsPage", resourceCulture);
             }
         }
         

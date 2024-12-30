@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:lang="clr-namespace:LocalizationResourceManager.Maui;assembly=LocalizationResourceManager.Maui"
              x:Class="Routey.SettingsPage"
-             Title="SettingsPage">
+             Title="{lang:Translate SettingsPage}">
     <!-- Styles for Light & Dark modes-->
     <ContentPage.Resources>
         <ResourceDictionary>

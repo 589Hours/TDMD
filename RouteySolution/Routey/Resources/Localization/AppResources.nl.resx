@@ -126,17 +126,26 @@
   <data name="EnterRoute" xml:space="preserve">
     <value>Voer route naam in...</value>
   </data>
+  <data name="MapPage" xml:space="preserve">
+    <value>Kaart Pagina</value>
+  </data>
   <data name="PreviousRoutes" xml:space="preserve">
     <value>Vorige Routes:</value>
   </data>
   <data name="RoutesHistory" xml:space="preserve">
     <value>Route Geschiedenis</value>
   </data>
+  <data name="RoutesPage" xml:space="preserve">
+    <value>Route Pagina</value>
+  </data>
   <data name="SelectLanguage" xml:space="preserve">
     <value>Selecteer Taal:</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Instellingen</value>
+  </data>
+  <data name="SettingsPage" xml:space="preserve">
+    <value>Instellingen Pagina</value>
   </data>
   <data name="StartRoute" xml:space="preserve">
     <value>Start Route</value>

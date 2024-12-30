@@ -126,17 +126,26 @@
   <data name="EnterRoute" xml:space="preserve">
     <value>Enter route name...</value>
   </data>
+  <data name="MapPage" xml:space="preserve">
+    <value>Map Page</value>
+  </data>
   <data name="PreviousRoutes" xml:space="preserve">
     <value>Previous Routes:</value>
   </data>
   <data name="RoutesHistory" xml:space="preserve">
     <value>Routes History</value>
   </data>
+  <data name="RoutesPage" xml:space="preserve">
+    <value>Routes Page</value>
+  </data>
   <data name="SelectLanguage" xml:space="preserve">
     <value>Select Language:</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="SettingsPage" xml:space="preserve">
+    <value>Settings Page</value>
   </data>
   <data name="StartRoute" xml:space="preserve">
     <value>Start Route</value>
