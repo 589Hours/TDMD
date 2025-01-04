@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using CommunityToolkit.Maui;
 using LocalizationResourceManager.Maui;
 using Microsoft.Extensions.Logging;
 using Routey.Domain.Clients;
@@ -27,24 +28,30 @@ namespace Routey
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
-            //.UseMauiMaps(); Usage of the MAUI map: https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/map?view=net-maui-9.0
+                })
+#if __ANDROID__ || __IOS___
+            .UseMauiMaps()
+#endif
+            .UseMauiCommunityToolkit();
 
             // Views & ViewModels:
             builder.Services.AddTransient<MapPage>();
             builder.Services.AddTransient<MapPageViewModel>(); //AddSingleton
+
             builder.Services.AddTransient<RoutesPage>();
             builder.Services.AddTransient<RoutesPageViewModel>(); //AddSingleton
+
             builder.Services.AddTransient<SettingsPage>(); // This page doesn't have a ViewModel because the language and modes are updated dynamically
             builder.Services.AddTransient<SettingsPageViewModel>();
 
-            // SQLite Database & HttpClient:
+            // SQLite Database & HttpClient & Map:
             builder.Services.AddSingleton<IRouteDatabase>(new SQLRouteDatabase(Path.Combine(FileSystem.Current.AppDataDirectory, "routesqlitedatabase.db3")));
             builder.Services.AddHttpClient<IWeatherApiClient, WeatherApiClient>(client =>
             {
                 // TODO add string to client BaseAddress
                 client.BaseAddress = new Uri("");
             });
+            builder.Services.AddSingleton<IGeolocation>(o => Geolocation.Default);
 
 #if DEBUG
             builder.Logging.AddDebug();

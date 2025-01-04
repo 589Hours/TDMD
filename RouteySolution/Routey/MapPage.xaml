@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:lang="clr-namespace:LocalizationResourceManager.Maui;assembly=LocalizationResourceManager.Maui"
              xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+             xmlns:cc="clr-namespace:Routey.MapControl"
              x:Class="Routey.MapPage"
              Title="{lang:Translate MapPage}">
     <!-- Styles for Light & Dark modes-->
@@ -49,8 +50,8 @@
                 <!-- Track Route elements -->
                 <Label x:Name="lblTrackRoute" Text="{lang:Translate TrackRoute}" Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyleHeader}" />
                 <Entry x:Name="eRouteName" Placeholder="{lang:Translate EnterRoute}" Grid.Row="1" Grid.Column="0" WidthRequest="160" Style="{StaticResource EntryStyle}" />
-                <Button x:Name="btnStartRoute" Text="{lang:Translate StartRoute}" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource ButtonStyle}" />
-                <Button x:Name="btnEndRoute" Text="{lang:Translate EndRoute}" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" Style="{StaticResource ButtonStyle}" />
+                <Button x:Name="btnStartRoute" Text="{lang:Translate StartRoute}" Command="{Binding StartListeningCommand}" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource ButtonStyle}" />
+                <Button x:Name="btnEndRoute" Text="{lang:Translate EndRoute}"  Command="{Binding StopListeningCommand}" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" Style="{StaticResource ButtonStyle}" />
 
                 <!-- Weather elements -->
                 <Label x:Name="lblWeather" Text="{lang:Translate Weather}" Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelStyleHeader}" />
@@ -59,11 +60,15 @@
 
             </Grid>
 
-            <!-- TODO: Add API key and other functionality to the map:
-                https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/map?view=net-maui-9.0 -->
             <!-- Map element -->
-            <!--<maps:Map x:Name="map" />-->
-        
+            <cc:MvvmMap x:Name="mvvmMap" ItemsSource="{Binding RoutePins}" IsShowingUser="{Binding IsListening}" MapSpan="{Binding CurrentMapSpan}" SelectedItem="{Binding CurrentRoutePin}" HeightRequest="300">
+                <cc:MvvmMap.ItemTemplate>
+                    <DataTemplate>
+                        <maps:Pin Location="{Binding CurrentPosition}" Label="{Binding LabelText}" />
+                    </DataTemplate>
+                </cc:MvvmMap.ItemTemplate>
+            </cc:MvvmMap>
+
         </VerticalStackLayout>
     </ScrollView>
 
