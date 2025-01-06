@@ -28,7 +28,7 @@ namespace Routey.ViewModels
                     }
                     break;
 
-                case "Dutch":
+                case "Nederlands":
                     if (localizationResourceManager.CurrentCulture.TwoLetterISOLanguageName != "nl") // Only change the language if it isn't already Dutch
                     {
                         localizationResourceManager.CurrentCulture = new CultureInfo("nl-NL");
