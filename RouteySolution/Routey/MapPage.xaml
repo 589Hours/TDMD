@@ -1,32 +1,75 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lang="clr-namespace:LocalizationResourceManager.Maui;assembly=LocalizationResourceManager.Maui"
+             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+             xmlns:cc="clr-namespace:Routey.MapControl"
              x:Class="Routey.MapPage"
-             Title="MapPage">
-    <VerticalStackLayout Margin="10,10,10,10">
-        <Grid RowSpacing="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+             Title="{lang:Translate MapPage}">
+    <!-- Styles for Light & Dark modes-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="LabelStyleHeader">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            <Style TargetType="Label" x:Key="LabelStyle">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            <Style TargetType="Entry" x:Key="EntryStyle">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+                <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            <Style TargetType="Button" x:Key="ButtonStyle">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=White, Dark=White}" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBlue}, Dark=Gray}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <!-- Page Contents -->
+    <ScrollView HorizontalOptions="Center">
+        <VerticalStackLayout Margin="10,10,10,10">
+            
+            <!-- Grid -->
+            <Grid RowSpacing="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <!-- Track Route elements -->
-            <Label x:Name="lblTrackRoute" Text="Track Route" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
-            <Entry x:Name="eRouteName" Placeholder="Enter route name..." Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" />
-            <Button x:Name="btnStartRoute" Text="Start Route" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" />
-            <Button x:Name="btnEndRoute" Text="End Route" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" />
+                <!-- Track Route elements -->
+                <Label x:Name="lblTrackRoute" Text="{lang:Translate TrackRoute}" Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyleHeader}" />
+                <Entry x:Name="eRouteName" Placeholder="{lang:Translate EnterRoute}" Grid.Row="1" Grid.Column="0" WidthRequest="160" Style="{StaticResource EntryStyle}" />
+                <Button x:Name="btnStartRoute" Text="{lang:Translate StartRoute}" Command="{Binding StartListeningCommand}" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource ButtonStyle}" />
+                <Button x:Name="btnEndRoute" Text="{lang:Translate EndRoute}"  Command="{Binding StopListeningCommand}" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" Style="{StaticResource ButtonStyle}" />
 
-            <!-- Weather elements -->
-            <Label x:Name="lblWeather" Text="Weather" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
-            <Image x:Name="imgIcon" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
-            <Label x:Name="lblTemp" Text="10C" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" />
+                <!-- Weather elements -->
+                <Label x:Name="lblWeather" Text="{lang:Translate Weather}" Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelStyleHeader}" />
+                <Image x:Name="imgIcon" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
+                <Label x:Name="lblTemp" Text="10C" Grid.Row="2" Grid.Column="1" Style="{StaticResource LabelStyle}" />
 
-        </Grid>
+            </Grid>
 
-    </VerticalStackLayout>
+            <!-- Map element -->
+            <cc:MvvmMap x:Name="mvvmMap" ItemsSource="{Binding RoutePins}" IsShowingUser="{Binding IsListening}" MapSpan="{Binding CurrentMapSpan}" SelectedItem="{Binding CurrentRoutePin}" HeightRequest="300">
+                <cc:MvvmMap.ItemTemplate>
+                    <DataTemplate>
+                        <maps:Pin Location="{Binding CurrentPosition}" Label="{Binding LabelText}" />
+                    </DataTemplate>
+                </cc:MvvmMap.ItemTemplate>
+            </cc:MvvmMap>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

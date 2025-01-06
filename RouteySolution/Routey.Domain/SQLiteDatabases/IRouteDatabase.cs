@@ -11,6 +11,7 @@ namespace Routey.Domain.SQLiteDatabases
     public interface IRouteDatabase
     {
         Task<IEnumerable<RouteEntity>> GetRoutesAsync();
-        Task AddRouteAsync(RouteEntity routeEntity);
+        Task AddRouteAsync(Route route);
+        Task DeleteRouteAsync(RouteEntity routeEntity);
     }
 }

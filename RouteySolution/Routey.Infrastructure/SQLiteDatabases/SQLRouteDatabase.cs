@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using Routey.Domain.Models;
 using Routey.Domain.SQLiteDatabases;
 using Routey.Domain.SQLiteDatabases.Entities;
@@ -20,16 +16,30 @@ namespace Routey.Infrastructure.SQLiteDatabases
              // Enable multi-threaded database access
              SQLite.SQLiteOpenFlags.SharedCache;
 
-        private readonly SQLiteAsyncConnection db;
+        private string DbPath;
 
-        public SQLRouteDatabase(string dbPath)
+        private SQLiteAsyncConnection db;
+
+        public SQLRouteDatabase(string path)
         {
-            this.db = new SQLiteAsyncConnection(dbPath, Flags);
+            this.DbPath = path;
+            Task.Run(async () =>
+            {
+                await Init();
+            });
         }
 
         public async Task Init()
         {
+            if (this.db != null)
+                return;
+
+            if (!Path.Exists(DbPath))
+                File.Create(DbPath).Close();
+
+            this.db = new SQLiteAsyncConnection(DbPath, Flags);
             var result = await db.CreateTableAsync<RouteEntity>();
+            await CreateTestData();
         }
 
         public async Task AddRouteAsync(Route route)
@@ -45,14 +55,41 @@ namespace Routey.Infrastructure.SQLiteDatabases
             });
         }
 
-        public Task<IEnumerable<RouteEntity>> GetRoutesAsync()
+        public async Task<IEnumerable<RouteEntity>> GetRoutesAsync()
         {
-            throw new NotImplementedException();
+            await Init();
+
+            return await db.Table<RouteEntity>().ToListAsync();
         }
 
-        public Task AddRouteAsync(RouteEntity routeEntity)
+        public async Task DeleteRouteAsync(RouteEntity routeEntity)
         {
-            throw new NotImplementedException();
+            await Init();
+
+            await db.DeleteAsync(routeEntity);
         }
+
+        public async Task CreateTestData() // TODO fix bug writing test data into db3-file
+        {
+            Route route1 = new Route();
+            route1.name = "route 1";
+            route1.startRouteMoment = DateTime.ParseExact("24-12-2024 15:30", "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+            route1.endRouteMoment = DateTime.ParseExact("24-12-2024 16:00", "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+            route1.totalDistance = 1;
+            route1.routePoints = new List<RoutePoint>() { new RoutePoint(10, 10, 5) };
+
+            Route route2 = new Route();
+            route2.name = "route 2";
+            route2.startRouteMoment = DateTime.ParseExact("23-12-2024 17:30", "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+            route2.endRouteMoment = DateTime.ParseExact("23-12-2024 18:00", "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+            route2.totalDistance = 5;
+            route2.routePoints = new List<RoutePoint>() { new RoutePoint(30, 10, 10) };
+
+            await AddRouteAsync(route1);
+            await AddRouteAsync(route2);
+        }
+
+        //TODO: Database wipe method/ check list usage
+
     }
 }
