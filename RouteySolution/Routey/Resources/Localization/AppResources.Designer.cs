@@ -106,6 +106,15 @@ namespace Routey.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Route Information.
+        /// </summary>
+        internal static string RouteInfo {
+            get {
+                return ResourceManager.GetString("RouteInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Routes History.
         /// </summary>
         internal static string RoutesHistory {

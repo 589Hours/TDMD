@@ -132,6 +132,9 @@
   <data name="PreviousRoutes" xml:space="preserve">
     <value>Vorige Routes:</value>
   </data>
+  <data name="RouteInfo" xml:space="preserve">
+    <value>Route Informatie</value>
+  </data>
   <data name="RoutesHistory" xml:space="preserve">
     <value>Route Geschiedenis</value>
   </data>

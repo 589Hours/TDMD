@@ -36,7 +36,7 @@ namespace Routey
 
             // Views & ViewModels:
             builder.Services.AddTransient<MapPage>();
-            builder.Services.AddTransient<MapPageViewModel>(); //AddSingleton
+            builder.Services.AddTransient<MapPageViewModel>(); //AddSingleton              
 
             builder.Services.AddTransient<RoutesPage>();
             builder.Services.AddTransient<RoutesPageViewModel>(); //AddSingleton
