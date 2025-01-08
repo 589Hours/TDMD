@@ -10,9 +10,9 @@ namespace Routey.Domain.Models
     {
         public double longtitude { get; set; }
         public double latitude { get; set; }
-        public double speed { get; set; }
+        public double? speed { get; set; }
 
-        public RoutePoint(double longtitude, double latitude, double speed)
+        public RoutePoint(double longtitude, double latitude, double? speed)
         {
             this.longtitude = longtitude;
             this.latitude = latitude;

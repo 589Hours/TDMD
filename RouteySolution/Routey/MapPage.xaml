@@ -32,44 +32,42 @@
     </ContentPage.Resources>
     
     <!-- Page Contents -->
-    <ScrollView HorizontalOptions="Center">
-        <VerticalStackLayout Margin="10,10,10,10">
-            
-            <!-- Grid -->
-            <Grid RowSpacing="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+    <VerticalStackLayout Margin="10,10,10,10" HorizontalOptions="Center">
 
-                <!-- Track Route elements -->
-                <Label x:Name="lblTrackRoute" Text="{lang:Translate TrackRoute}" Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyleHeader}" />
-                <Entry x:Name="eRouteName" Placeholder="{lang:Translate EnterRoute}" Grid.Row="1" Grid.Column="0" WidthRequest="160" Style="{StaticResource EntryStyle}" />
-                <Button x:Name="btnStartRoute" Text="{lang:Translate StartRoute}" Command="{Binding StartListeningCommand}" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource ButtonStyle}" />
-                <Button x:Name="btnEndRoute" Text="{lang:Translate EndRoute}"  Command="{Binding StopListeningCommand}" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" Style="{StaticResource ButtonStyle}" />
+        <!-- Grid -->
+        <Grid RowSpacing="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-                <!-- Weather elements -->
-                <Label x:Name="lblWeather" Text="{lang:Translate Weather}" Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelStyleHeader}" />
-                <Image x:Name="imgIcon" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
-                <Label x:Name="lblTemp" Text="10C" Grid.Row="2" Grid.Column="1" Style="{StaticResource LabelStyle}" />
+            <!-- Track Route elements -->
+            <Label x:Name="lblTrackRoute" Text="{lang:Translate TrackRoute}" Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyleHeader}" />
+            <Entry x:Name="eRouteName" Placeholder="{lang:Translate EnterRoute}" Grid.Row="1" Grid.Column="0" WidthRequest="160" Style="{StaticResource EntryStyle}" />
+            <Button x:Name="btnStartRoute" Text="{lang:Translate StartRoute}" Command="{Binding StartListeningCommand}" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource ButtonStyle}" />
+            <Button x:Name="btnEndRoute" Text="{lang:Translate EndRoute}"  Command="{Binding StopListeningCommand}" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" Style="{StaticResource ButtonStyle}" />
 
-            </Grid>
+            <!-- Weather elements -->
+            <Label x:Name="lblWeather" Text="{lang:Translate Weather}" Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelStyleHeader}" />
+            <Image x:Name="imgIcon" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
+            <Label x:Name="lblTemp" Text="10C" Grid.Row="2" Grid.Column="1" Style="{StaticResource LabelStyle}" />
 
-            <!-- Map element -->
-            <cc:MvvmMap x:Name="mvvmMap" ItemsSource="{Binding RoutePins}" IsShowingUser="{Binding IsListening}" MapSpan="{Binding CurrentMapSpan}" SelectedItem="{Binding CurrentRoutePin}" HeightRequest="300">
-                <cc:MvvmMap.ItemTemplate>
-                    <DataTemplate>
-                        <maps:Pin Location="{Binding CurrentPosition}" Label="{Binding LabelText}" />
-                    </DataTemplate>
-                </cc:MvvmMap.ItemTemplate>
-            </cc:MvvmMap>
+        </Grid>
 
-        </VerticalStackLayout>
-    </ScrollView>
+        <!-- Map element -->
+        <cc:MvvmMap x:Name="mvvmMap" ItemsSource="{Binding RoutePins}" IsShowingUser="{Binding IsListening}" MapSpan="{Binding CurrentMapSpan}" HeightRequest="300" >
+            <maps:Map.ItemTemplate>
+                <DataTemplate>
+                    <maps:Pin Location="{Binding Location}" Label="{Binding Label}" />
+                </DataTemplate>
+            </maps:Map.ItemTemplate>
+        </cc:MvvmMap>
+
+    </VerticalStackLayout>
 
 </ContentPage>
