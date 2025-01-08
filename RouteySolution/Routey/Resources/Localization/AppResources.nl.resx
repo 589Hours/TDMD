@@ -136,7 +136,7 @@
     <value>Kaart Pagina</value>
   </data>
   <data name="Previous" xml:space="preserve">
-    <value>Je hebt {0} vanaf je laatste punt!</value>
+    <value>Je hebt {0} gelopen vanaf je laatste punt!</value>
   </data>
   <data name="PreviousRoutes" xml:space="preserve">
     <value>Vorige Routes</value>

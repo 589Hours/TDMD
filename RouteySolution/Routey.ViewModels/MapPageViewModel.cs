@@ -81,9 +81,10 @@ namespace Routey.ViewModels
             timer.Elapsed += OnTimerInterval;
 
             // Reset UI elements
+            DistanceTracker = 0;
             TotalDuration = string.Format(localizationResourceManager["Duration"], "00:00:00");
-            TotalDistance = string.Format(localizationResourceManager["Distance"], "0 Meters");
-            DistancePrev = string.Format(localizationResourceManager["Previous"], "0");
+            TotalDistance = string.Format(localizationResourceManager["Distance"], "0 Kilometer(s)");
+            DistancePrev = string.Format(localizationResourceManager["Previous"], "0 Meter(s)");
         }
 
         private void OnTimerInterval(object? sender, ElapsedEventArgs e)
@@ -114,7 +115,7 @@ namespace Routey.ViewModels
                 if (RoutePoints.Count <= 1)
                     return;
 
-                //UpdateTotalDistance(pinPoint, user_location);
+                UpdateTotalDistance(pinPoint, user_location);
 
                 //3 * 10 seconds = 30 seconds between each marker put on the map
                 if (checksTillMarker < 3)
@@ -128,7 +129,7 @@ namespace Routey.ViewModels
                 // If there is an old pin availible, calculate the distance between that and the new pin
                 Pin oldPin = null;
                 if (RoutePins.Count > 1)
-                    oldPin = RoutePins.ElementAt(RoutePins.Count-2); // Previous pin = -1, but the list starts at 0
+                    oldPin = RoutePins.ElementAt(RoutePins.Count - 2); // Previous pin = -1, but the list starts at 0
 
                 UpdateDistanceBetweenPoints(oldPin, user_location);
 
@@ -150,17 +151,17 @@ namespace Routey.ViewModels
         private void UpdateTotalDistance(Pin pinPoint, Location user_location)
         {
             // If there is a previous user location availible, calculate the distance between these points
-            double distance = CalculateDistanceBetweenLocations(RoutePoints.ElementAt(RoutePoints.Count - 1), user_location);
+            double distance = CalculateDistanceBetweenLocations(RoutePoints.ElementAt(RoutePoints.Count - 2), user_location); // Previous pin = -1, but the list starts at 0
             if (distance == 0)
                 return;
 
-            int comma = distance.ToString().IndexOf('.') + 1; // Get the index of the dot (including the dot itself)
+            int comma = distance.ToString().IndexOf(',') + 1; // Get the index of the dot (including the dot itself)
             if (comma < 1)
             {
-                DistanceTracker += Double.Parse(distance.ToString()); // Show 2 digits after comma
+                DistanceTracker += Double.Parse(distance.ToString().Substring(0, comma+2)); // Show 2 digits after comma
                 TotalDistance = string.Format(localizationResourceManager["Distance"], $"{DistanceTracker.ToString()} Kilometer(s)");
             }
-            DistanceTracker += Double.Parse(distance.ToString().Substring(0, comma + 2)); // Show 2 digits after comma
+            DistanceTracker += Double.Parse(distance.ToString().Substring(0, comma+2)); // Show 2 digits after comma
             TotalDistance = string.Format(localizationResourceManager["Distance"], $"{DistanceTracker.ToString().Substring(0, comma + 2)} Kilometer(s)");
         }
 
@@ -222,9 +223,10 @@ namespace Routey.ViewModels
             this.geolocation.StopListeningForeground();
 
             // Reset UI elements
+            DistanceTracker = 0;
             TotalDuration = string.Format(localizationResourceManager["Duration"], "00:00:00");
-            TotalDistance = string.Format(localizationResourceManager["Distance"], "0 Meters");
-            DistancePrev = string.Format(localizationResourceManager["Previous"], "0");
+            TotalDistance = string.Format(localizationResourceManager["Distance"], "0 Kilometer(s)");
+            DistancePrev = string.Format(localizationResourceManager["Previous"], "0 Meter(s)");
 
             //TODO: Save Route in database
 
