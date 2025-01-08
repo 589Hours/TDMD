@@ -1,8 +1,12 @@
 ﻿using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Timers;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LocalizationResourceManager.Maui;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 using Microsoft.Maui.Platform;
@@ -13,6 +17,7 @@ namespace Routey.ViewModels
     public partial class MapPageViewModel : ObservableObject
     {
         private readonly IGeolocation geolocation;
+        private readonly ILocalizationResourceManager localizationResourceManager;
 
         [ObservableProperty]
         public string routeName;
@@ -32,10 +37,10 @@ namespace Routey.ViewModels
         public MapSpan currentMapSpan;
 
         [ObservableProperty]
-        private ObservableCollection<Pin> routePins;
+        private ObservableCollection<Pin> routePins; // Pins on the map
 
         [ObservableProperty]
-        private ObservableCollection<Pin> routePoints;
+        private ObservableCollection<Pin> routePoints; // Points while walking
 
         [ObservableProperty]
         private string totalDistance; // To show distance of the Route
@@ -56,24 +61,29 @@ namespace Routey.ViewModels
 
         public bool CanStopListening() => IsListening;
 
+        private CultureInfo culture;
         private System.Timers.Timer timer;
 
-        public MapPageViewModel(IGeolocation geolocation)
+        public MapPageViewModel(IGeolocation geolocation, ILocalizationResourceManager manager)
         {
             this.geolocation = geolocation;
             this.geolocation.LocationChanged += LocationChanged;
 
+            this.localizationResourceManager = manager;
+
             this.routePins = new ObservableCollection<Pin>();
             this.routePoints = new ObservableCollection<Pin>();
+
+            culture = CultureInfo.CurrentCulture;
 
             timer = new System.Timers.Timer();
             timer.Interval = 1000; // Interval each second
             timer.Elapsed += OnTimerInterval;
 
             // Reset UI elements
-            TotalDuration = "No Route Started!";
-            TotalDistance = "Total Distance Covered: 0 Kilometers";
-            DistancePrev = "No Previous Pin Availible!";
+            TotalDuration = string.Format(localizationResourceManager["Duration"], "00:00:00");
+            TotalDistance = string.Format(localizationResourceManager["Distance"], "0 Meters");
+            DistancePrev = string.Format(localizationResourceManager["Previous"], "0");
         }
 
         private void OnTimerInterval(object? sender, ElapsedEventArgs e)
@@ -82,7 +92,7 @@ namespace Routey.ViewModels
             TimeSpan add = new TimeSpan(0, 0, 1);
             TimePassed = TimePassed.Duration() + add;
             string time = TimePassed.ToFormattedString("HH:mm:ss");
-            TotalDuration = $"Route Duration: {time}";
+            TotalDuration = string.Format(localizationResourceManager["Duration"], time);
         }
 
         private int checksTillMarker = 0;
@@ -148,10 +158,10 @@ namespace Routey.ViewModels
             if (comma < 1)
             {
                 DistanceTracker += Double.Parse(distance.ToString()); // Show 2 digits after comma
-                TotalDistance = $"Total Distance Covered: {DistanceTracker.ToString()} Kilometers!";
+                TotalDistance = string.Format(localizationResourceManager["Distance"], $"{DistanceTracker.ToString()} Kilometer(s)");
             }
             DistanceTracker += Double.Parse(distance.ToString().Substring(0, comma + 2)); // Show 2 digits after comma
-            TotalDistance = $"Total Distance Covered: {DistanceTracker.ToString().Substring(0, comma + 2)} Kilometers!";
+            TotalDistance = string.Format(localizationResourceManager["Distance"], $"{DistanceTracker.ToString().Substring(0, comma + 2)} Kilometer(s)");
         }
 
         private void UpdateDistanceBetweenPoints(Pin? oldPin, Location user_location)
@@ -167,14 +177,10 @@ namespace Routey.ViewModels
                 {
                     distance = distance * 1000; // If the distance is less than 1 Kilometer(s), convert to Meter(s)
                     comma = distance.ToString().IndexOf('.') + 1;
-                    distanceMessage = $"You have walked {distance.ToString().Substring(0, comma + 2)} Meter(s) from your previous Point!"; // Show 2 digits after comma
+                    DistancePrev = string.Format(localizationResourceManager["Previous"], $"{distance.ToString().Substring(0, comma + 2)} Meter(s)"); // Show 2 digits after comma
                 }
                 else
-                    distanceMessage = $"You have walked {distance.ToString().Substring(0, comma + 2)} Kilometer(s) from your previous Point!"; // Show 2 digits after comma
-
-                DistancePrev = distanceMessage;
-                //TODO: Update total distance
-
+                    DistancePrev = string.Format(localizationResourceManager["Previous"], $"{distance.ToString().Substring(0, comma + 2)} Kilometer(s)"); // Show 2 digits after comma
             }
         }
 
@@ -189,9 +195,13 @@ namespace Routey.ViewModels
         [RelayCommand(CanExecute = nameof(CanStartListening))]
         public async Task StartListening()
         {
-            if (RouteName == null || RouteName == "Enter route name...")
+            if (RouteName == null || RouteName == "Enter route name..." || RouteName == "Voer route naam in...")
+            {
+                Toast message = (Toast)Toast.Make("Fill in a Route name before starting!", ToastDuration.Short, 14);
+                await message.Show();
                 return;
-
+            }
+            
             IsListening = true;
             IsNotListening = !IsListening;
             TimePassed = TimeSpan.Zero;
@@ -212,9 +222,10 @@ namespace Routey.ViewModels
             this.geolocation.StopListeningForeground();
 
             // Reset UI elements
-            TotalDuration = "No Route Started!";
-            TotalDistance = "Total Distance Covered: 0 Kilometers";
-            DistancePrev = "No Previous Pin Availible!";
+            TotalDuration = string.Format(localizationResourceManager["Duration"], "00:00:00");
+            TotalDistance = string.Format(localizationResourceManager["Distance"], "0 Meters");
+            DistancePrev = string.Format(localizationResourceManager["Previous"], "0");
+
             //TODO: Save Route in database
 
         }

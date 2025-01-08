@@ -71,7 +71,7 @@
 
             <!-- Labels to show information about the Route -->
             <Label x:Name="lblRouteInfo" Text="{lang:Translate RouteInfo}" Style="{StaticResource LabelStyleHeader}" />
-            <Label x:Name="lblDuration" Text="{Binding TotalDuration}" Style="{StaticResource LabelStyle}" />
+            <Label x:Name="lblDurationValue" Text="{Binding TotalDuration}" Style="{StaticResource LabelStyle}" />
             <Label x:Name="lblTotalDistance" Text="{Binding TotalDistance}" Style="{StaticResource LabelStyle}" />
             <Label x:Name="lblDistancePrev" Text="{Binding DistancePrev}" Style="{StaticResource LabelStyle}" />
 

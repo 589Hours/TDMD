@@ -70,6 +70,24 @@ namespace Routey.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have walked {0} in total!.
+        /// </summary>
+        internal static string Distance {
+            get {
+                return ResourceManager.GetString("Distance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Route time: {0}.
+        /// </summary>
+        internal static string Duration {
+            get {
+                return ResourceManager.GetString("Duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to End Route.
         /// </summary>
         internal static string EndRoute {
@@ -97,7 +115,16 @@ namespace Routey.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Previous Routes:.
+        ///   Looks up a localized string similar to You have walked {0} from your previous point!.
+        /// </summary>
+        internal static string Previous {
+            get {
+                return ResourceManager.GetString("Previous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous Routes.
         /// </summary>
         internal static string PreviousRoutes {
             get {

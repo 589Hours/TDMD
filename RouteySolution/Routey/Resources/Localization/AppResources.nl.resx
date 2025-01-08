@@ -120,6 +120,12 @@
   <data name="DeleteRoute" xml:space="preserve">
     <value>Verwijder Geselecteerde Route</value>
   </data>
+  <data name="Distance" xml:space="preserve">
+    <value>Je hebt in totaal {0} gelopen!</value>
+  </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Route tijd: {0}</value>
+  </data>
   <data name="EndRoute" xml:space="preserve">
     <value>Stop Route</value>
   </data>
@@ -129,8 +135,11 @@
   <data name="MapPage" xml:space="preserve">
     <value>Kaart Pagina</value>
   </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Je hebt {0} vanaf je laatste punt!</value>
+  </data>
   <data name="PreviousRoutes" xml:space="preserve">
-    <value>Vorige Routes:</value>
+    <value>Vorige Routes</value>
   </data>
   <data name="RouteInfo" xml:space="preserve">
     <value>Route Informatie</value>
