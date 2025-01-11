@@ -47,7 +47,7 @@ namespace Routey.Infrastructure.SQLiteDatabases
                 RouteDateTime = route.startRouteMoment,
                 RouteName = route.name,
                 AverageSpeed = route.GetAverageSpeed(),
-                TotalDistance = route.TotalDistance,
+                TotalDistance = Double.Round(route.TotalDistance, 2),
                 RouteDuration = route.TotalDuration
             });
         }

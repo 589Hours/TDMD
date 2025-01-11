@@ -4,19 +4,24 @@ namespace Routey;
 
 public partial class MapPage : ContentPage
 {
-	private MapPageViewModel viewModel;
+    private MapPageViewModel viewModel;
 
     public MapPage(MapPageViewModel mapPageViewModel)
-	{
-		InitializeComponent();
-		BindingContext = mapPageViewModel;
-		this.viewModel = mapPageViewModel;
-	}
+    {
+        InitializeComponent();
+        BindingContext = mapPageViewModel;
+        this.viewModel = mapPageViewModel;
+    }
+
+    bool hasStarted = false;
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
 
-		await viewModel.SetStartLocation();
+        if (!hasStarted)
+            await viewModel.SetStartLocation();
+
+        hasStarted = true;
     }
 }

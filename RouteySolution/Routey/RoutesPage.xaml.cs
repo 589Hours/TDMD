@@ -11,13 +11,23 @@ public partial class RoutesPage : ContentPage
 		InitializeComponent();
 
 		this.routesPageViewModel = routesPageViewModel;
-		BindingContext = this.routesPageViewModel;
+		BindingContext = routesPageViewModel;
 	}
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
 
-		await routesPageViewModel.GetRoutesAsync();
+        await routesPageViewModel.GetRoutesAsync();
+    }
+
+    private void RouteEntityTapped(object sender, TappedEventArgs e)
+    {
+        routesPageViewModel.OnRouteSelected(sender);
+    }
+
+    private async void DeleteButtonClicked(object sender, EventArgs e)
+    {
+        await routesPageViewModel.OnDeleteButtonPressed();
     }
 }

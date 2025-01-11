@@ -23,10 +23,12 @@
                 <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
                 <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
                 <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
             </Style>
             <Style TargetType="Button" x:Key="ButtonStyle">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light=White, Dark=White}" />
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBlue}, Dark=Gray}" />
+                <Setter Property="WidthRequest" Value="150" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -43,20 +45,13 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <!-- Track Route elements -->
             <Label x:Name="lblTrackRoute" Text="{lang:Translate TrackRoute}" Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyleHeader}" />
-            <Entry x:Name="eRouteName" Text="{Binding RouteName}" Placeholder="{lang:Translate EnterRoute}" IsEnabled="{Binding IsNotListening}" Grid.Row="1" Grid.Column="0" WidthRequest="160" Style="{StaticResource EntryStyle}" />
+            <Entry x:Name="eRouteName" Text="{Binding RouteName}" Placeholder="{lang:Translate EnterRoute}" IsEnabled="{Binding IsNotListening}" Grid.Row="1" Grid.Column="0" WidthRequest="250" Style="{StaticResource EntryStyle}" />
             <Button x:Name="btnStartRoute" Text="{lang:Translate StartRoute}" Command="{Binding StartListeningCommand}" IsEnabled="{Binding IsNotListening}" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource ButtonStyle}" />
             <Button x:Name="btnEndRoute" Text="{lang:Translate EndRoute}"  Command="{Binding StopListeningCommand}" IsEnabled="{Binding IsListening}" Grid.Row="2" Grid.Column="0" HorizontalOptions="End" Style="{StaticResource ButtonStyle}" />
-
-            <!-- Weather elements -->
-            <Label x:Name="lblWeather" Text="{lang:Translate Weather}" Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelStyleHeader}" />
-            <Image x:Name="imgIcon" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" />
-            <Label x:Name="lblTemp" Text="10C" Grid.Row="2" Grid.Column="1" Style="{StaticResource LabelStyle}" />
-
         </Grid>
 
         <VerticalStackLayout Margin="0,10,0,10" Spacing="5">

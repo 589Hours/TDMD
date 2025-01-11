@@ -74,8 +74,8 @@ namespace Routey.ViewModels
 
             this.localizationResourceManager = manager;
 
-            this.routePins = new ObservableCollection<Pin>();
-            this.routePoints = new ObservableCollection<Pin>();
+            RoutePins = new ObservableCollection<Pin>();
+            RoutePoints = new ObservableCollection<Pin>();
 
             timer = new System.Timers.Timer();
             timer.Interval = 1000; // Interval each second
@@ -100,22 +100,10 @@ namespace Routey.ViewModels
                 }
             } catch (UnauthorizedAccessException ex)
             {
-                var request = new NotificationRequest
-                {
-                    NotificationId = 1337,
-                    Title = "Location Permission",
-                    Description = "Please enable location services to use this feature",
-                    BadgeNumber = 42,
-                    Schedule = new NotificationRequestSchedule
-                    {
-                        NotifyTime = DateTime.Now.AddSeconds(5)
-                    }
-                };
-
-                await LocalNotificationCenter.Current.Show(request);
+                await NoPermissionNotification();
             } catch (Exception)
             {
-
+                await GeneralErrorNotification();
             }
         }
         private void OnTimerInterval(object? sender, ElapsedEventArgs e)
@@ -131,42 +119,54 @@ namespace Routey.ViewModels
 
         private async void LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
         {
-            var user_location = await this.geolocation.GetLastKnownLocationAsync();
-
-            if (user_location != null)
+            try
             {
-                this.CurrentPosition = user_location.ToString();
-                this.CurrentMapSpan = MapSpan.FromCenterAndRadius(user_location, Distance.FromMeters(250));
+                var user_location = await this.geolocation.GetLastKnownLocationAsync();
 
-                // Create a new Point to track distance
-                Pin pinPoint = MapPageViewModel.CreatePin(user_location, "Walk Point");
-                RoutePoints.Add(pinPoint);
+                if (user_location != null)
+                {
+                    this.CurrentPosition = user_location.ToString();
+                    this.CurrentMapSpan = MapSpan.FromCenterAndRadius(user_location, Distance.FromMeters(250));
 
-                // Add +1 to counter and add the speed
-                activeRoute.AmountOfRoutePoints++;
-                activeRoute.SumOfSpeeds += user_location.Speed;
+                    // Create a new Point to track distance
+                    Pin pinPoint = MapPageViewModel.CreatePin(user_location, "Walk Point");
+                    RoutePoints.Add(pinPoint);
 
-                if (RoutePoints.Count <= 1)
-                    return;
+                    // Add +1 to counter and add the speed
+                    activeRoute.AmountOfRoutePoints++;
+                    activeRoute.SumOfSpeeds += user_location.Speed;
 
-                UpdateTotalDistance(pinPoint, user_location);
+                    if (RoutePoints.Count <= 1)
+                        return;
 
-                //3 * 10 seconds = 30 seconds between each marker put on the map
-                if (activeRoute.AmountOfRoutePoints % 3 == 0)
-                    return;
+                    UpdateTotalDistance(pinPoint, user_location);
 
-                // Create a new Pin to show on the map
-                int routePointNumber = RoutePins.Count + 1; //+1 because the new marker increments the list
-                Pin pinPin = MapPageViewModel.CreatePin(user_location, $"Route Point {routePointNumber}");
-                RoutePins.Add(pinPin);
+                    //3 * 10 seconds = 30 seconds between each marker put on the map
+                    if (activeRoute.AmountOfRoutePoints % 3 == 0 || activeRoute.AmountOfRoutePoints % 3 == 1 || activeRoute.AmountOfRoutePoints % 3 == 2)
+                        return;
 
-                // If there is an old pin availible, calculate the distance between that and the new pin
-                Pin oldPin = null;
-                if (RoutePins.Count > 1)
-                    oldPin = RoutePins.ElementAt(RoutePins.Count - 2); // Previous pin = -1, but the list starts at 0
+                    // Create a new Pin to show on the map
+                    int routePointNumber = RoutePins.Count + 1; //+1 because the new marker increments the list
+                    Pin pinPin = MapPageViewModel.CreatePin(user_location, $"Route Point {routePointNumber}");
+                    RoutePins.Add(pinPin);
 
-                UpdateDistanceBetweenPoints(oldPin, user_location);
-            }
+                    // If there is an old pin availible, calculate the distance between that and the new pin
+                    Pin oldPin = null;
+                    if (RoutePins.Count > 1)
+                        oldPin = RoutePins.ElementAt(RoutePins.Count - 2); // Previous pin = -1, but the list starts at 0
+
+                    UpdateDistanceBetweenPoints(oldPin, user_location);
+                }
+            } catch (UnauthorizedAccessException)
+            {
+                await NoPermissionNotification();
+                StopListeningCrashed();
+            } catch (Exception)
+            {
+                await GeneralErrorNotification();
+                StopListeningCrashed();
+            } 
+
         }
 
         private static Pin CreatePin(Location user_location, string labelText)
@@ -252,30 +252,21 @@ namespace Routey.ViewModels
                     MinimumTime = TimeSpan.FromSeconds(10),
                     DesiredAccuracy = GeolocationAccuracy.Default
                 });
-            } catch (UnauthorizedAccessException ex)
+            } catch (UnauthorizedAccessException)
             {
-                var request = new NotificationRequest
-                {
-                    NotificationId = 1337,
-                    Title = "Location Permission",
-                    Description = "Please enable location services to use this feature",
-                    BadgeNumber = 42,
-                    Schedule = new NotificationRequestSchedule
-                    {
-                        NotifyTime = DateTime.Now.AddSeconds(5)
-                    }
-                };
-
-                await LocalNotificationCenter.Current.Show(request);
+                await NoPermissionNotification();
+                StopListeningCrashed();
             } catch (Exception)
             {
-
+                await GeneralErrorNotification();
+                StopListeningCrashed();
             }
         }
 
         [RelayCommand(CanExecute = nameof(CanStopListening))]
         public async Task StopListening()
         {
+            // Standard items
             IsListening = false;
             IsNotListening = !IsListening;
             timer.Stop();
@@ -294,6 +285,52 @@ namespace Routey.ViewModels
             TotalDuration = string.Format(localizationResourceManager["Duration"], "00:00:00");
             TotalDistance = string.Format(localizationResourceManager["Distance"], "0 Kilometer(s)");
             DistancePrev = string.Format(localizationResourceManager["Previous"], "0 Meter(s)");
+        }
+
+        private void StopListeningCrashed()
+        {
+            // Standard items
+            IsListening = false;
+            IsNotListening = !IsListening;
+            timer.Stop();
+            this.geolocation.StopListeningForeground();
+
+            // Reset (UI) elements
+            DistanceTracker = 0;
+            activeRoute = null;
+            TotalDuration = string.Format(localizationResourceManager["Duration"], "00:00:00");
+            TotalDistance = string.Format(localizationResourceManager["Distance"], "0 Kilometer(s)");
+            DistancePrev = string.Format(localizationResourceManager["Previous"], "0 Meter(s)");
+        }
+        #endregion
+
+        #region Notifcations
+        private async Task ShowNotification(string title, string subTitle, string message)
+        {
+            var request = new NotificationRequest
+            {
+                NotificationId = 1337,
+                Title = title,
+                Subtitle = subTitle,
+                Description = message,
+                CategoryType = NotificationCategoryType.Error,
+                BadgeNumber = 42,
+                Schedule = new NotificationRequestSchedule
+                {
+                    NotifyTime = DateTime.Now
+                }
+            };
+            await LocalNotificationCenter.Current.Show(request);
+        }
+
+        private async Task NoPermissionNotification()
+        {
+            await ShowNotification("Location Permission", "Error", "Please enable location services to use this feature.");
+        }
+
+        private async Task GeneralErrorNotification()
+        {
+            await ShowNotification("Unforseen Action", "Error", "An unforseen action has occured!");
         }
         #endregion
     }
