@@ -10,33 +10,28 @@ namespace Routey.Domain.Models
     {
         // TODO: Check later if datetimes are necessary (totaldistance / avg. speed)
         public string name { get; set; }
-        public List<RoutePoint> routePoints { get; set; }
-        public double totalDistance { get; set; }
+        public double TotalDistance { get; set; }
+        public string TotalDuration { get; set; }
         public DateTime startRouteMoment { get; set; }
-        public DateTime endRouteMoment { get; set; }
+        public double? SumOfSpeeds { get; set; }
+        public int AmountOfRoutePoints { get; set; }
 
-        public Route() { routePoints = new List<RoutePoint>(); }
-        public Route(string name, List<RoutePoint> points)
+        public Route(string name, DateTime startRouteMoment) 
         {
             this.name = name;
-            this.routePoints = points;
-        }
-
-        public double GetTotalRouteDistance()
-        {
-            //TODO: add business logic for calculating the total distance
-            throw new NotImplementedException();
-        }
-
-        public TimeSpan GetTotalRouteDuration()
-        {
-            // end - start = tijdsverschil
-            throw new NotImplementedException();
+            this.startRouteMoment = startRouteMoment;
+            this.TotalDistance = 0;
+            this.TotalDuration = "00:00:00";
+            this.SumOfSpeeds = 0;
+            this.AmountOfRoutePoints = 0;
         }
 
         public double GetAverageSpeed()
         {
-            throw new NotImplementedException();
+            if (SumOfSpeeds == null || AmountOfRoutePoints == 0)
+                return 0;
+
+            return (double) SumOfSpeeds / AmountOfRoutePoints;
         }
 
     }

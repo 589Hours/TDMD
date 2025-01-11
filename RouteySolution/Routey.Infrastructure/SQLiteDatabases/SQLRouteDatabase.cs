@@ -34,9 +34,6 @@ namespace Routey.Infrastructure.SQLiteDatabases
             if (this.db != null)
                 return;
 
-            if (!Path.Exists(DbPath))
-                File.Create(DbPath).Close();
-
             this.db = new SQLiteAsyncConnection(DbPath, Flags);
             var result = await db.CreateTableAsync<RouteEntity>();
             await CreateTestData();
@@ -50,8 +47,8 @@ namespace Routey.Infrastructure.SQLiteDatabases
                 RouteDateTime = route.startRouteMoment,
                 RouteName = route.name,
                 AverageSpeed = route.GetAverageSpeed(),
-                TotalDistance = route.GetTotalRouteDistance(),
-                RouteDuration = route.GetTotalRouteDuration()
+                TotalDistance = route.TotalDistance,
+                RouteDuration = route.TotalDuration
             });
         }
 
@@ -69,21 +66,19 @@ namespace Routey.Infrastructure.SQLiteDatabases
             await db.DeleteAsync(routeEntity);
         }
 
-        public async Task CreateTestData() // TODO fix bug writing test data into db3-file
-        {
-            Route route1 = new Route();
-            route1.name = "route 1";
-            route1.startRouteMoment = DateTime.ParseExact("24-12-2024 15:30", "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
-            route1.endRouteMoment = DateTime.ParseExact("24-12-2024 16:00", "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
-            route1.totalDistance = 1;
-            route1.routePoints = new List<RoutePoint>() { new RoutePoint(10, 10, 5) };
+        public async Task CreateTestData()
+        { 
+            Route route1 = new Route("route 1", DateTime.ParseExact("24-12-2024 15:30", "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture));
+            route1.TotalDistance = 1;
+            route1.AmountOfRoutePoints = 4;
+            route1.SumOfSpeeds = 12;
+            route1.TotalDuration = "01:22:00";
 
-            Route route2 = new Route();
-            route2.name = "route 2";
-            route2.startRouteMoment = DateTime.ParseExact("23-12-2024 17:30", "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
-            route2.endRouteMoment = DateTime.ParseExact("23-12-2024 18:00", "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
-            route2.totalDistance = 5;
-            route2.routePoints = new List<RoutePoint>() { new RoutePoint(30, 10, 10) };
+            Route route2 = new Route("route 2", DateTime.ParseExact("23-12-2024 17:30", "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture));
+            route2.TotalDistance = 5;
+            route2.AmountOfRoutePoints = 10;
+            route2.SumOfSpeeds = 50;
+            route2.TotalDuration = "12:22:33";
 
             await AddRouteAsync(route1);
             await AddRouteAsync(route2);

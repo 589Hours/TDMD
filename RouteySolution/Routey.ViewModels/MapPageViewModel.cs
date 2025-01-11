@@ -11,6 +11,7 @@ using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 using Microsoft.Maui.Platform;
 using Routey.Domain.Models;
+using Routey.Domain.SQLiteDatabases;
 
 namespace Routey.ViewModels
 {
@@ -18,6 +19,7 @@ namespace Routey.ViewModels
     {
         private readonly IGeolocation geolocation;
         private readonly ILocalizationResourceManager localizationResourceManager;
+        private readonly IRouteDatabase routeDatabase;
 
         [ObservableProperty]
         public string routeName;
@@ -61,20 +63,20 @@ namespace Routey.ViewModels
 
         public bool CanStopListening() => IsListening;
 
-        private CultureInfo culture;
         private System.Timers.Timer timer;
+        private Route activeRoute;
 
-        public MapPageViewModel(IGeolocation geolocation, ILocalizationResourceManager manager)
+        public MapPageViewModel(IGeolocation geolocation, ILocalizationResourceManager manager, IRouteDatabase routeDatabase)
         {
             this.geolocation = geolocation;
             this.geolocation.LocationChanged += LocationChanged;
+
+            this.routeDatabase = routeDatabase;
 
             this.localizationResourceManager = manager;
 
             this.routePins = new ObservableCollection<Pin>();
             this.routePoints = new ObservableCollection<Pin>();
-
-            culture = CultureInfo.CurrentCulture;
 
             timer = new System.Timers.Timer();
             timer.Interval = 1000; // Interval each second
@@ -87,16 +89,34 @@ namespace Routey.ViewModels
             DistancePrev = string.Format(localizationResourceManager["Previous"], "0 Meter(s)");
         }
 
+        public async Task SetStartLocation()
+        {
+            try
+            {
+                var userLocation = await this.geolocation.GetLocationAsync();
+                if (userLocation != null)
+                {
+                    this.CurrentPosition = userLocation.ToString();
+                    this.CurrentMapSpan = MapSpan.FromCenterAndRadius(userLocation, Distance.FromMeters(250));
+                }
+            } catch (UnauthorizedAccessException ex)
+            {
+                
+            } catch (Exception)
+            {
+
+            }
+        }
         private void OnTimerInterval(object? sender, ElapsedEventArgs e)
         {
             // Add a second every Timer interval (also every second)
             TimeSpan add = new TimeSpan(0, 0, 1);
             TimePassed = TimePassed.Duration() + add;
+
+            // Format the TimeSpan to a string
             string time = TimePassed.ToFormattedString("HH:mm:ss");
             TotalDuration = string.Format(localizationResourceManager["Duration"], time);
         }
-
-        private int checksTillMarker = 0;
 
         private async void LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
         {
@@ -104,13 +124,16 @@ namespace Routey.ViewModels
 
             if (user_location != null)
             {
-                checksTillMarker++;
                 this.CurrentPosition = user_location.ToString();
-                this.CurrentMapSpan = MapSpan.FromCenterAndRadius(user_location, Distance.FromMeters(500));
+                this.CurrentMapSpan = MapSpan.FromCenterAndRadius(user_location, Distance.FromMeters(250));
 
                 // Create a new Point to track distance
                 Pin pinPoint = MapPageViewModel.CreatePin(user_location, "Walk Point");
                 RoutePoints.Add(pinPoint);
+
+                // Add +1 to counter and add the speed
+                activeRoute.AmountOfRoutePoints++;
+                activeRoute.SumOfSpeeds += user_location.Speed;
 
                 if (RoutePoints.Count <= 1)
                     return;
@@ -118,7 +141,7 @@ namespace Routey.ViewModels
                 UpdateTotalDistance(pinPoint, user_location);
 
                 //3 * 10 seconds = 30 seconds between each marker put on the map
-                if (checksTillMarker < 3)
+                if (activeRoute.AmountOfRoutePoints % 3 == 0)
                     return;
 
                 // Create a new Pin to show on the map
@@ -132,8 +155,6 @@ namespace Routey.ViewModels
                     oldPin = RoutePins.ElementAt(RoutePins.Count - 2); // Previous pin = -1, but the list starts at 0
 
                 UpdateDistanceBetweenPoints(oldPin, user_location);
-
-                checksTillMarker = 0;
             }
         }
 
@@ -155,16 +176,16 @@ namespace Routey.ViewModels
             if (distance == 0)
                 return;
 
-            int comma = distance.ToString().IndexOf(',') + 1; // Get the index of the dot (including the dot itself)
-            if (comma < 1)
-            {
-                DistanceTracker += Double.Parse(distance.ToString().Substring(0, comma+2)); // Show 2 digits after comma
-                TotalDistance = string.Format(localizationResourceManager["Distance"], $"{DistanceTracker.ToString()} Kilometer(s)");
-            }
-            DistanceTracker += Double.Parse(distance.ToString().Substring(0, comma+2)); // Show 2 digits after comma
-            TotalDistance = string.Format(localizationResourceManager["Distance"], $"{DistanceTracker.ToString().Substring(0, comma + 2)} Kilometer(s)");
+            // Add to total distance of the route and to property
+            DistanceTracker += distance;
+
+            if (DistanceTracker < 1)
+                TotalDistance = string.Format(localizationResourceManager["Distance"], $"{Double.Round(DistanceTracker * 1000, 2)} Meter(s)");
+            else
+                TotalDistance = string.Format(localizationResourceManager["Distance"], $"{Double.Round(DistanceTracker, 2)} Kilometer(s)");
         }
 
+        #region Methods for updating distance between points
         private void UpdateDistanceBetweenPoints(Pin? oldPin, Location user_location)
         {
             // If there is a previous pin availible, calculate the distance between these pins
@@ -182,6 +203,7 @@ namespace Routey.ViewModels
                 }
                 else
                     DistancePrev = string.Format(localizationResourceManager["Previous"], $"{distance.ToString().Substring(0, comma + 2)} Kilometer(s)"); // Show 2 digits after comma
+
             }
         }
 
@@ -192,6 +214,9 @@ namespace Routey.ViewModels
                     newLocation, DistanceUnits.Kilometers);
             
         }
+        #endregion
+
+        #region Listening Methods
 
         [RelayCommand(CanExecute = nameof(CanStartListening))]
         public async Task StartListening()
@@ -202,35 +227,51 @@ namespace Routey.ViewModels
                 await message.Show();
                 return;
             }
-            
+
+            activeRoute = new Route(RouteName, DateTime.Now);
+
             IsListening = true;
             IsNotListening = !IsListening;
             TimePassed = TimeSpan.Zero;
             timer.Start();
-            await this.geolocation.StartListeningForegroundAsync(new GeolocationListeningRequest
+            try
             {
-                MinimumTime = TimeSpan.FromSeconds(10),
-                DesiredAccuracy = GeolocationAccuracy.Default
-            });
+                await this.geolocation.StartListeningForegroundAsync(new GeolocationListeningRequest
+                {
+                    MinimumTime = TimeSpan.FromSeconds(10),
+                    DesiredAccuracy = GeolocationAccuracy.Default
+                });
+            } catch (UnauthorizedAccessException ex)
+            {
+
+            } catch (Exception)
+            {
+
+            }
         }
 
         [RelayCommand(CanExecute = nameof(CanStopListening))]
-        public void StopListening()
+        public async Task StopListening()
         {
             IsListening = false;
             IsNotListening = !IsListening;
             timer.Stop();
             this.geolocation.StopListeningForeground();
 
-            // Reset UI elements
+            // Ready Route for saving
+            activeRoute.TotalDuration = TimePassed.ToFormattedString("HH:mm:ss");
+            activeRoute.TotalDistance = DistanceTracker;
+
+            //Save Route in database
+            await routeDatabase.AddRouteAsync(activeRoute);
+
+            // Reset (UI) elements
             DistanceTracker = 0;
+            activeRoute = null;
             TotalDuration = string.Format(localizationResourceManager["Duration"], "00:00:00");
             TotalDistance = string.Format(localizationResourceManager["Distance"], "0 Kilometer(s)");
             DistancePrev = string.Format(localizationResourceManager["Previous"], "0 Meter(s)");
-
-            //TODO: Save Route in database
-
         }
-
+        #endregion
     }
 }

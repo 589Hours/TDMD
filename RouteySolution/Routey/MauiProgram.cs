@@ -45,7 +45,10 @@ namespace Routey
             builder.Services.AddTransient<SettingsPageViewModel>();
 
             // SQLite Database & HttpClient & Map:
-            builder.Services.AddSingleton<IRouteDatabase>(new SQLRouteDatabase(Path.Combine(FileSystem.Current.AppDataDirectory, "routesqlitedatabase.db3")));
+            builder.Services.AddSingleton<IRouteDatabase, SQLRouteDatabase>(o => 
+            {
+                return new SQLRouteDatabase(Path.Combine(FileSystem.Current.AppDataDirectory, "routesqlitedatabase.db3"));
+            });
             builder.Services.AddHttpClient<IWeatherApiClient, WeatherApiClient>(client =>
             {
                 // TODO add string to client BaseAddress

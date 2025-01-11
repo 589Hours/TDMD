@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Routey.Domain.SQLiteDatabases;
@@ -19,10 +20,21 @@ namespace Routey.ViewModels
         public RoutesPageViewModel(IRouteDatabase database)
         {
             this.database = database;
-            Task.Run(async () =>
+        }
+
+        public async Task GetRoutesAsync()
+        {
+            IEnumerable<RouteEntity> routes = await database.GetRoutesAsync();
+            foreach (RouteEntity routeEntity in routes)
             {
-                await database.GetRoutesAsync();
-            });
+                Debug.WriteLine($"Got route with:" +
+                    $"\nName: {routeEntity.RouteName}" +
+                    $"\nStart date: {routeEntity.RouteDateTime}" +
+                    $"\nDistance: {routeEntity.TotalDistance}" +
+                    $"\nDuration: {routeEntity.RouteDuration}" +
+                    $"\nAverage Speed: {routeEntity.AverageSpeed}");
+            }
+            RouteHistory = new ObservableCollection<RouteEntity>(routes);
         }
 
         [RelayCommand]

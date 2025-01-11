@@ -11,6 +11,13 @@ public partial class RoutesPage : ContentPage
 		InitializeComponent();
 
 		this.routesPageViewModel = routesPageViewModel;
-		BindingContext = routesPageViewModel;
+		BindingContext = this.routesPageViewModel;
 	}
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+		await routesPageViewModel.GetRoutesAsync();
+    }
 }
