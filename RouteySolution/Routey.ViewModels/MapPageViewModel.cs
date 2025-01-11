@@ -142,7 +142,7 @@ namespace Routey.ViewModels
                     UpdateTotalDistance(pinPoint, user_location);
 
                     //3 * 10 seconds = 30 seconds between each marker put on the map
-                    if (activeRoute.AmountOfRoutePoints % 3 == 0 || activeRoute.AmountOfRoutePoints % 3 == 1 || activeRoute.AmountOfRoutePoints % 3 == 2)
+                    if (activeRoute.AmountOfRoutePoints % 3 == 0 || activeRoute.AmountOfRoutePoints % 3 == 2)
                         return;
 
                     // Create a new Pin to show on the map
