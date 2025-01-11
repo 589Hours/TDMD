@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui;
 using LocalizationResourceManager.Maui;
 using Microsoft.Extensions.Logging;
+using Plugin.LocalNotification;
 using Routey.Domain.Clients;
 using Routey.Domain.SQLiteDatabases;
 using Routey.Infrastructure.SQLiteDatabases;
@@ -18,6 +19,7 @@ namespace Routey
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseLocalNotification()
                 .UseLocalizationResourceManager(settings =>
                 {
                     settings.RestoreLatestCulture(true);

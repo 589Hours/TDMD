@@ -1,6 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
 using System.Timers;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
@@ -10,6 +8,7 @@ using LocalizationResourceManager.Maui;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 using Microsoft.Maui.Platform;
+using Plugin.LocalNotification;
 using Routey.Domain.Models;
 using Routey.Domain.SQLiteDatabases;
 
@@ -101,7 +100,19 @@ namespace Routey.ViewModels
                 }
             } catch (UnauthorizedAccessException ex)
             {
-                
+                var request = new NotificationRequest
+                {
+                    NotificationId = 1337,
+                    Title = "Location Permission",
+                    Description = "Please enable location services to use this feature",
+                    BadgeNumber = 42,
+                    Schedule = new NotificationRequestSchedule
+                    {
+                        NotifyTime = DateTime.Now.AddSeconds(5)
+                    }
+                };
+
+                await LocalNotificationCenter.Current.Show(request);
             } catch (Exception)
             {
 
@@ -243,7 +254,19 @@ namespace Routey.ViewModels
                 });
             } catch (UnauthorizedAccessException ex)
             {
+                var request = new NotificationRequest
+                {
+                    NotificationId = 1337,
+                    Title = "Location Permission",
+                    Description = "Please enable location services to use this feature",
+                    BadgeNumber = 42,
+                    Schedule = new NotificationRequestSchedule
+                    {
+                        NotifyTime = DateTime.Now.AddSeconds(5)
+                    }
+                };
 
+                await LocalNotificationCenter.Current.Show(request);
             } catch (Exception)
             {
 
