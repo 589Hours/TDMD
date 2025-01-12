@@ -2,6 +2,10 @@
 
 namespace Routey.Domain.SQLiteDatabases.Entities
 {
+    /// <summary>
+    /// This class has been documented with the help of GitHub Copilot!
+    /// RouteEntity class is a model class for the RouteEntity table in the SQLite database.
+    /// </summary>
     public class RouteEntity
     {
         [PrimaryKey]

@@ -19,7 +19,7 @@ public partial class MapPage : ContentPage
     {
         base.OnAppearing();
 
-        if (!hasStarted)
+        if (!hasStarted) // Activate this one time once the app has started
             await viewModel.SetStartLocation();
 
         hasStarted = true;

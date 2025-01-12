@@ -2,6 +2,10 @@
 
 namespace Routey.ViewModels
 {
+    /// <summary>
+    /// This class has been documented with the help of GitHub Copilot!
+    /// This class is used to represent a route pin on the map.
+    /// </summary>
     public partial class RoutePinViewModel : ObservableObject
     {
         [ObservableProperty]

@@ -6,6 +6,10 @@ using SQLite;
 
 namespace Routey.Infrastructure.SQLiteDatabases
 {
+    /// <summary>
+    /// This class has been documented with the help of GitHub Copilot!
+    /// SQLite database object that can be used to perform CRUD operations on the RouteEntity table.
+    /// </summary>
     public class SQLRouteDatabase : IRouteDatabase
     {
         public const SQLite.SQLiteOpenFlags Flags =
@@ -29,6 +33,10 @@ namespace Routey.Infrastructure.SQLiteDatabases
             });
         }
 
+        /// <summary>
+        /// Initializes the database connection and creates the RouteEntity table if it doesn't exist.
+        /// </summary>
+        /// <returns></returns>
         public async Task Init()
         {
             if (this.db != null)
@@ -60,6 +68,10 @@ namespace Routey.Infrastructure.SQLiteDatabases
             await db.DeleteAsync(routeEntity);
         }
 
+        /// <summary>
+        /// Helper method that creates test data in the database.
+        /// </summary>
+        /// <returns></returns>
         public async Task CreateTestData()
         { 
             Route route1 = new Route("route 1", DateTime.ParseExact("24-12-2024 15:30", "dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture));

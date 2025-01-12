@@ -4,6 +4,10 @@ using System.Globalization;
 
 namespace Routey.ViewModels
 {
+    /// <summary>
+    /// This class has been documented with the help of GitHub Copilot!
+    /// ViewModel for the SettingsPage. This class is responsible for handling the logic of the SettingsPage.
+    /// </summary>
     public partial class SettingsPageViewModel : ObservableObject
     {
         private ILocalizationResourceManager localizationResourceManager; // To keep track of current language, and it's translations
@@ -12,6 +16,10 @@ namespace Routey.ViewModels
             localizationResourceManager = manager;
         }
 
+        /// <summary>
+        /// Handle the changing of the language. This can be either English or Dutch.
+        /// </summary>
+        /// <param name="language"></param>
         public void LanguageChanged(string language)
         {
             switch (language) // All languages are listed here

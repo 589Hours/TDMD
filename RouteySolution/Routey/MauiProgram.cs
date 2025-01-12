@@ -10,12 +10,17 @@ using Routey.ViewModels;
 
 namespace Routey
 {
+    /// <summary>
+    /// This class has been documented with the help of GitHub Copilot!
+    /// The main entry point for the application.
+    /// </summary>
     public static class MauiProgram
     {
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
             builder
+                // Packages and app components:
                 .UseMauiApp<App>()
                 .UseLocalNotification()
                 .UseLocalizationResourceManager(settings =>
@@ -36,25 +41,23 @@ namespace Routey
 
             // Views & ViewModels:
             builder.Services.AddTransient<MapPage>();
-            builder.Services.AddTransient<MapPageViewModel>(); //AddSingleton              
+            builder.Services.AddTransient<MapPageViewModel>();          
 
             builder.Services.AddTransient<RoutesPage>();
-            builder.Services.AddTransient<RoutesPageViewModel>(); //AddSingleton
+            builder.Services.AddTransient<RoutesPageViewModel>();
 
-            builder.Services.AddTransient<SettingsPage>(); // This page doesn't have a ViewModel because the language and modes are updated dynamically
+            builder.Services.AddTransient<SettingsPage>();
             builder.Services.AddTransient<SettingsPageViewModel>();
 
-            // SQLite Database & HttpClient & Map:
+            // SQLite Database & Map Location:
             builder.Services.AddSingleton<IRouteDatabase, SQLRouteDatabase>(o => 
             {
-                return new SQLRouteDatabase(Path.Combine(FileSystem.Current.AppDataDirectory, "routesqlitedatabase.db3"));
+                return new SQLRouteDatabase(Path.Combine(FileSystem.Current.AppDataDirectory, "routesqlitedatabase.db3")); // Database file name
             });
             builder.Services.AddSingleton<IGeolocation>(o => Geolocation.Default);
-
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-
             return builder.Build();
         }
     }

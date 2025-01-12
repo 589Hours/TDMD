@@ -7,6 +7,10 @@ using Routey.Domain.SQLiteDatabases.Entities;
 
 namespace Routey.ViewModels
 {
+    /// <summary>
+    /// This class has been documented with the help of GitHub Copilot!
+    /// ViewModel for the RoutesPage. This class is responsible for handling the logic of the RoutesPage.
+    /// </summary>
     public partial class RoutesPageViewModel : ObservableObject
     {
         private IRouteDatabase database;
@@ -28,13 +32,21 @@ namespace Routey.ViewModels
             this.database = database;
             SelectedRoute = null;
         }
-        
+
+        /// <summary>
+        /// Gets the Routes from the database and sets the RouteHistory property.
+        /// </summary>
+        /// <returns></returns>
         public async Task GetRoutesAsync()
         {
             IEnumerable<RouteEntity> routes = await database.GetRoutesAsync();
             RouteHistory = new ObservableCollection<RouteEntity>(routes);
         }
 
+        /// <summary>
+        /// When a Route is selected, update the borde color of the selected frame. Also, set the SelectedRoute property.
+        /// </summary>
+        /// <param name="sender"></param>
         private Frame previousSelectedFrame;
         public void OnRouteSelected(object sender)
         {
@@ -54,6 +66,10 @@ namespace Routey.ViewModels
             }
         }
 
+        /// <summary>
+        /// Deletes a Route from the database and the RouteHistory.
+        /// </summary>
+        /// <returns></returns>
         public async Task OnDeleteButtonPressed()
         {
             RouteHistory.Remove(SelectedRoute);

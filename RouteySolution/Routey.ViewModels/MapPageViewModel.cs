@@ -14,6 +14,10 @@ using Routey.Domain.SQLiteDatabases;
 
 namespace Routey.ViewModels
 {
+    /// <summary>
+    /// This class has been documented with the help of GitHub Copilot!
+    /// ViewModel for the MapPage. This ViewModel is responsible for the logic of the MapPage.
+    /// </summary>
     public partial class MapPageViewModel : ObservableObject
     {
         private readonly IGeolocation geolocation;
@@ -88,6 +92,44 @@ namespace Routey.ViewModels
             DistancePrev = string.Format(localizationResourceManager["Previous"], "0 Meter(s)");
         }
 
+        /// <summary>
+        /// Method to update the time every second.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnTimerInterval(object? sender, ElapsedEventArgs e)
+        {
+            // Add a second every Timer interval (also every second)
+            TimeSpan add = new TimeSpan(0, 0, 1);
+            TimePassed = TimePassed.Duration() + add;
+
+            // Format the TimeSpan to a string
+            string time = TimePassed.ToFormattedString("HH:mm:ss");
+            TotalDuration = string.Format(localizationResourceManager["Duration"], time);
+        }
+
+        /// <summary>
+        /// Helper method to create a new Pin.
+        /// </summary>
+        /// <param name="user_location"></param>
+        /// <param name="labelText"></param>
+        /// <returns></returns>
+        private static Pin CreatePin(Location user_location, string labelText)
+        {
+            Pin newPin = new Pin
+            {
+                Type = PinType.Generic,
+                Label = labelText,
+                Location = user_location
+            };
+            return newPin;
+        }
+
+        #region Location Events
+        /// <summary>
+        /// When starting the app, set the start location of the user.
+        /// </summary>
+        /// <returns></returns>
         public async Task SetStartLocation()
         {
             try
@@ -106,17 +148,12 @@ namespace Routey.ViewModels
                 await GeneralErrorNotification();
             }
         }
-        private void OnTimerInterval(object? sender, ElapsedEventArgs e)
-        {
-            // Add a second every Timer interval (also every second)
-            TimeSpan add = new TimeSpan(0, 0, 1);
-            TimePassed = TimePassed.Duration() + add;
 
-            // Format the TimeSpan to a string
-            string time = TimePassed.ToFormattedString("HH:mm:ss");
-            TotalDuration = string.Format(localizationResourceManager["Duration"], time);
-        }
-
+        /// <summary>
+        /// Method to update the location of the user and change UI elements accordingly. Also updates the Route.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
         {
             try
@@ -166,20 +203,15 @@ namespace Routey.ViewModels
                 await GeneralErrorNotification();
                 StopListeningCrashed();
             } 
-
         }
+        #endregion
 
-        private static Pin CreatePin(Location user_location, string labelText)
-        {
-            Pin newPin = new Pin
-            {
-                Type = PinType.Generic,
-                Label = labelText,
-                Location = user_location
-            };
-            return newPin;
-        }
-
+        #region Methods for updating distance
+        /// <summary>
+        /// Updates the total distance of the Route and changes the UI element accordingly.
+        /// </summary>
+        /// <param name="pinPoint"></param>
+        /// <param name="user_location"></param>
         private void UpdateTotalDistance(Pin pinPoint, Location user_location)
         {
             // If there is a previous user location availible, calculate the distance between these points
@@ -196,7 +228,11 @@ namespace Routey.ViewModels
                 TotalDistance = string.Format(localizationResourceManager["Distance"], $"{Double.Round(DistanceTracker, 2)} Kilometer(s)");
         }
 
-        #region Methods for updating distance between points
+        /// <summary>
+        /// Updates the distance between the previous pin and the current user location. Also changes the UI element accordingly.
+        /// </summary>
+        /// <param name="oldPin"></param>
+        /// <param name="user_location"></param>
         private void UpdateDistanceBetweenPoints(Pin? oldPin, Location user_location)
         {
             // If there is a previous pin availible, calculate the distance between these pins
@@ -214,10 +250,15 @@ namespace Routey.ViewModels
                 }
                 else
                     DistancePrev = string.Format(localizationResourceManager["Previous"], $"{distance.ToString().Substring(0, comma + 2)} Kilometer(s)"); // Show 2 digits after comma
-
             }
         }
 
+        /// <summary>
+        /// Helper method to calculate the distance between two locations.
+        /// </summary>
+        /// <param name="oldLocation"></param>
+        /// <param name="newLocation"></param>
+        /// <returns></returns>
         private double CalculateDistanceBetweenLocations(Pin oldLocation, Location newLocation)
         {
             return Location.CalculateDistance(oldLocation.Location.Latitude,
@@ -229,6 +270,10 @@ namespace Routey.ViewModels
 
         #region Listening Methods
 
+        /// <summary>
+        /// When we start the route, start listening to the user's location and set the active Route.
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand(CanExecute = nameof(CanStartListening))]
         public async Task StartListening()
         {
@@ -263,6 +308,10 @@ namespace Routey.ViewModels
             }
         }
 
+        /// <summary>
+        /// When we stop the route, stop listening to the user's location and save the Route in the database.
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand(CanExecute = nameof(CanStopListening))]
         public async Task StopListening()
         {
@@ -287,6 +336,9 @@ namespace Routey.ViewModels
             DistancePrev = string.Format(localizationResourceManager["Previous"], "0 Meter(s)");
         }
 
+        /// <summary>
+        /// When the app crashes while listening, stop listening and reset UI elements.
+        /// </summary>
         private void StopListeningCrashed()
         {
             // Standard items
@@ -304,7 +356,14 @@ namespace Routey.ViewModels
         }
         #endregion
 
-        #region Notifcations
+        #region Notifications
+        /// <summary>
+        /// General method to show a notification.
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="subTitle"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         private async Task ShowNotification(string title, string subTitle, string message)
         {
             var request = new NotificationRequest
@@ -323,11 +382,14 @@ namespace Routey.ViewModels
             await LocalNotificationCenter.Current.Show(request);
         }
 
+        /// <summary>
+        /// Specific pre-made notifications.
+        /// </summary>
+        /// <returns></returns>
         private async Task NoPermissionNotification()
         {
             await ShowNotification("Location Permission", "Error", "Please enable location services to use this feature.");
         }
-
         private async Task GeneralErrorNotification()
         {
             await ShowNotification("Unforseen Action", "Error", "An unforseen action has occured!");
