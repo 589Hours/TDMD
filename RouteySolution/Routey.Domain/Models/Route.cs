@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Routey.Domain.SQLiteDatabases.Entities;
 
 namespace Routey.Domain.Models
 {
@@ -34,5 +35,16 @@ namespace Routey.Domain.Models
             return (double) SumOfSpeeds / AmountOfRoutePoints;
         }
 
+        public RouteEntity ConvertToRouteEntity()
+        {
+            return new RouteEntity
+            {
+                RouteDateTime = this.startRouteMoment,
+                RouteName = this.name,
+                AverageSpeed = GetAverageSpeed(),
+                TotalDistance = Double.Round(this.TotalDistance, 2),
+                RouteDuration = this.TotalDuration
+            };
+        }
     }
 }

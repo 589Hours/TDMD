@@ -3,10 +3,8 @@ using CommunityToolkit.Maui;
 using LocalizationResourceManager.Maui;
 using Microsoft.Extensions.Logging;
 using Plugin.LocalNotification;
-using Routey.Domain.Clients;
 using Routey.Domain.SQLiteDatabases;
 using Routey.Infrastructure.SQLiteDatabases;
-using Routey.Infrastructure.WeatherApiClient;
 using Routey.Resources.Localization;
 using Routey.ViewModels;
 
@@ -50,11 +48,6 @@ namespace Routey
             builder.Services.AddSingleton<IRouteDatabase, SQLRouteDatabase>(o => 
             {
                 return new SQLRouteDatabase(Path.Combine(FileSystem.Current.AppDataDirectory, "routesqlitedatabase.db3"));
-            });
-            builder.Services.AddHttpClient<IWeatherApiClient, WeatherApiClient>(client =>
-            {
-                // TODO add string to client BaseAddress
-                client.BaseAddress = new Uri("");
             });
             builder.Services.AddSingleton<IGeolocation>(o => Geolocation.Default);
 

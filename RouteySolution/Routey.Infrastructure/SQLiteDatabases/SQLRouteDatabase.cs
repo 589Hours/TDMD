@@ -43,13 +43,7 @@ namespace Routey.Infrastructure.SQLiteDatabases
         {
             await Init();
 
-            await db.InsertAsync(new RouteEntity { 
-                RouteDateTime = route.startRouteMoment,
-                RouteName = route.name,
-                AverageSpeed = route.GetAverageSpeed(),
-                TotalDistance = Double.Round(route.TotalDistance, 2),
-                RouteDuration = route.TotalDuration
-            });
+            await db.InsertAsync(route.ConvertToRouteEntity());
         }
 
         public async Task<IEnumerable<RouteEntity>> GetRoutesAsync()
