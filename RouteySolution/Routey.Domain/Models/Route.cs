@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Routey.Domain.SQLiteDatabases.Entities;
+﻿using Routey.Domain.SQLiteDatabases.Entities;
 
 namespace Routey.Domain.Models
 {
     public class Route
     {
-        // TODO: Check later if datetimes are necessary (totaldistance / avg. speed)
         public string name { get; set; }
         public double TotalDistance { get; set; }
         public string TotalDuration { get; set; }

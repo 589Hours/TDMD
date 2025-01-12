@@ -1,5 +1,3 @@
-using System.Globalization;
-using LocalizationResourceManager.Maui;
 using Routey.ViewModels;
 
 namespace Routey;

@@ -77,8 +77,5 @@ namespace Routey.Infrastructure.SQLiteDatabases
             await AddRouteAsync(route1);
             await AddRouteAsync(route2);
         }
-
-        //TODO: Database wipe method/ check list usage
-
     }
 }
