@@ -35,13 +35,29 @@ namespace Routey.Domain.Tests
         }
 
         [TestMethod]
-        // unhappy flow
+        // unhappy flow: Dividing by zero
         public void RouteAverageSpeed_IsCorrectlyHandled_WhenGivenAZeroToDivideBy()
         {
             // Arrange
             Route route = testRoute;
             route.AmountOfRoutePoints = 0;
 
+            double expectedAverageSpeed = 0;
+
+            // Act
+            double actualAverageSpeed = route.GetAverageSpeed();
+
+            // Assert
+            Assert.AreEqual(expectedAverageSpeed, actualAverageSpeed);
+        }
+
+        [TestMethod]
+        // unhappy flow: Sumspeeds is null
+        public void RouteAverageSpeed_IsCorrectlyHandled_WhenSumOfSpeedsIsNull()
+        {
+            // Arrange
+            Route route = testRoute;
+            route.SumOfSpeeds = null;
             double expectedAverageSpeed = 0;
 
             // Act
@@ -77,7 +93,7 @@ namespace Routey.Domain.Tests
             Assert.AreEqual(expectedRouteEntity.AverageSpeed, actualRouteEntity.AverageSpeed);
             Assert.AreEqual(expectedRouteEntity.TotalDistance, actualRouteEntity.TotalDistance);
             Assert.AreEqual(expectedRouteEntity.RouteDuration, actualRouteEntity.RouteDuration);
-        }
+        } 
         #endregion
     }
 }

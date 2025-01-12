@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<coverage line-rate="1" branch-rate="1" complexity="33" version="1.9" timestamp="1736697201" lines-covered="90" lines-valid="90" branches-covered="4" branches-valid="4">
+  <packages>
+    <package line-rate="1" branch-rate="1" complexity="5" name="Routey.Domain.Tests">
+      <classes>
+        <class line-rate="1" branch-rate="1" complexity="5" name="Routey.Domain.Tests.ModelTests" filename="C:\Users\rikva\Documents\GitKraken codes\TDMD\RouteySolution\Routey.Domain.Tests\ModelTests.cs">
+          <methods>
+            <method line-rate="1" branch-rate="1" complexity="1" name="Setup" signature="()">
+              <lines>
+                <line number="13" hits="1" branch="False" />
+                <line number="14" hits="1" branch="False" />
+                <line number="15" hits="1" branch="False" />
+                <line number="16" hits="1" branch="False" />
+                <line number="17" hits="1" branch="False" />
+                <line number="18" hits="1" branch="False" />
+                <line number="19" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="RouteAverageSpeed_IsCorrectlyCalcated_WhenGivenACorrectDivision" signature="()">
+              <lines>
+                <line number="25" hits="1" branch="False" />
+                <line number="27" hits="1" branch="False" />
+                <line number="28" hits="1" branch="False" />
+                <line number="31" hits="1" branch="False" />
+                <line number="34" hits="1" branch="False" />
+                <line number="35" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="RouteAverageSpeed_IsCorrectlyHandled_WhenGivenAZeroToDivideBy" signature="()">
+              <lines>
+                <line number="40" hits="1" branch="False" />
+                <line number="42" hits="1" branch="False" />
+                <line number="43" hits="1" branch="False" />
+                <line number="45" hits="1" branch="False" />
+                <line number="48" hits="1" branch="False" />
+                <line number="51" hits="1" branch="False" />
+                <line number="52" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="RouteAverageSpeed_IsCorrectlyHandled_WhenSumOfSpeedsIsNull" signature="()">
+              <lines>
+                <line number="57" hits="1" branch="False" />
+                <line number="59" hits="1" branch="False" />
+                <line number="60" hits="1" branch="False" />
+                <line number="61" hits="1" branch="False" />
+                <line number="64" hits="1" branch="False" />
+                <line number="67" hits="1" branch="False" />
+                <line number="68" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="RouteEntity_IsCorrectlyCreated_WhenGivenAValidRoute" signature="()">
+              <lines>
+                <line number="75" hits="1" branch="False" />
+                <line number="77" hits="1" branch="False" />
+                <line number="78" hits="1" branch="False" />
+                <line number="79" hits="1" branch="False" />
+                <line number="80" hits="1" branch="False" />
+                <line number="81" hits="1" branch="False" />
+                <line number="82" hits="1" branch="False" />
+                <line number="83" hits="1" branch="False" />
+                <line number="84" hits="1" branch="False" />
+                <line number="85" hits="1" branch="False" />
+                <line number="88" hits="1" branch="False" />
+                <line number="91" hits="1" branch="False" />
+                <line number="92" hits="1" branch="False" />
+                <line number="93" hits="1" branch="False" />
+                <line number="94" hits="1" branch="False" />
+                <line number="95" hits="1" branch="False" />
+                <line number="96" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="13" hits="1" branch="False" />
+            <line number="14" hits="1" branch="False" />
+            <line number="15" hits="1" branch="False" />
+            <line number="16" hits="1" branch="False" />
+            <line number="17" hits="1" branch="False" />
+            <line number="18" hits="1" branch="False" />
+            <line number="19" hits="1" branch="False" />
+            <line number="25" hits="1" branch="False" />
+            <line number="27" hits="1" branch="False" />
+            <line number="28" hits="1" branch="False" />
+            <line number="31" hits="1" branch="False" />
+            <line number="34" hits="1" branch="False" />
+            <line number="35" hits="1" branch="False" />
+            <line number="40" hits="1" branch="False" />
+            <line number="42" hits="1" branch="False" />
+            <line number="43" hits="1" branch="False" />
+            <line number="45" hits="1" branch="False" />
+            <line number="48" hits="1" branch="False" />
+            <line number="51" hits="1" branch="False" />
+            <line number="52" hits="1" branch="False" />
+            <line number="57" hits="1" branch="False" />
+            <line number="59" hits="1" branch="False" />
+            <line number="60" hits="1" branch="False" />
+            <line number="61" hits="1" branch="False" />
+            <line number="64" hits="1" branch="False" />
+            <line number="67" hits="1" branch="False" />
+            <line number="68" hits="1" branch="False" />
+            <line number="75" hits="1" branch="False" />
+            <line number="77" hits="1" branch="False" />
+            <line number="78" hits="1" branch="False" />
+            <line number="79" hits="1" branch="False" />
+            <line number="80" hits="1" branch="False" />
+            <line number="81" hits="1" branch="False" />
+            <line number="82" hits="1" branch="False" />
+            <line number="83" hits="1" branch="False" />
+            <line number="84" hits="1" branch="False" />
+            <line number="85" hits="1" branch="False" />
+            <line number="88" hits="1" branch="False" />
+            <line number="91" hits="1" branch="False" />
+            <line number="92" hits="1" branch="False" />
+            <line number="93" hits="1" branch="False" />
+            <line number="94" hits="1" branch="False" />
+            <line number="95" hits="1" branch="False" />
+            <line number="96" hits="1" branch="False" />
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package line-rate="1" branch-rate="1" complexity="28" name="Routey.Domain">
+      <classes>
+        <class line-rate="1" branch-rate="1" complexity="10" name="Routey.Domain.SQLiteDatabases.Entities.RouteEntity" filename="C:\Users\rikva\Documents\GitKraken codes\TDMD\RouteySolution\Routey.Domain\SQLiteDatabases\Entities\RouteEntity.cs">
+          <methods>
+            <method line-rate="1" branch-rate="1" complexity="1" name="get_RouteDateTime" signature="()">
+              <lines>
+                <line number="8" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="set_RouteDateTime" signature="(System.DateTime)">
+              <lines>
+                <line number="8" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="get_RouteName" signature="()">
+              <lines>
+                <line number="9" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="set_RouteName" signature="(string)">
+              <lines>
+                <line number="9" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="get_TotalDistance" signature="()">
+              <lines>
+                <line number="10" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="set_TotalDistance" signature="(double)">
+              <lines>
+                <line number="10" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="get_AverageSpeed" signature="()">
+              <lines>
+                <line number="11" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="set_AverageSpeed" signature="(double)">
+              <lines>
+                <line number="11" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="get_RouteDuration" signature="()">
+              <lines>
+                <line number="12" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="set_RouteDuration" signature="(string)">
+              <lines>
+                <line number="12" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="8" hits="1" branch="False" />
+            <line number="9" hits="1" branch="False" />
+            <line number="10" hits="1" branch="False" />
+            <line number="11" hits="1" branch="False" />
+            <line number="12" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class line-rate="1" branch-rate="1" complexity="18" name="Routey.Domain.Models.Route" filename="C:\Users\rikva\Documents\GitKraken codes\TDMD\RouteySolution\Routey.Domain\Models\Route.cs">
+          <methods>
+            <method line-rate="1" branch-rate="1" complexity="1" name="get_name" signature="()">
+              <lines>
+                <line number="13" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="set_name" signature="(string)">
+              <lines>
+                <line number="13" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="get_TotalDistance" signature="()">
+              <lines>
+                <line number="14" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="set_TotalDistance" signature="(double)">
+              <lines>
+                <line number="14" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="get_TotalDuration" signature="()">
+              <lines>
+                <line number="15" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="set_TotalDuration" signature="(string)">
+              <lines>
+                <line number="15" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="get_startRouteMoment" signature="()">
+              <lines>
+                <line number="16" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="set_startRouteMoment" signature="(System.DateTime)">
+              <lines>
+                <line number="16" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="get_SumOfSpeeds" signature="()">
+              <lines>
+                <line number="17" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="set_SumOfSpeeds" signature="(System.Nullable&lt;double&gt;)">
+              <lines>
+                <line number="17" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="get_AmountOfRoutePoints" signature="()">
+              <lines>
+                <line number="18" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="set_AmountOfRoutePoints" signature="(int)">
+              <lines>
+                <line number="18" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name=".ctor" signature="(string, System.DateTime)">
+              <lines>
+                <line number="20" hits="1" branch="False" />
+                <line number="21" hits="1" branch="False" />
+                <line number="22" hits="1" branch="False" />
+                <line number="23" hits="1" branch="False" />
+                <line number="24" hits="1" branch="False" />
+                <line number="25" hits="1" branch="False" />
+                <line number="26" hits="1" branch="False" />
+                <line number="27" hits="1" branch="False" />
+                <line number="28" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="4" name="GetAverageSpeed" signature="()">
+              <lines>
+                <line number="31" hits="1" branch="False" />
+                <line number="32" hits="1" branch="True" condition-coverage="100% (4/4)">
+                  <conditions>
+                    <condition number="0" type="jump" coverage="100%" />
+                    <condition number="1" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="33" hits="1" branch="False" />
+                <line number="35" hits="1" branch="False" />
+                <line number="36" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method line-rate="1" branch-rate="1" complexity="1" name="ConvertToRouteEntity" signature="()">
+              <lines>
+                <line number="39" hits="1" branch="False" />
+                <line number="40" hits="1" branch="False" />
+                <line number="41" hits="1" branch="False" />
+                <line number="42" hits="1" branch="False" />
+                <line number="43" hits="1" branch="False" />
+                <line number="44" hits="1" branch="False" />
+                <line number="45" hits="1" branch="False" />
+                <line number="46" hits="1" branch="False" />
+                <line number="47" hits="1" branch="False" />
+                <line number="48" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="13" hits="1" branch="False" />
+            <line number="14" hits="1" branch="False" />
+            <line number="15" hits="1" branch="False" />
+            <line number="16" hits="1" branch="False" />
+            <line number="17" hits="1" branch="False" />
+            <line number="18" hits="1" branch="False" />
+            <line number="20" hits="1" branch="False" />
+            <line number="21" hits="1" branch="False" />
+            <line number="22" hits="1" branch="False" />
+            <line number="23" hits="1" branch="False" />
+            <line number="24" hits="1" branch="False" />
+            <line number="25" hits="1" branch="False" />
+            <line number="26" hits="1" branch="False" />
+            <line number="27" hits="1" branch="False" />
+            <line number="28" hits="1" branch="False" />
+            <line number="31" hits="1" branch="False" />
+            <line number="32" hits="1" branch="True" condition-coverage="100% (4/4)">
+              <conditions>
+                <condition number="0" type="jump" coverage="100%" />
+                <condition number="1" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="33" hits="1" branch="False" />
+            <line number="35" hits="1" branch="False" />
+            <line number="36" hits="1" branch="False" />
+            <line number="39" hits="1" branch="False" />
+            <line number="40" hits="1" branch="False" />
+            <line number="41" hits="1" branch="False" />
+            <line number="42" hits="1" branch="False" />
+            <line number="43" hits="1" branch="False" />
+            <line number="44" hits="1" branch="False" />
+            <line number="45" hits="1" branch="False" />
+            <line number="46" hits="1" branch="False" />
+            <line number="47" hits="1" branch="False" />
+            <line number="48" hits="1" branch="False" />
+          </lines>
+        </class>
+      </classes>
+    </package>
+  </packages>
+</coverage>
