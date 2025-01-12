@@ -335,6 +335,8 @@ namespace Routey.ViewModels
             TotalDistance = string.Format(localizationResourceManager["Distance"], "0 Kilometer(s)");
             DistancePrev = string.Format(localizationResourceManager["Previous"], "0 Meter(s)");
             RouteName = "";
+
+            await RouteStoppedNotificationLater();
         }
 
         /// <summary>
@@ -365,7 +367,7 @@ namespace Routey.ViewModels
         /// <param name="subTitle"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        private async Task ShowNotification(string title, string subTitle, string message)
+        private async Task ShowNotification(string title, string subTitle, string message, NotificationCategoryType type, DateTime timeToNotify)
         {
             var request = new NotificationRequest
             {
@@ -373,11 +375,11 @@ namespace Routey.ViewModels
                 Title = title,
                 Subtitle = subTitle,
                 Description = message,
-                CategoryType = NotificationCategoryType.Error,
+                CategoryType = type,
                 BadgeNumber = 42,
                 Schedule = new NotificationRequestSchedule
                 {
-                    NotifyTime = DateTime.Now
+                    NotifyTime = timeToNotify
                 }
             };
             await LocalNotificationCenter.Current.Show(request);
@@ -389,11 +391,15 @@ namespace Routey.ViewModels
         /// <returns></returns>
         private async Task NoPermissionNotification()
         {
-            await ShowNotification("Location Permission", "Error", "Please enable location services to use this feature.");
+            await ShowNotification("Location Permission", "Error", "Please enable location services to use this feature.", NotificationCategoryType.Error, DateTime.UtcNow);
+        }
+        private async Task RouteStoppedNotificationLater()
+        {
+            await ShowNotification("Route Stopped", "Status", "You have succesfully stopped your route!", NotificationCategoryType.Status, DateTime.UtcNow.AddSeconds(15));
         }
         private async Task GeneralErrorNotification()
         {
-            await ShowNotification("Unforseen Action", "Error", "An unforseen action has occured!");
+            await ShowNotification("Unforseen Action", "Error", "An unforseen action has occured!", NotificationCategoryType.Error, DateTime.UtcNow);
         }
         #endregion
     }
