@@ -334,6 +334,7 @@ namespace Routey.ViewModels
             TotalDuration = string.Format(localizationResourceManager["Duration"], "00:00:00");
             TotalDistance = string.Format(localizationResourceManager["Distance"], "0 Kilometer(s)");
             DistancePrev = string.Format(localizationResourceManager["Previous"], "0 Meter(s)");
+            RouteName = "";
         }
 
         /// <summary>
