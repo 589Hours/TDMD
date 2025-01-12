@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Routey.Domain", "Routey.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Routey.Infrastructure", "Routey.Infrastructure\Routey.Infrastructure.csproj", "{5EED1B99-D405-413A-8B49-61CB730398F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Routey.Domain.Tests", "Routey.Domain.Tests\Routey.Domain.Tests.csproj", "{2EB5C842-C877-436A-AE53-B4FCA5505D93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5EED1B99-D405-413A-8B49-61CB730398F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EED1B99-D405-413A-8B49-61CB730398F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EED1B99-D405-413A-8B49-61CB730398F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EB5C842-C877-436A-AE53-B4FCA5505D93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EB5C842-C877-436A-AE53-B4FCA5505D93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EB5C842-C877-436A-AE53-B4FCA5505D93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EB5C842-C877-436A-AE53-B4FCA5505D93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -239,7 +239,7 @@ namespace Routey.ViewModels
                 return;
             }
 
-            activeRoute = new Route(RouteName, DateTime.Now);
+            activeRoute = new Route(RouteName, DateTime.UtcNow);
 
             IsListening = true;
             IsNotListening = !IsListening;
