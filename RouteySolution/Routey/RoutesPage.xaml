@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Routey.Domain.SQLiteDatabases.Entities;assembly=Routey.Domain"
+             xmlns:viewModels="clr-namespace:Routey.ViewModels;assembly=Routey.ViewModels"
+             xmlns:lang="clr-namespace:LocalizationResourceManager.Maui;assembly=LocalizationResourceManager.Maui"
+             x:Class="Routey.RoutesPage"
+             Title="{lang:Translate RoutesPage}">
+    <!-- Styles for Light & Dark modes-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="LabelStyleHeader1">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+            <Style TargetType="Label" x:Key="LabelStyleHeader2">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+            <Style TargetType="Label" x:Key="LabelStyle">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            <Style TargetType="ListView" x:Key="ListStyle">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=LightGray, Dark=Gray}" />
+                <Setter Property="SeparatorColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+                <Setter Property="RefreshControlColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+            </Style>
+            <Style TargetType="Button" x:Key="ButtonStyle">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=White, Dark=White}" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBlue}, Dark=Gray}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!-- Page Contents -->
+    <VerticalStackLayout Margin="10,10,10,10" Spacing="10" VerticalOptions="Fill">
+
+        <Button x:Name="DeleteButton" Text="{lang:Translate DeleteRoute}" Margin="10,0,0,5"
+            Clicked="DeleteButtonClicked" Style="{StaticResource ButtonStyle}" />
+        
+        <!-- Previously Walked Routes List -->
+        <Label Text="{lang:Translate PreviousRoutes}" Style="{StaticResource LabelStyleHeader1}" />
+
+        <!-- RouteHistory contains RouteEntity objects -->
+        <CollectionView x:Name="lvRoutes" ItemsSource="{Binding RouteHistory}" SelectedItem="{Binding SelectedRoute}"
+                    Style="{Binding ListStyle}" SelectionMode="Single" MaximumHeightRequest="450">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <!-- Bindings directly from RouteEntity -->
+                <DataTemplate x:DataType="models:RouteEntity">
+                    <Frame HorizontalOptions="Fill" BorderColor="Black">
+                        <!-- Tap gesture to select RouteEntity -->
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="RouteEntityTapped" />
+                        </Frame.GestureRecognizers>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label x:Name="name" Grid.Column="0" Grid.Row="0" HorizontalOptions="Start"
+                                       Text="{Binding RouteName}" Style="{StaticResource LabelStyleHeader2}" />
+                            <Label x:Name="data" Grid.Column="1" Grid.Row="0" HorizontalOptions="End"
+                                       Text="{Binding RouteDateTime, StringFormat='{}{0:MM/dd/yyyy HH:mm}'}" Style="{StaticResource LabelStyle}" />
+                            <Label x:Name="distance" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Start"
+                                       Text="{Binding TotalDistance, StringFormat='Total distance: {0} Km'}" Style="{StaticResource LabelStyle}" />
+                            <Label x:Name="speed" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Start"
+                                       Text="{Binding AverageSpeed, StringFormat='Average speed: {0} km/h'}" Style="{StaticResource LabelStyle}" />
+                            <Label x:Name="duration" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Start"
+                                       Text="{Binding RouteDuration, StringFormat='Route Duration: {0}'}" Style="{StaticResource LabelStyle}" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+
+</ContentPage>

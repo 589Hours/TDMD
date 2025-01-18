@@ -4,12 +4,32 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Routey"
-    Shell.FlyoutBehavior="Flyout"
-    Title="Routey">
+    xmlns:lang="clr-namespace:LocalizationResourceManager.Maui;assembly=LocalizationResourceManager.Maui"
+    Title="Routey"
+    Shell.TabBarBackgroundColor="{AppThemeBinding Light={StaticResource LightBlue}, Dark=Black}"
+    Shell.TabBarForegroundColor="{AppThemeBinding Light=White, Dark={StaticResource LightBlue}}"
+    Shell.TabBarTitleColor="{AppThemeBinding Light=White, Dark={StaticResource LightBlue}}"
+    Shell.TabBarUnselectedColor="{AppThemeBinding Light=Gray, Dark=LightGray}"
+    Shell.BackgroundColor="{AppThemeBinding Light={StaticResource LightBlue}, Dark=Black}"
+    Shell.TitleColor="{AppThemeBinding Light=White, Dark={StaticResource LightBlue}}">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <!-- The icons in the TabBar were used from FlatIcon: https://icons8.com/icons -->
+    <TabBar Title="Tabs">
+        <ShellContent
+            Title="{lang:Translate ViewMap}"
+            Icon="map.png"
+            ContentTemplate="{DataTemplate local:MapPage}"
+            Route="MapPage" />
+        <ShellContent
+            Title="{lang:Translate RoutesHistory}"
+            Icon="routes.png"
+            ContentTemplate="{DataTemplate local:RoutesPage}"
+            Route="RoutesPage" />
+        <ShellContent
+            Title="{lang:Translate Settings}"
+            Icon="settings.png"
+            ContentTemplate="{DataTemplate local:SettingsPage}"
+            Route="SettingsPage" />
+    </TabBar>
 
 </Shell>
